@@ -113,7 +113,14 @@ class FetchClient {
 
   Options options() {
     var option = Options(
-        headers: {'Authorization': token.isEmpty ? '' : ('Bearer $token')},
+        // headers: {'Authorization': token.isEmpty ? '' : ('Bearer $token')},
+        headers: {
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcwNjUyMzVjLThkMjktNDY1ZS1hMmNiLTdjYTFhOGM1MjMxMCIsInVzZXJfaWQiOjExLCJ1c2VybmFtZSI6ImNocmVleSIsImV4cCI6MTczMDIwNTM2NSwiaWF0IjoxNzMwMjA0NzY1fQ.ZpYmmWpNufARo3_ZgTs3fCSk9wJZC-isAFnqHGYnHdQ',
+          // token.isEmpty
+          //     ? ''
+          //     : ('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcwNjUyMzVjLThkMjktNDY1ZS1hMmNiLTdjYTFhOGM1MjMxMCIsInVzZXJfaWQiOjExLCJ1c2VybmFtZSI6ImNocmVleSIsImV4cCI6MTczMDIwNTM2NSwiaWF0IjoxNzMwMjA0NzY1fQ.ZpYmmWpNufARo3_ZgTs3fCSk9wJZC-isAFnqHGYnHdQ')
+        },
         followRedirects: false,
         validateStatus: (status) {
           return true;

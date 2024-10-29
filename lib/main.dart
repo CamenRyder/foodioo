@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 late PackageInfo packageInfo;
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
@@ -70,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), 
+      ),
     );
   }
 }
