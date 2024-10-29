@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
-import 'package:foodioo/Core/Theme/app_colors.dart';
-import 'package:foodioo/Core/Theme/app_typography.dart';
+import 'package:foodioo/Core/theme/app_colors.dart';
+import 'package:foodioo/Core/theme/app_typography.dart';
 
 class AppTheme {
   static ThemeData get lightTheme {

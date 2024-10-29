@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
-import 'package:foodioo/Core/Theme/app_colors.dart';
+import 'package:foodioo/Core/theme/app_colors.dart';
 
 class AppTypography {
   static const textButtonExtraBold =

@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:foodioo/core/constants/constant_stataue.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+late PackageInfo packageInfo;
 
 void main() {
   runApp(const MyApp());
@@ -7,11 +14,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: AppConstant.APP_NAME,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

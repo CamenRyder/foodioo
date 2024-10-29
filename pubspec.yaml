@@ -1,6 +1,6 @@
 name: foodioo
 description: "A personal project build with 21DTHC4 team."
-publish_to: 'none' 
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -17,17 +17,19 @@ dependencies:
   flutter_spinkit: ^5.2.1
   cached_network_image: ^3.4.1
   dio: ^5.7.0
+  curl_logger_dio_interceptor: ^1.0.0
+  pretty_dio_logger: ^1.4.0
   shared_preferences: ^2.3.2
+  flutter_dotenv: ^5.2.1
   get_storage: ^2.1.1
   sliding_up_panel: ^2.0.0+1
   flutter_bloc: ^8.1.6
-
+  package_info_plus: ^8.1.0
 
 dev_dependencies:
   flutter_gen: ^5.8.0
   build_runner: ^2.4.11
   flutter_lints: ^4.0.0
-
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -45,7 +47,7 @@ flutter_gen:
     flare_flutter: true
     rive: true
     lottie: true
-    
+
 flutter:
   generate: true
   uses-material-design: true
