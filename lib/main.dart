@@ -52,23 +52,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MultiBlocProvider(providers: [
       BlocProvider<AuthBloc>(create: (context) => widget.authBloc),
     ], 
-    child: LoaderOverLayWidget(child: MaterialApp(
+    child: LoaderOverLayWidget(child: 
+    BlocListener(listener:(context, state) {
+      return 
+    },) ;  
+    MaterialApp(
          title: AppConstant.APP_NAME,
                 color: Colors.white,
                 // theme: ,
                 navigatorKey: navigatorKey,
                 debugShowCheckedModeBanner: false,
-                home: ,
+                home: 
                 onGenerateRoute: RouteGenerator.generateRoute,
     ) ));
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
 }
