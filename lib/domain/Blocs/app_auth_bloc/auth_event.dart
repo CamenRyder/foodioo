@@ -1,9 +1,7 @@
 import 'package:foodioo/domain/view_models/login/login_view_model.dart';
 import '../../view_models/register/register_view_model.dart';
 
-class AuthEvent {
-  const AuthEvent();
-}
+class AuthEvent {}
 
 class AuthUserToken extends AuthEvent {}
 

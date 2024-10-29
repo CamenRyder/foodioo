@@ -2,42 +2,42 @@ import '../../models/user_model.dart';
 
 class AuthState {
   String token;
-  bool isLoading;
+  bool isLogout;
   bool isLoadingOverLay;
   bool isShowMessage;
   String message;
   bool isShowSplash;
-  UserModel? currentUser;
-  List<UserModel> user;
+  UserModel? currentAccount;
+  List<UserModel> accounts;
 
   AuthState(
-      {this.isLoading = false,
+      {this.isLogout = false,
       this.isLoadingOverLay = false,
       this.isShowSplash = false,
       this.isShowMessage = false,
       this.message = '',
-      this.user = const [],
+      this.accounts = const [],
       this.token = '',
-      this.currentUser});
+      this.currentAccount});
 
   AuthState copyWith({
-    bool? isLoading,
+    bool? isLogout,
     bool? isLoadingOverLay,
     bool? isShowSplash,
     bool? isShowMessage,
     String? message,
-    UserModel? currentUser,
-    List<UserModel>? user,
+    UserModel? currentAccount,
+    List<UserModel>? accounts,
     String? token,
   }) {
     return AuthState(
-      isLoading: isLoading ?? this.isLoading,
-      isLoadingOverLay: isLoadingOverLay ?? this.isLoadingOverLay,
-      isShowMessage: isShowMessage ?? this.isShowMessage,
-      message: message ?? this.message,
+      isLogout: isLogout ?? false,
+      isLoadingOverLay: isLoadingOverLay ?? false,
+      isShowMessage: isShowMessage ?? false,
+      message: message ?? "",
       isShowSplash: isShowSplash ?? this.isShowSplash,
-      currentUser: currentUser ?? this.currentUser,
-      user: user ?? this.user,
+      currentAccount: currentAccount ?? this.currentAccount,
+      accounts: accounts ?? this.accounts,
       token: token ?? this.token,
     );
   }

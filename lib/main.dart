@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
+import 'package:foodioo/domain/Blocs/app_Auth_Bloc/auth_event.dart';
+
 import 'package:package_info_plus/package_info_plus.dart';
+
+import 'domain/blocs/app_auth_bloc/auth_bloc.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 late PackageInfo packageInfo;
 
 void main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final authBloc = AuthBloc();
+  authBloc.add(AuthUserToken());
+
+  authBloc.stream.listen((state) {
+    runApp(MyApp(authBloc: authBloc));
+  });
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AuthBloc authBloc;
+  const MyApp({super.key, required this.authBloc});
 
   @override
   Widget build(BuildContext context) {
