@@ -11,6 +11,8 @@ class RouteGenerator {
     switch (settings.name) {
       case NavigatorNames.LOGIN:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case NavigatorNames.SPLASH:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       // case NavigatorNames.LOGIN_WEB:
       //   return MaterialPageRoute(
       //       builder: (_) => const LoginWeb(), fullscreenDialog: true);

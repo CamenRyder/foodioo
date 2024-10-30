@@ -5,10 +5,15 @@ import 'package:foodioo/core/constants/constant_stataue.dart';
 import 'package:foodioo/domain/blocs/app_auth_bloc/auth_event.dart';
 import 'package:foodioo/domain/blocs/app_auth_bloc/auth_bloc.dart';
 import 'package:foodioo/domain/blocs/app_auth_bloc/auth_state.dart';
+import 'package:foodioo/ui/general/message_over_screen.dart';
+import 'package:foodioo/ui/screen/login/login_screen.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
 import 'core/routes/routes.dart';
+import 'core/routes/routes_name.dart';
 import 'ui/general/loader_over_lay_widget.dart';
+import 'ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
 import 'ui/screen/splash/splash_screen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -57,6 +62,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ],
         child: LoaderOverLayWidget(
             child: BlocBuilder<AuthBloc, AuthState>(
+          buildWhen: (previous, current) {
+            // dùng cho thay đổi theme!
+            return true;
+          },
           bloc: widget.authBloc,
           // buildWhen: (previous, current) {
           //   return previous != current;
@@ -68,7 +77,24 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               // theme: ,
               navigatorKey: navigatorKey,
               debugShowCheckedModeBanner: false,
-              home: const SplashScreen(),
+              home: state.isShowSplash
+                  ? const SplashScreen()
+                  : BlocListener<AuthBloc, AuthState>(
+                      listener: (context, stateListener) {
+                        if (stateListener.isShowMessage) {
+                          MessageToast.showToast(context, state.message);
+                        }
+                        if (stateListener.isLoadingOverLay) {
+                          context.loaderOverlay.show();
+                        }
+
+                        context.loaderOverlay.hide();
+                      },
+                      child: state.currentAccount != null
+                          ? const BottomTabbarScreen()
+                          : const LoginScreen(),
+                    ),
+              // initialRoute: NavigatorNames.SPLASH,
               onGenerateRoute: RouteGenerator.generateRoute,
             );
           },

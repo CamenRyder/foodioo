@@ -30,6 +30,12 @@ class AppTypographyLight {
     fontWeight: FontWeight.w500,
   );
 
+  static const textHintBold = TextStyle(
+    color: AppColorsLight.textContent,
+    fontSize: AppConstant.textSizeHint,
+    fontWeight: FontWeight.w800,
+  );
+  
   static TextTheme get textTheme => const TextTheme(
       bodyMedium: textContent,
       bodyLarge: textContentBold,
@@ -58,6 +64,13 @@ class AppTypographyDark {
     fontSize: AppConstant.textSizeContent,
     fontWeight: FontWeight.w500,
   );
+
+  static const textHintBold = TextStyle(
+    color: AppColorsLight.textContent,
+    fontSize: AppConstant.textSizeHint,
+    fontWeight: FontWeight.w800,
+  );
+
   static TextTheme get textTheme => const TextTheme(
       bodyMedium: textContent,
       bodyLarge: textContentBold,

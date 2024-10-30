@@ -6,7 +6,6 @@ import 'package:foodioo/domain/blocs/app_auth_bloc/auth_state.dart';
 import 'package:foodioo/domain/models/user_model.dart';
 import 'package:get_storage/get_storage.dart';
 
-
 import '../../../domain/service/user_service.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -17,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _onAuthUserToken(AuthUserToken event, Emitter emit) async {
     try {
       emit(state.copyWith(isShowSplash: true));
+      await Future.delayed(Duration(seconds: 3));
 
       await Future.wait([dotenv.load(fileName: ".env"), GetStorage.init()]);
 
@@ -30,14 +30,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
       emit(state.copyWith(isShowSplash: false));
       if (accounts.isNotEmpty) {
-        emit(state.copyWith(
-            isShowSplash: false,
-            accounts: accounts,
-            currentAccount: accounts[0]));
+        emit(state.copyWith(accounts: accounts, currentAccount: accounts[0]));
       }
-    } catch (e) {
-      
-    }
+    } catch (e) {}
   }
 
   logout({required Logout event, required Emitter emit}) async {
