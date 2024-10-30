@@ -10,8 +10,8 @@ import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:flutter/services.dart';
 
-import '../../Domain/Blocs/app_Auth_Bloc/auth_bloc.dart';
-import '../../domain/Blocs/app_Auth_Bloc/auth_event.dart';
+import 'package:foodioo/domain/blocs/app_auth_bloc/auth_event.dart';
+import 'package:foodioo/domain/blocs/app_auth_bloc/auth_bloc.dart';
 import '../../main.dart';
 
 class FetchClient {

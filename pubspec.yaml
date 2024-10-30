@@ -29,17 +29,18 @@ dependencies:
 
 dev_dependencies:
   flutter_gen: ^5.8.0
+  flutter_gen_runner: ^5.8.0
   build_runner: ^2.4.11
   flutter_lints: ^4.0.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/icon_app.png"
+  image_path: "assets/avatar/app_avatar.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
 
 flutter_gen:
-  output: lib/core/theme # Optional (default: lib/gen/)
+  output: lib/core/theme/ # Optional (default: lib/gen/)
   line_length: 80 # Optional (default: 80)
 
   # Optional
@@ -56,3 +57,4 @@ flutter:
     - .env
     - assets/images/
     - assets/icons/
+    - assets/avatar/

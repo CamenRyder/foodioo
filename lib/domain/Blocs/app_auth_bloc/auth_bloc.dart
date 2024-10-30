@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foodioo/core/helper/dio_sepecificate.dart';
+import 'package:foodioo/domain/blocs/app_auth_bloc/auth_event.dart';
+import 'package:foodioo/domain/blocs/app_auth_bloc/auth_state.dart';
 import 'package:foodioo/domain/models/user_model.dart';
 import 'package:get_storage/get_storage.dart';
 
-import '../../../domain/Blocs/app_Auth_Bloc/auth_event.dart';
-import '../../../domain/Blocs/app_Auth_Bloc/auth_state.dart';
+
 import '../../../domain/service/user_service.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

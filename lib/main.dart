@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
-import 'package:foodioo/domain/Blocs/app_Auth_Bloc/auth_event.dart';
+import 'package:foodioo/domain/blocs/app_auth_bloc/auth_event.dart';
+import 'package:foodioo/domain/blocs/app_auth_bloc/auth_bloc.dart';
+import 'package:foodioo/domain/blocs/app_auth_bloc/auth_state.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
-
-import 'domain/blocs/app_auth_bloc/auth_bloc.dart';
-import 'ui/General/loader_over_lay_widget.dart';
+import 'core/routes/routes.dart';
+import 'ui/general/loader_over_lay_widget.dart';
+import 'ui/screen/splash/splash_screen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 late PackageInfo packageInfo;
@@ -49,21 +51,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<AuthBloc>(create: (context) => widget.authBloc),
-    ], 
-    child: LoaderOverLayWidget(child: 
-    BlocListener(listener:(context, state) {
-      return 
-    },) ;  
-    MaterialApp(
-         title: AppConstant.APP_NAME,
-                color: Colors.white,
-                // theme: ,
-                navigatorKey: navigatorKey,
-                debugShowCheckedModeBanner: false,
-                home: 
-                onGenerateRoute: RouteGenerator.generateRoute,
-    ) ));
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(create: (context) => widget.authBloc),
+        ],
+        child: LoaderOverLayWidget(
+            child: BlocBuilder<AuthBloc, AuthState>(
+          bloc: widget.authBloc,
+          // buildWhen: (previous, current) {
+          //   return previous != current;
+          // },
+          builder: (context, state) {
+            return MaterialApp(
+              title: AppConstant.APP_NAME,
+              color: Colors.white,
+              // theme: ,
+              navigatorKey: navigatorKey,
+              debugShowCheckedModeBanner: false,
+              home: const SplashScreen(),
+              onGenerateRoute: RouteGenerator.generateRoute,
+            );
+          },
+        )));
   }
 }
