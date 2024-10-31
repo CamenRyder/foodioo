@@ -8,6 +8,7 @@ class AppColors {
   static const Color green = Color.fromARGB(255, 0, 255, 55);
   static const Color pink = Color.fromARGB(255, 234, 0, 255);
   static const Color brown = Color(0xFFa2845e);
+  static const Color grey = Color.fromARGB(255, 68, 67, 66);
 }
 
 class AppColorsLight {

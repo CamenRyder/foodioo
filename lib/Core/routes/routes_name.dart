@@ -3,4 +3,5 @@ class NavigatorNames {
   static const String REGISTER = '/register';
   static const String FORGOT_PASSWORD = '/forgot_password';
   static const String SPLASH = '/splash';
+  static const String APP_MAIN = '/app_main';
 }

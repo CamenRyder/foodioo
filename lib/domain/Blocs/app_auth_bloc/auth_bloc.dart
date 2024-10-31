@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _onAuthUserToken(AuthUserToken event, Emitter emit) async {
     try {
       emit(state.copyWith(isShowSplash: true));
-      await Future.delayed(Duration(seconds: 3));
+      // await Future.delayed(const Duration(seconds: 3));
 
       await Future.wait([dotenv.load(fileName: ".env"), GetStorage.init()]);
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:foodioo/ui/screen/splash/splash_screen.dart';
 
+import '../../ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
 import '../../ui/screen/login/login_screen.dart';
 import 'routes_name.dart';
 
@@ -13,6 +14,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case NavigatorNames.SPLASH:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case NavigatorNames.APP_MAIN:
+        return MaterialPageRoute(builder: (_) => const BottomTabbarScreen());
+
       // case NavigatorNames.LOGIN_WEB:
       //   return MaterialPageRoute(
       //       builder: (_) => const LoginWeb(), fullscreenDialog: true);

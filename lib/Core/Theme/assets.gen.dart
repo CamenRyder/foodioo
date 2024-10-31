@@ -46,12 +46,32 @@ class $AssetsIconsGen {
   List<SvgGenImage> get values => [bag, home, notification, profile, search];
 }
 
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/intro_01.png
+  AssetGenImage get intro01 =>
+      const AssetGenImage('assets/images/intro_01.png');
+
+  /// File path: assets/images/intro_02.png
+  AssetGenImage get intro02 =>
+      const AssetGenImage('assets/images/intro_02.png');
+
+  /// File path: assets/images/intro_03.png
+  AssetGenImage get intro03 =>
+      const AssetGenImage('assets/images/intro_03.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [intro01, intro02, intro03];
+}
+
 class Assets {
   Assets._();
 
   static const String aEnv = '.env';
   static const $AssetsAvatarGen avatar = $AssetsAvatarGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsImagesGen images = $AssetsImagesGen();
 
   /// List of all assets
   static List<String> get values => [aEnv];
