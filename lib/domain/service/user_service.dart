@@ -12,7 +12,7 @@ class UserService extends FetchClient {
 
       final Response<dynamic> result =
           await super.getData(path: '/accounts/me');
-      if (result.data['code'] == 200) {
+      if (result.data['code'] > 200 && result.data['code'] < 300) {
         final accounts = result.data['data'];
 
         for (var e in accounts) {
@@ -27,11 +27,23 @@ class UserService extends FetchClient {
 
   Future<ResponseModel> registerUser(RegisterViewModel data) async {
     try {
-      Response<dynamic> result =  await super.postData(
-          path: '/users/register' ,  
-          params: data.toJson()
-      );
-    } catch (err) {}
+      Response<dynamic> result =
+          await super.postData(path: '/users/register', params: data.toJson());
+      if (result.data['code'] > 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: null,
+            getSuccess: true,
+            message: "Đăng ký tài khoản thành công");
+      } else {
+        return ResponseModel(
+            data: null,
+            getSuccess: false,
+            message: showErorrResponse(result.data['code']));
+      }
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
   }
 
   Future<ResponseModel> loginUser(LoginViewModel data) async {

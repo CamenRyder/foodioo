@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:foodioo/core/theme/assets.gen.dart';
+import 'package:foodioo/domain/view_models/register/register_view_model.dart';
 
 import '../../../core/constants/constant_stataue.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
-
+import '../../../domain/blocs/app_auth_bloc/auth_bloc.dart';
+import '../../../domain/blocs/app_auth_bloc/auth_event.dart';
 import '../../general/customize_button_widget.dart';
 import '../../general/spacing_vertical_widget.dart';
 import '../../general/svg_gen_size_widget.dart';
@@ -87,7 +91,17 @@ class _RegisterAuthorizatorScreenState
                     isPasswordTextField: true),
                 const Expanded(child: SizedBox()),
                 CustomizeButtonWidget(
-                  onPressed: () {},
+                  onPressed: () {
+                    final userRegister = RegisterViewModel(
+                        email: textControllerEmail.text,
+                        fullname: textControllerFullname.text,
+                        gender: textControllerGenter.text == "Nam" ? 1 : 0,
+                        username: textControllerUsername.text,
+                        password: textControllerPassword.text);
+                    context
+                        .read<AuthBloc>()
+                        .add(RegisterUser(user: userRegister));
+                  },
                   title: "Đăng ký",
                   isEnable: true,
                 ),

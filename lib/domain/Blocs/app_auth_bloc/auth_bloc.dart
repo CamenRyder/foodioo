@@ -16,13 +16,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Logout>((event, emit) => _onLogout(event, emit));
     on<RegisterUser>((event, emit) => _onRegisterUser(event, emit));
   }
-  _onRegisterUser(RegisterUser event ,   Emitter emit) async {
-      try{
-              emit(state.copyWith(isLoadingOverLay: true));
-      }catch(err)
-      {
-
+  _onRegisterUser(RegisterUser event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoadingOverLay: true));
+      final ResponseModel data = await UserService().registerUser(event.user);
+      if (data.getSuccess) {
+        emit(state.copyWith(
+            isLoadingOverLay: false,
+            isShowMessage: true,
+            message: data.message));
+      } else {
+        emit(state.copyWith(
+          isLoadingOverLay: false,
+          isShowMessage: true,
+          message: data.message,
+        ));
       }
+    } catch (err) {
+      emit(state.copyWith(
+        isShowMessage: true,
+        isLoadingOverLay: false,
+        message: "Lỗi hệ thống ${err.toString()}",
+      ));
+    }
   }
 
   _onLoginUser(LoginUser event, Emitter emit) async {
