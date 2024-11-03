@@ -10,9 +10,9 @@ class RegisterUser extends AuthEvent {
   RegisterUser({required this.user});
 }
 
-class AuthLogin extends AuthEvent {
+class LoginUser extends AuthEvent {
   final LoginViewModel user;
-  AuthLogin({required this.user});
+  LoginUser({required this.user});
 }
 
 class Logout extends AuthEvent {}

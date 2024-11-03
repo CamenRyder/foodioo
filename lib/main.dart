@@ -13,7 +13,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'core/routes/routes.dart';
 import 'core/theme/app_theme.dart';
 import 'ui/general/loader_over_lay_widget.dart';
-import 'ui/screen/authorizator/register_authorizator_screen.dart';
 import 'ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
 import 'ui/screen/splash/splash_screen.dart';
 
@@ -72,32 +71,42 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           //   return previous != current;
           // },
           builder: (context, state) {
-            return MaterialApp(
-              title: AppConstant.APP_NAME,
-              color: Colors.white,
-              navigatorKey: navigatorKey,
-              theme: AppTheme.lightTheme,
-              debugShowCheckedModeBanner: false,
-              home: state.isShowSplash
-                  ? const SplashScreen()
-                  : BlocListener<AuthBloc, AuthState>(
-                      listener: (context, stateListener) {
-                        if (stateListener.isShowMessage) {
-                          MessageToast.showToast(context, state.message);
-                        }
-                        if (stateListener.isLoadingOverLay) {
-                          context.loaderOverlay.show();
-                        }
+            return Listener(
+              onPointerDown: (_) {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.focusedChild?.unfocus();
+                }
+              },
+              child: MaterialApp(
+                title: AppConstant.APP_NAME,
+                color: Colors.white,
+                navigatorKey: navigatorKey,
+                theme: AppTheme.lightTheme,
+                debugShowCheckedModeBanner: false,
+                home: state.isShowSplash
+                    ? const SplashScreen()
+                    : BlocListener<AuthBloc, AuthState>(
+                        listener: (context, stateListener) {
+                          if (stateListener.isShowMessage) {
+                            MessageToast.showToast(context, state.message);
+                          }
+                          if (stateListener.isLoadingOverLay) {
+                            context.loaderOverlay.show();
+                          } else {
+                            context.loaderOverlay.hide();
+                          }
 
-                        context.loaderOverlay.hide();
-                      },
-                      child: state.currentAccount != null
-                          ? const BottomTabbarScreen()
-                          : const RegisterAuthorizatorScreen()
-                      // : const LoginScreen(),
-                      ),
-              // initialRoute: NavigatorNames.SPLASH,
-              onGenerateRoute: RouteGenerator.generateRoute,
+                          //
+                        },
+                        child: state.isLogout
+                            ? const LoginAuthorizatorScreen()
+                            : const BottomTabbarScreen()
+                        // : const LoginScreen(),
+                        ),
+                // initialRoute: NavigatorNames.SPLASH,
+                onGenerateRoute: RouteGenerator.generateRoute,
+              ),
             );
           },
         )));

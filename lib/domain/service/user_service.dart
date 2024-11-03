@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:foodioo/domain/models/user_model.dart';
 
 import '../../Core/Helper/dio_sepecificate.dart';
+import '../../core/helper/helper_function.dart';
+import '../view_models/login/login_view_model.dart';
 
 class UserService extends FetchClient {
   Future<List<UserModel>> getUser() async {
     try {
       List<UserModel> userModels = [];
-      Response<dynamic> result = await getData(path: '/accounts/me');
+   final   Response<dynamic> result = await super.getData(path: '/accounts/me');
       if (result.data['code'] == 200) {
         final accounts = result.data['data'];
 
@@ -18,6 +20,29 @@ class UserService extends FetchClient {
       return userModels;
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<ResponseModel> loginUser(LoginViewModel data) async {
+    try {
+      String token = "";
+      Response<dynamic> result = await super.postData(
+          path: '/users/login',
+          params: {'username': data.username, 'password': data.password});
+      if (result.data['code'] == 200) {
+        token = result.data['data']['access_token'];
+        return ResponseModel(
+            data: token, getSuccess: true, message: "Lấy token thành công");
+      } else {
+        return ResponseModel(
+          data: null,
+          getSuccess: false,
+          message: showErorrResponse(result.data['code']),
+        );
+      }
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
     }
   }
 }

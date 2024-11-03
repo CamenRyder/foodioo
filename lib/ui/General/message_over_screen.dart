@@ -66,7 +66,7 @@ class _CustomMessage extends State<CustomMessage> {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-                color: AppColors.blue,
+                color: AppColorsLight.primary,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -87,7 +87,7 @@ class _CustomMessage extends State<CustomMessage> {
                         : widget.type == MessageType.warning
                             ? Icons.warning
                             : Icons.check_circle,
-                    color: AppColors.blue,
+                    color: AppColorsLight.primary,
                     size: 30,
                   ),
                 ),

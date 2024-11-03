@@ -7,6 +7,7 @@ class AuthState {
   bool isShowMessage;
   String message;
   bool isShowSplash;
+  bool isShowIntroApp;
   UserModel? currentAccount;
   List<UserModel> accounts;
 
@@ -15,6 +16,7 @@ class AuthState {
       this.isLoadingOverLay = false,
       this.isShowSplash = false,
       this.isShowMessage = false,
+      this.isShowIntroApp = false,
       this.message = '',
       this.accounts = const [],
       this.token = '',
@@ -25,16 +27,18 @@ class AuthState {
     bool? isLoadingOverLay,
     bool? isShowSplash,
     bool? isShowMessage,
+    bool? isShowIntroApp,
     String? message,
     UserModel? currentAccount,
     List<UserModel>? accounts,
     String? token,
   }) {
     return AuthState(
-      isLogout: isLogout ?? false,
+      isLogout: isLogout ?? this.isLogout,
+      isShowIntroApp: isShowIntroApp ?? this.isShowIntroApp,
       isLoadingOverLay: isLoadingOverLay ?? false,
       isShowMessage: isShowMessage ?? false,
-      message: message ?? "",
+      message: message ?? this.message,
       isShowSplash: isShowSplash ?? this.isShowSplash,
       currentAccount: currentAccount ?? this.currentAccount,
       accounts: accounts ?? this.accounts,

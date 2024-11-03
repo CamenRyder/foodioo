@@ -1,37 +1,43 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-import 'dart:io';
 
+import 'dart:io';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/core/constants/constant_stataue.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:flutter/services.dart';
 
-import 'package:foodioo/domain/blocs/app_auth_bloc/auth_event.dart';
-import 'package:foodioo/domain/blocs/app_auth_bloc/auth_bloc.dart';
+import '../../domain/blocs/app_auth_bloc/auth_bloc.dart';
+import '../../domain/blocs/app_auth_bloc/auth_event.dart';
 import '../../main.dart';
 
 class FetchClient {
   String get domain {
-    return AppConstant.apiBaseURL;
+    return AppConstant.apiBaseURL ;
   }
 
   static String token = '';
 
   Dio dio = Dio();
+
   List<String> curlList = [];
 
   logRequest() {
-    // dio.interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
-    // dio.interceptors.add(InterceptorsWrapper(
-    //   onRequest: (options, handler) {
-    //     getCurlFromDioRequest(options);
-    //     return handler.next(options);
-    //   },
-    // ));
+    dio.interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
+    // if (AppConstants.mod == "develop") {
+    //   dio.interceptors.add(InterceptorsWrapper(
+    //     onRequest: (options, handler) {
+    //       getCurlFromDioRequest(options);
+    //       return handler.next(options);
+    //     },
+    //   ));
+    // }
+
     // dio.interceptors.add(PrettyDioLogger(
     //   maxWidth: 1000,
     //   requestHeader: true,
@@ -40,7 +46,6 @@ class FetchClient {
     //   responseHeader: false,
     //   compact: false,
     // ));
-
     dio.interceptors.add(InterceptorsWrapper(
       onResponse: (response, handler) {
         if (response.statusCode == 401) {
@@ -113,13 +118,9 @@ class FetchClient {
 
   Options options() {
     var option = Options(
-        // headers: {'Authorization': token.isEmpty ? '' : ('Bearer $token')},
         headers: {
-          'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcwNjUyMzVjLThkMjktNDY1ZS1hMmNiLTdjYTFhOGM1MjMxMCIsInVzZXJfaWQiOjExLCJ1c2VybmFtZSI6ImNocmVleSIsImV4cCI6MTczMDIwNTM2NSwiaWF0IjoxNzMwMjA0NzY1fQ.ZpYmmWpNufARo3_ZgTs3fCSk9wJZC-isAFnqHGYnHdQ',
-          // token.isEmpty
-          //     ? ''
-          //     : ('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcwNjUyMzVjLThkMjktNDY1ZS1hMmNiLTdjYTFhOGM1MjMxMCIsInVzZXJfaWQiOjExLCJ1c2VybmFtZSI6ImNocmVleSIsImV4cCI6MTczMDIwNTM2NSwiaWF0IjoxNzMwMjA0NzY1fQ.ZpYmmWpNufARo3_ZgTs3fCSk9wJZC-isAFnqHGYnHdQ')
+          // 'x-application-name': 'PMS-APP', // config sau khi  sử dụng
+          'Authorization': token.isEmpty ? '' : ('Bearer $token')
         },
         followRedirects: false,
         validateStatus: (status) {
@@ -133,11 +134,12 @@ class FetchClient {
   Future<Response> getData(
       {String? domainApp,
       required String path,
+      Options? optionsAlternative,
       Map<String, dynamic>? queryParameters}) async {
     try {
       logRequest();
       Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
-          queryParameters: queryParameters, options: options());
+          queryParameters: queryParameters, options: optionsAlternative ?? options());
       return result;
     } on DioException catch (e) {
       return e.response ??
@@ -159,21 +161,21 @@ class FetchClient {
     }
   }
 
-  // Future<Response> postDataGraphql(
-  //     {String? domainApp,
-  //     required String path,
-  //     String? query,
-  //     Map<String, dynamic>? variables}) async {
-  //   try {
-  //     logRequest();
-  //     Response<dynamic> result = await dio.post((domainApp ?? domain) + path,
-  //         data: {"query": query, "variables": variables}, options: options());
-  //     return result;
-  //   } on DioException catch (e) {
-  //     return e.response ??
-  //         Response(statusCode: -1, requestOptions: RequestOptions());
-  //   }
-  // }
+  Future<Response> postDataGraphql(
+      {String? domainApp,
+      required String path,
+      String? query,
+      Map<String, dynamic>? variables}) async {
+    try {
+      logRequest();
+      Response<dynamic> result = await dio.post((domainApp ?? domain) + path,
+          data: {"query": query, "variables": variables}, options: options());
+      return result;
+    } on DioException catch (e) {
+      return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+    }
+  }
 
   Future<Response> putData(
       {String? domainApp, required String path, dynamic params}) async {
@@ -252,63 +254,85 @@ class FetchClient {
     }
   }
 
-  // Future download(String url, String savePath) async {
-  //   try {
-  //     try {
-  //       Response response = await Dio().get(
-  //         url,
-  //         options: Options(
-  //             responseType: ResponseType.bytes,
-  //             followRedirects: false,
-  //             validateStatus: (status) {
-  //               return status! < 500;
-  //             }),
-  //       );
-  //       File file = File(savePath);
-  //       print(file.path);
-  //       var raf = file.openSync(mode: FileMode.write);
-  //       raf.writeFromSync(response.data);
-  //       await raf.close();
-  //     } catch (e) {
-  //       print(e);
-  //     }
-  //   } on DioException catch (e) {
-  //     return e.response ??
-  //         Response(statusCode: -1, requestOptions: RequestOptions());
-  //   }
-  // }
+  Future<dynamic> getInvoiceDigital(String url) async {
+    try {
+      try {
+        Response response = await Dio().get(
+          url,
+          options: Options(
+              responseType: ResponseType.bytes,
+              followRedirects: false,
+              validateStatus: (status) {
+                return status! < 500;
+              }),
+        );
+        return response.data;
+      } catch (e) {
+        print(e);
+      }
+    } on DioException catch (e) {
+      return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+    }
+  }
 
-  // Future<Response> getDataMap(
-  //     {String? domainApp,
-  //     required String path,
-  //     Map<String, dynamic>? queryParameters}) async {
-  //   try {
-  //     logRequest();
-  //     Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
-  //         queryParameters: queryParameters);
-  //     return result;
-  //   } on DioException catch (e) {
-  //     return e.response ??
-  //         Response(statusCode: -1, requestOptions: RequestOptions());
-  //   }
-  // }
+  Future download(String url, String savePath) async {
+    try {
+      try {
+        Response response = await Dio().get(
+          url,
+          options: Options(
+              responseType: ResponseType.bytes,
+              followRedirects: false,
+              validateStatus: (status) {
+                return status! < 500;
+              }),
+        );
+        File file = File(savePath);
+        print(file.path);
+        var raf = file.openSync(mode: FileMode.write);
+        raf.writeFromSync(response.data);
+        await raf.close();
+      } catch (e) {
+        print(e);
+      }
+    } on DioException catch (e) {
+      return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+    }
+  }
 
-  // Future<Response> downloadFile({
-  //   required String path,
-  //   required dynamic params,
-  // }) async {
-  //   try {
-  //     logRequest();
-  //     Response response = await dio.post((domain) + path,
-  //         data: params,
-  //         options: Options(
-  //           headers: {'Authorization': token.isEmpty ? '' : ('Bearer $token')},
-  //           responseType: ResponseType.bytes,
-  //         ));
-  //     return response;
-  //   } on DioException catch (e) {
-  //     return e.response ??
-  //         Response(statusCode: -1, requestOptions: RequestOptions());
-  //   }
-  // }
+  Future<Response> getDataMap(
+      {String? domainApp,
+      required String path,
+      Map<String, dynamic>? queryParameters}) async {
+    try {
+      logRequest();
+      Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
+          queryParameters: queryParameters);
+      return result;
+    } on DioException catch (e) {
+      return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+    }
+  }
+
+  Future<Response> downloadFile({
+    required String path,
+    required dynamic params,
+  }) async {
+    try {
+      logRequest();
+      Response response = await dio.post((domain) + path,
+          data: params,
+          options: Options(
+            headers: {'Authorization': token.isEmpty ? '' : ('Bearer $token')},
+            responseType: ResponseType.bytes,
+          ));
+      return response;
+    } on DioException catch (e) {
+      return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+    }
+  }
 }

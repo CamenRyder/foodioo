@@ -7,14 +7,14 @@ class CustomizeButtonWidget extends StatelessWidget {
       required this.onPressed,
       this.isEnable = false});
   final String title;
-  final Function onPressed;
+  final VoidCallback onPressed;
   final bool isEnable;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: isEnable
-            ? TextButton(onPressed: onPressed(), child: Text(title))
+            ? TextButton(onPressed: onPressed, child: Text(title))
             : TextButton(
                 onPressed: () {},
                 style: const ButtonStyle(

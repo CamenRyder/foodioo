@@ -57,9 +57,6 @@ class _InputWidgetState extends State<SelectGenderWidget> {
                                     value == 1 ? "Nam" : "Nữ";
                               });
                             }
-                            // setState(() {
-
-                            // });
                           },
                           child: const Icon(
                             Icons.keyboard_arrow_down_rounded,
