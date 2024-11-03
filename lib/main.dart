@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
-import 'package:foodioo/domain/blocs_partern/app_auth_bloc/auth_event.dart';
-import 'package:foodioo/domain/blocs_partern/app_auth_bloc/auth_bloc.dart';
-import 'package:foodioo/domain/blocs_partern/app_auth_bloc/auth_state.dart';
 import 'package:foodioo/ui/general/message_over_screen.dart';
 import 'package:foodioo/ui/screen/authorizator/login_authorizator_screen.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -12,6 +9,9 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'core/routes/routes.dart';
 import 'core/theme/app_theme.dart';
+import 'repositories/authentication/auth_bloc.dart';
+import 'repositories/authentication/auth_event.dart';
+import 'repositories/authentication/auth_state.dart';
 import 'ui/general/loader_over_lay_widget.dart';
 import 'ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
 import 'ui/screen/splash/splash_screen.dart';
@@ -24,9 +24,10 @@ void main() async {
   final authBloc = AuthBloc();
   authBloc.add(AuthUserToken());
 
-  authBloc.stream.listen((state) {
-    runApp(MyApp(authBloc: authBloc));
-  });
+  // authBloc.stream.listen((state) {
+
+  // });
+  runApp(MyApp(authBloc: authBloc));
 }
 
 class MyApp extends StatefulWidget {

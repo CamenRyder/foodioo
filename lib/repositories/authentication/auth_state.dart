@@ -1,4 +1,5 @@
-import '../../models/user_model.dart';
+
+import '../models/user_model.dart';
 
 class AuthState {
   String token;

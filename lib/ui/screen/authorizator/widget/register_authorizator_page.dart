@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:foodioo/core/theme/assets.gen.dart';
-import 'package:foodioo/domain/blocs_partern/app_auth_bloc/auth_bloc.dart';
-import 'package:foodioo/domain/blocs_partern/app_auth_bloc/auth_event.dart';
-import 'package:foodioo/domain/view_models/register/register_view_model.dart';
 
-import '../../../core/constants/constant_stataue.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../general/customize_button_widget.dart';
-import '../../general/spacing_vertical_widget.dart';
-import '../../general/svg_gen_size_widget.dart';
-import 'widget/input_widget.dart';
-import 'widget/login_text_widget.dart';
-import 'widget/select_gender_widget.dart';
+import '../../../../core/constants/constant_stataue.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_typography.dart';
+import '../../../../repositories/authentication/auth_bloc.dart';
+import '../../../../repositories/authentication/auth_event.dart';
+import '../../../../repositories/view/register_vm.dart';
+import '../../../general/customize_button_widget.dart';
+import '../../../general/spacing_vertical_widget.dart';
+import '../../../general/svg_gen_size_widget.dart';
+import 'input_widget.dart';
+import 'login_text_widget.dart';
+import 'select_gender_widget.dart';
 
 class RegisterAuthorizatorScreen extends StatefulWidget {
   const RegisterAuthorizatorScreen({super.key});
@@ -98,6 +98,7 @@ class _RegisterAuthorizatorScreenState
                         gender: textControllerGenter.text == "Nam" ? 1 : 0,
                         username: textControllerUsername.text,
                         password: textControllerPassword.text);
+                        
                     context
                         .read<AuthBloc>()
                         .add(RegisterUser(user: userRegister));

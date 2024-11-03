@@ -1,25 +1,26 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foodioo/core/helper/dio_sepecificate.dart';
-import 'package:foodioo/domain/blocs_partern/app_auth_bloc/auth_state.dart';
-import 'package:foodioo/domain/models/user_model.dart';
-import 'package:foodioo/domain/view_models/login/login_view_model.dart';
+import 'package:foodioo/repositories/authentication/auth_event.dart';
+import 'package:foodioo/repositories/authentication/auth_state.dart';
 import 'package:get_storage/get_storage.dart';
 
-import '../../service/user_service.dart';
-import 'auth_event.dart';
+import '../../Core/Helper/dio_sepecificate.dart';
+import '../models/user_model.dart';
+import '../service/user_service.dart';
+import '../view/login_vm.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthState()) {
     on<AuthUserToken>((event, emit) => _onAuthUserToken(event, emit));
     on<LoginUser>((event, emit) => _onLoginUser(event, emit));
     on<Logout>((event, emit) => _onLogout(event, emit));
+    on<RegisterUser>((event, emit) => _onRegisterUser(event, emit));
   }
 
   _onRegisterUser(RegisterUser event, Emitter emit) async {
     try {
-      emit(state.copyWith(isLoadingOverLay: true));
-      final ResponseModel data = await UserService().registerUser(event.user);
+       emit(state.copyWith(isLoadingOverLay: true));
+      ResponseModel data = await UserService().registerUser(event.user);
       if (data.getSuccess) {
         emit(state.copyWith(
             isLoadingOverLay: false,

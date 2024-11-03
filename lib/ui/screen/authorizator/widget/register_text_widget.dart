@@ -11,8 +11,7 @@ class RegisterTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          Navigator.pushReplacementNamed(context, NavigatorNames.REGISTER),
+      onTap: () => Navigator.pushNamed(context, NavigatorNames.REGISTER),
       child: RichText(
           text: TextSpan(
         children: [

@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/core/theme/app_colors.dart';
 import 'package:foodioo/core/theme/app_typography.dart';
-import 'package:foodioo/domain/view_models/login/login_view_model.dart';
 import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
 
-import '../../../core/constants/constant_stataue.dart';
-import '../../../core/theme/assets.gen.dart';
-import '../../../domain/blocs_partern/app_auth_bloc/auth_bloc.dart';
-import '../../../domain/blocs_partern/app_auth_bloc/auth_event.dart';
-import '../../general/customize_button_widget.dart';
-import '../../general/svg_gen_size_widget.dart';
-import 'widget/input_widget.dart';
-import 'widget/register_text_widget.dart';
+import '../../../../core/constants/constant_stataue.dart';
+import '../../../../core/theme/assets.gen.dart';
+import '../../../../repositories/authentication/auth_bloc.dart';
+import '../../../../repositories/authentication/auth_event.dart';
+import '../../../../repositories/view/login_vm.dart';
+import '../../../general/customize_button_widget.dart';
+import '../../../general/svg_gen_size_widget.dart';
+import 'input_widget.dart';
+import 'register_text_widget.dart';
 
-class LoginAuthorizatorScreen extends StatefulWidget {
-  const LoginAuthorizatorScreen({super.key, this.isBack = false});
+class LoginAuthorizatorPage extends StatefulWidget {
+  const LoginAuthorizatorPage({super.key, this.isBack = false});
   final bool isBack;
 
   @override
-  State<LoginAuthorizatorScreen> createState() =>
+  State<LoginAuthorizatorPage> createState() =>
       _LoginAuthorizatorScreenState();
 }
 
-class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorScreen> {
+class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorPage> {
   final double marginComponent = 20;
   TextEditingController textLogin = TextEditingController();
   TextEditingController textPassword = TextEditingController();
