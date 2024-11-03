@@ -58,7 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state.copyWith(
               isLoadingOverLay: false,
               isLogout: true,
-              message: "No Accounts Found",
+              message: "Không tìm thấy tài khoản.",
               isShowMessage: true,
               token: token));
         } else {
