@@ -13,6 +13,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthState()) {
     on<AuthUserToken>((event, emit) => _onAuthUserToken(event, emit));
     on<LoginUser>((event, emit) => _onLoginUser(event, emit));
+    on<Logout>((event, emit) => _onLogout(event, emit));
+    on<RegisterUser>((event, emit) => _onRegisterUser(event, emit));
+  }
+  _onRegisterUser(RegisterUser event ,   Emitter emit) async {
+      try{
+              emit(state.copyWith(isLoadingOverLay: true));
+      }catch(err)
+      {
+
+      }
   }
 
   _onLoginUser(LoginUser event, Emitter emit) async {
@@ -37,6 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state.copyWith(
               isLoadingOverLay: false,
               accounts: accounts,
+              isLogout: false,
               currentAccount: accounts[0],
               token: token));
         }
@@ -94,17 +105,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  logout({required Logout event, required Emitter emit}) async {
+  _onLogout(Logout event, Emitter emit) async {
     try {
       String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
       await GetStorage().write(keyToken, '');
       FetchClient.token = '';
-      emit(state.copyWith(
-          isLogout: true,
-          isShowMessage: true,
-          message: "Hết phiên đăng nhập",
-          currentAccount: null,
-          accounts: const []));
+      emit(state
+          .copyWith(isLogout: true, currentAccount: null, accounts: const []));
     } catch (e) {
       emit(state.copyWith(message: e.toString(), isShowMessage: true));
     }

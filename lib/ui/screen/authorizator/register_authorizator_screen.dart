@@ -12,11 +12,32 @@ import 'widget/input_widget.dart';
 import 'widget/login_text_widget.dart';
 import 'widget/select_gender_widget.dart';
 
-class RegisterAuthorizatorScreen extends StatelessWidget {
-  final String headerScreen = "Tạo tài khoản mới";
-  final double marginComponent = 20;
-  final Color iconColor = AppColorsLight.primary;
+class RegisterAuthorizatorScreen extends StatefulWidget {
   const RegisterAuthorizatorScreen({super.key});
+
+  @override
+  State<RegisterAuthorizatorScreen> createState() =>
+      _RegisterAuthorizatorScreenState();
+}
+
+class _RegisterAuthorizatorScreenState
+    extends State<RegisterAuthorizatorScreen> {
+  final String headerScreen = "Tạo tài khoản mới";
+
+  final double marginComponent = 20;
+
+  final Color iconColor = AppColorsLight.primary;
+
+  TextEditingController textControllerEmail = TextEditingController();
+
+  TextEditingController textControllerPassword = TextEditingController();
+
+  TextEditingController textControllerFullname = TextEditingController();
+
+  TextEditingController textControllerGenter = TextEditingController();
+
+  TextEditingController textControllerUsername = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,31 +59,37 @@ class RegisterAuthorizatorScreen extends StatelessWidget {
                 InputWidget(
                   icon: SvgGenSizeWidget(
                       icon: Assets.icons.heart.svg(color: iconColor)),
-                  controller: TextEditingController(),
+                  controller: textControllerFullname,
                   hintText: "Tên đầy đủ",
+                ),
+                SpacingVerticalWidget(height: marginComponent),
+                SelectGenderWidget(controller: textControllerGenter),
+                SpacingVerticalWidget(height: marginComponent),
+                InputWidget(
+                  icon: SvgGenSizeWidget(
+                      icon: Assets.icons.heart.svg(color: iconColor)),
+                  controller: textControllerEmail,
+                  hintText: "Địa chỉ email",
                 ),
                 SpacingVerticalWidget(height: marginComponent),
                 InputWidget(
                   icon: SvgGenSizeWidget(
                       icon: Assets.icons.heart.svg(color: iconColor)),
-                  controller: TextEditingController(),
-                  hintText: "Địa chỉ email",
+                  controller: textControllerUsername,
+                  hintText: "Tài khoản",
                 ),
                 SpacingVerticalWidget(height: marginComponent),
                 InputWidget(
                     icon: SvgGenSizeWidget(
                         icon: Assets.icons.heart.svg(color: iconColor)),
-                    controller: TextEditingController(),
+                    controller: textControllerPassword,
                     hintText: "Mật khẩu",
                     isPasswordTextField: true),
-                SpacingVerticalWidget(height: marginComponent),
-                SelectGenderWidget(
-                  controller: TextEditingController(text: 'Nam'),
-                ),
                 const Expanded(child: SizedBox()),
                 CustomizeButtonWidget(
                   onPressed: () {},
                   title: "Đăng ký",
+                  isEnable: true,
                 ),
                 const SpacingVerticalWidget(height: 20),
                 const LoginTextWidget()

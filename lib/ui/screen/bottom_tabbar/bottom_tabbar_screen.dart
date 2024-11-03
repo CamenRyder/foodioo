@@ -29,7 +29,7 @@ class _BottomTabbarScreenState extends State<BottomTabbarScreen> {
           StoreScreen(),
           SearchScreen(),
           NotificationScreen(),
-          ProfileScreen()
+         const ProfileScreen()
         ],
       ),
       bottomNavigationBar: BottomNavBarWidget(

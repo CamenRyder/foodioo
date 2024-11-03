@@ -18,7 +18,7 @@ import '../../main.dart';
 
 class FetchClient {
   String get domain {
-    return AppConstant.apiBaseURL ;
+    return AppConstant.apiBaseURL;
   }
 
   static String token = '';
@@ -139,7 +139,8 @@ class FetchClient {
     try {
       logRequest();
       Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
-          queryParameters: queryParameters, options: optionsAlternative ?? options());
+          queryParameters: queryParameters,
+          options: optionsAlternative ?? options());
       return result;
     } on DioException catch (e) {
       return e.response ??

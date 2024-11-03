@@ -19,7 +19,7 @@ class InputWidget extends StatefulWidget {
 }
 
 class _InputWidgetState extends State<InputWidget> {
-  bool passwordVisible = false;
+  bool passwordVisible = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +35,8 @@ class _InputWidgetState extends State<InputWidget> {
               child: TextField(
                 controller: widget.controller,
                 maxLines: 1,
-                obscureText: passwordVisible,
+                obscureText:
+                    widget.isPasswordTextField ? passwordVisible : false,
                 keyboardType: TextInputType.visiblePassword,
                 cursorColor: Theme.of(context).primaryColor,
                 style: AppTypographyLight.textContentBold,
@@ -43,9 +44,12 @@ class _InputWidgetState extends State<InputWidget> {
                 decoration: widget.isPasswordTextField
                     ? InputDecoration(
                         suffixIcon: IconButton(
-                          icon: Icon(passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off),
+                          icon: Icon(
+                            passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.black,
+                          ),
                           onPressed: () {
                             setState(
                               () {

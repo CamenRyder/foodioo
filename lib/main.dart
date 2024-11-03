@@ -96,8 +96,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           } else {
                             context.loaderOverlay.hide();
                           }
-
-                          //
                         },
                         child: state.isLogout
                             ? const LoginAuthorizatorScreen()
