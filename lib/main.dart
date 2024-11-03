@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
 import 'package:foodioo/ui/general/message_over_screen.dart';
-import 'package:foodioo/ui/screen/authorizator/login_authorizator_screen.dart';
+import 'package:foodioo/ui/screen/authorizator/authorizator_screen.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           }
                         },
                         child: state.isLogout
-                            ? const LoginAuthorizatorScreen()
+                            ? AuthorizatorScreen()
                             : const BottomTabbarScreen()
                         // : const LoginScreen(),
                         ),

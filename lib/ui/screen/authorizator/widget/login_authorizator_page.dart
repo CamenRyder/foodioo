@@ -15,12 +15,13 @@ import 'input_widget.dart';
 import 'register_text_widget.dart';
 
 class LoginAuthorizatorPage extends StatefulWidget {
-  const LoginAuthorizatorPage({super.key, this.isBack = false});
+  const LoginAuthorizatorPage(
+      {super.key, this.isBack = false, required this.pageController});
   final bool isBack;
+  final PageController pageController;
 
   @override
-  State<LoginAuthorizatorPage> createState() =>
-      _LoginAuthorizatorScreenState();
+  State<LoginAuthorizatorPage> createState() => _LoginAuthorizatorScreenState();
 }
 
 class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorPage> {
@@ -83,7 +84,13 @@ class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorPage> {
                   isEnable: true,
                 ),
                 const SpacingVerticalWidget(height: 20),
-                const RegisterTextWidget()
+                RegisterTextWidget(
+                  onTap: () => setState(() {
+                    widget.pageController.animateToPage(1,
+                        duration: const Duration(milliseconds: 150),
+                        curve: Curves.ease);
+                  }),
+                )
               ],
             ),
           ),

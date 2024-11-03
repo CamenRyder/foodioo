@@ -19,12 +19,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _onRegisterUser(RegisterUser event, Emitter emit) async {
     try {
-       emit(state.copyWith(isLoadingOverLay: true));
+      emit(state.copyWith(isLoadingOverLay: true));
       ResponseModel data = await UserService().registerUser(event.user);
       if (data.getSuccess) {
         emit(state.copyWith(
             isLoadingOverLay: false,
             isShowMessage: true,
+            isRegisterSuccess: true,
             message: data.message));
       } else {
         emit(state.copyWith(
@@ -70,9 +71,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       } else {
         emit(state.copyWith(
+          message: data.message,
           isShowMessage: true,
           isLoadingOverLay: false,
-          message: data.message,
         ));
       }
     } catch (err) {
@@ -115,9 +116,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } catch (err) {
       emit(state.copyWith(
+        message: "Lỗi hệ thống ${err.toString()}",
         isShowMessage: true,
         isLoadingOverLay: false,
-        message: "Lỗi hệ thống ${err.toString()}",
       ));
     }
   }

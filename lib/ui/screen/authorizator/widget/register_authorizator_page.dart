@@ -17,7 +17,8 @@ import 'login_text_widget.dart';
 import 'select_gender_widget.dart';
 
 class RegisterAuthorizatorScreen extends StatefulWidget {
-  const RegisterAuthorizatorScreen({super.key});
+  const RegisterAuthorizatorScreen({super.key, required this.pageController});
+  final PageController pageController;
 
   @override
   State<RegisterAuthorizatorScreen> createState() =>
@@ -98,7 +99,7 @@ class _RegisterAuthorizatorScreenState
                         gender: textControllerGenter.text == "Nam" ? 1 : 0,
                         username: textControllerUsername.text,
                         password: textControllerPassword.text);
-                        
+
                     context
                         .read<AuthBloc>()
                         .add(RegisterUser(user: userRegister));
@@ -107,7 +108,13 @@ class _RegisterAuthorizatorScreenState
                   isEnable: true,
                 ),
                 const SpacingVerticalWidget(height: 20),
-                const LoginTextWidget()
+                LoginTextWidget(
+                  onTap: () => setState(() {
+                    widget.pageController.animateToPage(0,
+                        duration: const Duration(milliseconds: 150),
+                        curve: Curves.easeIn);
+                  }),
+                )
               ],
             ),
           ),

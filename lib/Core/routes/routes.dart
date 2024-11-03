@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:foodioo/ui/screen/authorizator/login_authorizator_screen.dart';
-import 'package:foodioo/ui/screen/authorizator/register_authorizator_screen.dart';
 import 'package:foodioo/ui/screen/splash/splash_screen.dart';
 import '../../ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
 import 'routes_name.dart';
@@ -10,12 +8,12 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments as Map?;
     switch (settings.name) {
-      case NavigatorNames.LOGIN:
-        return MaterialPageRoute(
-            builder: (_) => const LoginAuthorizatorScreen());
-      case NavigatorNames.REGISTER:
-        return MaterialPageRoute(
-            builder: (_) => const RegisterAuthorizatorScreen());
+      // case NavigatorNames.LOGIN:
+      //   return MaterialPageRoute(
+      //       builder: (_) => const LoginAuthorizatorScreen());
+      // case NavigatorNames.REGISTER:
+      //   return MaterialPageRoute(
+      //       builder: (_) => const RegisterAuthorizatorScreen());
       case NavigatorNames.SPLASH:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case NavigatorNames.APP_MAIN:
