@@ -92,13 +92,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         TextSpan(
                             text: " cộng đồng Foodioo.",
-                            style: AppTypographyLight.textPrimaryBold),
+                            style: AppTypographyLight.textContentPrimaryBold),
                         TextSpan(
                             text: " Khám phá xung quanh khu vực của mình bằng",
                             style: textNormalStyle),
                         TextSpan(
                             text: " tìm kiếm ",
-                            style: AppTypographyLight.textPrimaryBold),
+                            style: AppTypographyLight.textContentPrimaryBold),
                         TextSpan(text: "thông minh.", style: textNormalStyle),
                       ],
                       style: textNormalStyle)),

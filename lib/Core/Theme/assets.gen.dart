@@ -32,6 +32,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
+  /// File path: assets/icons/key.svg
+  SvgGenImage get key => const SvgGenImage('assets/icons/key.svg');
+
+  /// File path: assets/icons/mail.svg
+  SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
+
   /// File path: assets/icons/notification.svg
   SvgGenImage get notification =>
       const SvgGenImage('assets/icons/notification.svg');
@@ -43,7 +49,8 @@ class $AssetsIconsGen {
   SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [bag, home, notification, profile, search];
+  List<SvgGenImage> get values =>
+      [bag, home, key, mail, notification, profile, search];
 }
 
 class $AssetsImagesGen {

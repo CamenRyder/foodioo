@@ -8,15 +8,21 @@ class AppTypography {
 }
 
 class AppTypographyLight {
-  static const textPrimaryBold = TextStyle(
+  static const textContentPrimaryBold = TextStyle(
     color: AppColorsLight.primary,
     fontSize: AppConstant.textSizeContent,
     fontWeight: FontWeight.w800,
   );
-  static const textPrimary = TextStyle(
+  static const textContentPrimary = TextStyle(
     color: AppColorsLight.primary,
     fontSize: AppConstant.textSizeContent,
     fontWeight: FontWeight.w500,
+  );
+
+  static const textHeader = TextStyle(
+    color: AppColorsLight.textContent,
+    fontSize: AppConstant.textSizeHeader,
+    fontWeight: FontWeight.w800,
   );
 
   static const textContentBold = TextStyle(
@@ -30,28 +36,49 @@ class AppTypographyLight {
     fontWeight: FontWeight.w500,
   );
 
+  static const textButtonBold = TextStyle(
+    color: AppColors.white,
+    fontSize: AppConstant.textSizeButton,
+    fontWeight: FontWeight.w800,
+  );
+
   static const textHintBold = TextStyle(
-    color: AppColorsLight.textContent,
+    color: AppColorsLight.textHint,
     fontSize: AppConstant.textSizeHint,
     fontWeight: FontWeight.w800,
   );
-  
-  static TextTheme get textTheme => const TextTheme(
-      bodyMedium: textContent,
-      bodyLarge: textContentBold,
-      bodySmall: textPrimaryBold);
+
+  static TextTheme get textTheme => TextThemeCustomer(
+      textHintBold: textHintBold,
+      textContent: textContent,
+      textContentPrimaryBold: textContentPrimaryBold,
+      textContentPrimary: textContentPrimary,
+      textContentBold: textContentBold,
+      textHeader: textHeader);
 }
 
 class AppTypographyDark {
-  static const textPrimaryBold = TextStyle(
+  static const textContentPrimaryBold = TextStyle(
     color: AppColorsDark.primary,
     fontSize: AppConstant.textSizeContent,
     fontWeight: FontWeight.w800,
   );
-  static const textPrimary = TextStyle(
+  static const textContentPrimary = TextStyle(
     color: AppColorsDark.primary,
     fontSize: AppConstant.textSizeContent,
     fontWeight: FontWeight.w500,
+  );
+
+  static const textButtonBold = TextStyle(
+    color: AppColors.white,
+    fontSize: AppConstant.textSizeButton,
+    fontWeight: FontWeight.w800,
+  );
+
+  static const textHeader = TextStyle(
+    color: AppColorsDark.textContent,
+    fontSize: AppConstant.textSizeHeader,
+    fontWeight: FontWeight.w800,
   );
 
   static const textContentBold = TextStyle(
@@ -66,13 +93,32 @@ class AppTypographyDark {
   );
 
   static const textHintBold = TextStyle(
-    color: AppColorsLight.textContent,
+    color: AppColorsLight.textHint,
     fontSize: AppConstant.textSizeHint,
     fontWeight: FontWeight.w800,
   );
 
-  static TextTheme get textTheme => const TextTheme(
-      bodyMedium: textContent,
-      bodyLarge: textContentBold,
-      bodySmall: textPrimaryBold);
+  static TextTheme get textTheme => TextThemeCustomer(
+      textHintBold: textHintBold,
+      textContent: textContent,
+      textContentPrimaryBold: textContentPrimaryBold,
+      textContentPrimary: textContentPrimary,
+      textContentBold: textContentBold,
+      textHeader: textHeader);
+}
+
+class TextThemeCustomer extends TextTheme {
+  TextStyle textHintBold;
+  TextStyle textContent;
+  TextStyle textContentPrimaryBold;
+  TextStyle textContentPrimary;
+  TextStyle textContentBold;
+  TextStyle textHeader;
+  TextThemeCustomer(
+      {required this.textHintBold,
+      required this.textContent,
+      required this.textContentPrimaryBold,
+      required this.textContentPrimary,
+      required this.textContentBold,
+      required this.textHeader});
 }
