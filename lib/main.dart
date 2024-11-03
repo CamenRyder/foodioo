@@ -89,6 +89,7 @@ class MainApp extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
         bloc: context.read<AuthBloc>(),
         builder: (context, state) {
+         
           if (state.isLoadingOverLay) {
             context.loaderOverlay.show();
           } else {
