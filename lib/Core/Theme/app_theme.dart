@@ -32,8 +32,8 @@ class AppTheme {
               borderSide: BorderSide(color: AppColorsLight.textHint),
             ),
             hintStyle: AppTypographyLight.textHintBold,
-            contentPadding: EdgeInsets.symmetric(
-                vertical: AppConstant.paddingHorizontalApp),
+            contentPadding:
+                EdgeInsets.symmetric(vertical: AppConstant.paddingContent),
             labelStyle: AppTypographyLight.textHintBold,
             floatingLabelStyle: AppTypographyLight.textHintBold,
             floatingLabelBehavior: FloatingLabelBehavior.auto,

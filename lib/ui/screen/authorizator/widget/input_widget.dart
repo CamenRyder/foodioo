@@ -8,7 +8,7 @@ class InputWidget extends StatefulWidget {
       required this.controller,
       required this.hintText,
       required this.icon,
-       this.isPasswordTextField = false });
+      this.isPasswordTextField = false});
   final TextEditingController controller;
   final String hintText;
   final bool isPasswordTextField;
@@ -25,8 +25,11 @@ class _InputWidgetState extends State<InputWidget> {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 28),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            widget.icon,
+            Padding(
+                padding: const EdgeInsets.only(bottom: 5), child: widget.icon),
             const SpacingHorizontalWidget(width: 12),
             Expanded(
               child: TextField(
@@ -40,7 +43,7 @@ class _InputWidgetState extends State<InputWidget> {
                 decoration: widget.isPasswordTextField
                     ? InputDecoration(
                         suffixIcon: IconButton(
-                          icon: Icon(!passwordVisible
+                          icon: Icon(passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off),
                           onPressed: () {

@@ -10,12 +10,12 @@ import '../../general/svg_gen_size_widget.dart';
 import 'widget/input_widget.dart';
 import 'widget/register_text_widget.dart';
 
-class AuthorizatorScreen extends StatelessWidget {
-  const AuthorizatorScreen({super.key});
+class LoginAuthorizatorScreen extends StatelessWidget {
+  const LoginAuthorizatorScreen({super.key, this.isBack = false});
 
+  final bool isBack;
   @override
   Widget build(BuildContext context) {
-    bool isBack = false;
     final String headerScreen = isBack ? "Chào mừng trở lại" : "Đăng nhập";
     return Scaffold(
         backgroundColor: AppColorsLight.background,
@@ -38,6 +38,7 @@ class AuthorizatorScreen extends StatelessWidget {
                   controller: TextEditingController(),
                   hintText: "Tài khoản",
                 ),
+                const SpacingVerticalWidget(height: 9),
                 InputWidget(
                     icon: SvgGenSizeWidget(icon: Assets.icons.key.svg()),
                     controller: TextEditingController(),

@@ -26,6 +26,12 @@ class $AssetsAvatarGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/Heart.svg
+  SvgGenImage get heart => const SvgGenImage('assets/icons/Heart.svg');
+
+  /// File path: assets/icons/account.svg
+  SvgGenImage get account => const SvgGenImage('assets/icons/account.svg');
+
   /// File path: assets/icons/bag.svg
   SvgGenImage get bag => const SvgGenImage('assets/icons/bag.svg');
 
@@ -50,7 +56,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values =>
-      [bag, home, key, mail, notification, profile, search];
+      [heart, account, bag, home, key, mail, notification, profile, search];
 }
 
 class $AssetsImagesGen {

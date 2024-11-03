@@ -21,6 +21,7 @@ class AppConstant {
 
   static const double paddingIcon = 3.0;
   static const double paddingButton = 18.0;
+  static const double paddingContent = 3.0;
   static const double paddingHorizontalApp = 18.0;
   static const double paddingVerticalApp = 22.0;
 }

@@ -18,7 +18,7 @@ class CustomizeButtonWidget extends StatelessWidget {
             : TextButton(
                 onPressed: () {},
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.grey),
+                  backgroundColor: WidgetStatePropertyAll(Colors.grey),
                 ),
                 child: Text(title)));
   }
