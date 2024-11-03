@@ -7,8 +7,8 @@ import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
 
 import '../../../core/constants/constant_stataue.dart';
 import '../../../core/theme/assets.gen.dart';
-import '../../../domain/blocs/app_auth_bloc/auth_bloc.dart';
-import '../../../domain/blocs/app_auth_bloc/auth_event.dart';
+import '../../../domain/blocs_partern/app_auth_bloc/auth_bloc.dart';
+import '../../../domain/blocs_partern/app_auth_bloc/auth_event.dart';
 import '../../general/customize_button_widget.dart';
 import '../../general/svg_gen_size_widget.dart';
 import 'widget/input_widget.dart';
