@@ -63,51 +63,51 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ],
         child: LoaderOverLayWidget(
             child: BlocBuilder<AuthBloc, AuthState>(
-          buildWhen: (previous, current) {
-            // dùng cho thay đổi theme!
-            return true;
-          },
           bloc: widget.authBloc,
           // buildWhen: (previous, current) {
           //   return previous != current;
           // },
           builder: (context, state) {
             return Listener(
-              onPointerDown: (_) {
-                FocusScopeNode currentFocus = FocusScope.of(context);
-                if (!currentFocus.hasPrimaryFocus) {
-                  currentFocus.focusedChild?.unfocus();
-                }
-              },
-              child: MaterialApp(
-                title: AppConstant.APP_NAME,
-                color: Colors.white,
-                navigatorKey: navigatorKey,
-                theme: AppTheme.lightTheme,
-                debugShowCheckedModeBanner: false,
-                home: state.isShowSplash
-                    ? const SplashScreen()
-                    : BlocListener<AuthBloc, AuthState>(
-                        listener: (context, stateListener) {
-                          if (stateListener.isShowMessage) {
-                            MessageToast.showToast(context, state.message);
-                          }
-                          if (stateListener.isLoadingOverLay) {
-                            context.loaderOverlay.show();
-                          } else {
-                            context.loaderOverlay.hide();
-                          }
-                        },
-                        child: state.isLogout
-                            ? AuthorizatorScreen()
-                            : const BottomTabbarScreen()
-                        // : const LoginScreen(),
-                        ),
-                // initialRoute: NavigatorNames.SPLASH,
-                onGenerateRoute: RouteGenerator.generateRoute,
-              ),
-            );
+                onPointerDown: (_) {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.focusedChild?.unfocus();
+                  }
+                },
+                child: const MainApp());
           },
         )));
+  }
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(
+        bloc: context.read<AuthBloc>(),
+        builder: (context, state) {
+          if (state.isLoadingOverLay) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
+          return MaterialApp(
+            title: AppConstant.APP_NAME,
+            color: Colors.white,
+            navigatorKey: navigatorKey,
+            theme: AppTheme.lightTheme,
+            debugShowCheckedModeBanner: false,
+            home: state.isShowSplash
+                ? const SplashScreen()
+                : state.isLogout
+                    ? AuthorizatorScreen()
+                    : const BottomTabbarScreen(),
+            // initialRoute: NavigatorNames.SPLASH,
+            onGenerateRoute: RouteGenerator.generateRoute,
+          );
+        });
   }
 }
