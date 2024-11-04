@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
-import 'package:foodioo/ui/general/message_over_screen.dart';
 import 'package:foodioo/ui/screen/authorizator/authorizator_screen.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:toastification/toastification.dart';
 import 'core/routes/routes.dart';
 import 'core/theme/app_theme.dart';
 import 'repositories/authentication/auth_bloc.dart';
 import 'repositories/authentication/auth_event.dart';
 import 'repositories/authentication/auth_state.dart';
+import 'ui/General/message_over_screen.dart';
 import 'ui/general/loader_over_lay_widget.dart';
 import 'ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
 import 'ui/screen/splash/splash_screen.dart';
@@ -89,7 +90,6 @@ class MainApp extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
         bloc: context.read<AuthBloc>(),
         builder: (context, state) {
-         
           if (state.isLoadingOverLay) {
             context.loaderOverlay.show();
           } else {
@@ -104,7 +104,7 @@ class MainApp extends StatelessWidget {
             home: state.isShowSplash
                 ? const SplashScreen()
                 : state.isLogout
-                    ? AuthorizatorScreen()
+                    ? const AuthorizatorScreen()
                     : const BottomTabbarScreen(),
             // initialRoute: NavigatorNames.SPLASH,
             onGenerateRoute: RouteGenerator.generateRoute,

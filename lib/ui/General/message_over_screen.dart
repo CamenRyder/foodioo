@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/Core/Theme/app_theme.dart';
+import 'package:foodioo/Core/Theme/assets.gen.dart';
 import 'package:foodioo/core/theme/app_colors.dart';
-
-enum MessageType {
-  success,
-  warning,
-  error,
-}
+import 'package:foodioo/ui/General/spacing_horizontal_widget.dart';
 
 class MessageToast {
-  static showToast(BuildContext context, String message,
-      {MessageType type = MessageType.success, int? duration}) {
+  static showToast(BuildContext context, String message, {int? duration}) {
     FToast fToast = FToast();
     fToast.init(context);
 
@@ -18,7 +15,6 @@ class MessageToast {
       fToast.showToast(
         positionedToastBuilder: (context, child) {
           return Positioned(
-            // bottom: kBottomNavigationBarHeight + 20,
             width: MediaQuery.of(context).size.width,
             child: child,
           );
@@ -26,14 +22,10 @@ class MessageToast {
         child: SafeArea(
           child: CustomMessage(
             message: message,
-            type: type,
-            onClose: () {
-              fToast.removeCustomToast();
-            },
           ),
         ),
-        gravity: ToastGravity.TOP,
-        toastDuration: Duration(seconds: duration ?? 5),
+        gravity: ToastGravity.TOP_RIGHT,
+        toastDuration: Duration(seconds: duration ?? 2),
       );
     });
   }
@@ -41,11 +33,8 @@ class MessageToast {
 
 class CustomMessage extends StatefulWidget {
   final String? message;
-  final MessageType? type;
   final bool? center;
-  final VoidCallback? onClose;
-  const CustomMessage(
-      {super.key, this.message, this.type, this.center, this.onClose});
+  const CustomMessage({super.key, this.message, this.center});
 
   @override
   State<CustomMessage> createState() => _CustomMessage();
@@ -57,59 +46,47 @@ class _CustomMessage extends State<CustomMessage> {
     super.initState();
   }
 
+  final double paddingVertical = 20;
+  final double paddingTop = 10;
+  final double paddingTextWithIcon = 16;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                color: AppColorsLight.primary,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.9),
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  )
-                ]),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Icon(
-                    widget.type == MessageType.error
-                        ? Icons.error
-                        : widget.type == MessageType.warning
-                            ? Icons.warning
-                            : Icons.check_circle,
-                    color: AppColorsLight.primary,
-                    size: 30,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    widget.message!,
-                    overflow: TextOverflow.visible,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
-                    // maxLines: 2,
-                    textAlign: widget.center != null && widget.center!
-                        ? TextAlign.center
-                        : TextAlign.left,
-                  ),
-                ),
-                const SizedBox(width: 12)
-              ],
+      padding: EdgeInsets.only(
+          left: paddingVertical, right: paddingVertical, top: paddingTop),
+      child: Container(
+        padding: const EdgeInsets.all(AppConstant.paddingHorizontalApp),
+        decoration: BoxDecoration(
+            color: AppColorsLight.background,
+            borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
+            boxShadow: AppTheme.shadowLight),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: paddingTextWithIcon),
+              child: Assets.avatar.appAvatar.image(
+                  height: AppConstant.sizeIconLarge,
+                  width: AppConstant.sizeIconLarge),
             ),
-          )
-        ],
+            Expanded(
+              child: Text(
+                widget.message!,
+                overflow: TextOverflow.visible,
+                style: const TextStyle(
+                    color: AppColorsLight.textContent,
+                    fontWeight: FontWeight.w500,
+                    fontSize: AppConstant.textSizeTitle),
+                textAlign: widget.center != null && widget.center!
+                    ? TextAlign.center
+                    : TextAlign.left,
+              ),
+            ),
+            const SpacingHorizontalWidget(width: 12)
+          ],
+        ),
       ),
     );
   }

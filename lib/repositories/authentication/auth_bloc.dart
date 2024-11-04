@@ -65,6 +65,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state.copyWith(
               isLoadingOverLay: false,
               accounts: accounts,
+              isShowMessage: true,
+              message: "Chào mừng - ${accounts[0].fullname}",
               isLogout: false,
               currentAccount: accounts[0],
               token: token));

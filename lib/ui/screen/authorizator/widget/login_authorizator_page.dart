@@ -9,6 +9,7 @@ import '../../../../core/theme/assets.gen.dart';
 import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../../repositories/authentication/auth_event.dart';
 import '../../../../repositories/view/login_vm.dart';
+import '../../../General/message_over_screen.dart';
 import '../../../general/customize_button_widget.dart';
 import '../../../general/svg_gen_size_widget.dart';
 import 'input_widget.dart';
@@ -66,7 +67,7 @@ class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorPage> {
                   child: Container(
                       margin: const EdgeInsets.only(right: 25),
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () => handleOnPressForgotPasswordButton(context),
                         child: const Text(
                           "Quên mật khẩu",
                           style: AppTypographyLight.textContentPrimaryBold,
@@ -75,25 +76,39 @@ class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorPage> {
                 ),
                 const Expanded(child: SizedBox()),
                 CustomizeButtonWidget(
-                  onPressed: () {
-                    LoginViewModel data = LoginViewModel(
-                        password: textPassword.text, username: textLogin.text);
-                    context.read<AuthBloc>().add(LoginUser(user: data));
-                  },
+                  onPressed: () => handleOnPressLoginButton(context),
                   title: "Đăng nhập",
                   isEnable: true,
                 ),
                 const SpacingVerticalWidget(height: 20),
                 RegisterTextWidget(
-                  onTap: () => setState(() {
-                    widget.pageController.animateToPage(1,
-                        duration: const Duration(milliseconds: 150),
-                        curve: Curves.ease);
-                  }),
-                )
+                    onTap: () => handleOnPressMoveRegisterScreen())
               ],
             ),
           ),
         ));
+  }
+
+  handleOnPressMoveRegisterScreen() {
+    setState(() {
+      widget.pageController.animateToPage(1,
+          duration: const Duration(milliseconds: 150), curve: Curves.ease);
+    });
+  }
+
+  handleOnPressForgotPasswordButton(BuildContext context) {
+    MessageToast.showToast(context, "Tính năng đang bảo trì!");
+  }
+
+  handleOnPressLoginButton(BuildContext context) {
+    if (textLogin.text.isEmpty) {
+      MessageToast.showToast(context, "Vui lòng nhập tài khoản!");
+    } else if (textPassword.text.isEmpty) {
+      MessageToast.showToast(context, "Vui lòng nhập mật khẩu!");
+    } else {
+      LoginViewModel data =
+          LoginViewModel(password: textPassword.text, username: textLogin.text);
+      context.read<AuthBloc>().add(LoginUser(user: data));
+    }
   }
 }

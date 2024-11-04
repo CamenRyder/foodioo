@@ -5,6 +5,7 @@ import 'app_colors.dart';
 import 'app_typography.dart';
 
 class AppTheme {
+  
   static ThemeData get lightTheme {
     return ThemeData(
         brightness: Brightness.dark,
@@ -72,12 +73,27 @@ class AppTheme {
           ),
         ));
   }
+  static List<BoxShadow> shadowLight = [
+    BoxShadow(
+      color: Colors.grey.withOpacity(0.8),
+      blurRadius: 9,
+      offset: const Offset(0, 3),
+    )
+  ]; 
+  static List<BoxShadow> shadowDark = [
+    BoxShadow(
+      color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+      blurRadius: 9,
+      offset: const Offset(0, 3),
+    )
+  ]; 
 
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
       primaryColor: AppColorsDark.primary,
       scaffoldBackgroundColor: AppColorsDark.background, // ddoori laji khi xong
+
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColorsDark.primary,
       ),

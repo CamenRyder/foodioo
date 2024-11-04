@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../Core/Helper/dio_sepecificate.dart';
-import '../../Core/Helper/helper_function.dart';
+import '../../Core/Helper/validate_code_response.dart';
 import '../models/user_model.dart';
 import '../view/login_vm.dart';
 import '../view/register_vm.dart';
@@ -45,7 +45,8 @@ class UserService extends FetchClient {
         return ResponseModel(
             data: null,
             getSuccess: false,
-            message: showErorrResponse(result.data['code']));
+            message:
+                ValidateCodeResponse.showErorrResponse(result.data['code']));
       }
     } catch (e) {
       return ResponseModel(
@@ -67,7 +68,7 @@ class UserService extends FetchClient {
         return ResponseModel(
           data: null,
           getSuccess: false,
-          message: showErorrResponse(result.data['code']),
+          message: ValidateCodeResponse.showErorrResponse(result.data['code']),
         );
       }
     } catch (e) {
