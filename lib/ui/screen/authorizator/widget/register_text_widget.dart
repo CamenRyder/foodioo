@@ -6,13 +6,12 @@ import '../../../../core/theme/app_typography.dart';
 class RegisterTextWidget extends StatelessWidget {
   final String suffixText = "Bạn chưa có tài khoản? ";
   final String prefixText = "Đăng ký";
-
-  const RegisterTextWidget({super.key});
+  final VoidCallback onTap;
+  const RegisterTextWidget({super.key, required this.onTap});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          Navigator.pushReplacementNamed(context, NavigatorNames.REGISTER),
+      onTap: () => onTap(),
       child: RichText(
           text: TextSpan(
         children: [

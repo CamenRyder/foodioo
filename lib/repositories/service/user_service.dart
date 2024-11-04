@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:foodioo/domain/models/user_model.dart';
-import 'package:foodioo/domain/view_models/register/register_view_model.dart';
-import '../../core/helper/dio_sepecificate.dart';
-import '../../core/helper/helper_function.dart';
-import '../view_models/login/login_view_model.dart';
+
+import '../../Core/Helper/dio_sepecificate.dart';
+import '../../Core/Helper/helper_function.dart';
+import '../models/user_model.dart';
+import '../view/login_vm.dart';
+import '../view/register_vm.dart';
 
 class UserService extends FetchClient {
   Future<List<UserModel>> getUser() async {
@@ -12,7 +13,7 @@ class UserService extends FetchClient {
 
       final Response<dynamic> result =
           await super.getData(path: '/accounts/me');
-      if (result.data['code'] > 200 && result.data['code'] < 300) {
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final accounts = result.data['data'];
 
         for (var e in accounts) {
@@ -28,8 +29,14 @@ class UserService extends FetchClient {
   Future<ResponseModel> registerUser(RegisterViewModel data) async {
     try {
       Response<dynamic> result =
-          await super.postData(path: '/users/register', params: data.toJson());
-      if (result.data['code'] > 200 && result.data['code'] < 300) {
+          await super.postData(path: '/users/register', params: {
+        'username': data.username,
+        'password': data.password,
+        'email': data.email,
+        'fullname': data.fullname,
+        'gender': data.gender
+      });
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
         return ResponseModel(
             data: null,
             getSuccess: true,

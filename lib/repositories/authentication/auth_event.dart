@@ -1,5 +1,5 @@
-import 'package:foodioo/domain/view_models/login/login_view_model.dart';
-import '../../view_models/register/register_view_model.dart';
+import '../view/login_vm.dart';
+import '../view/register_vm.dart';
 
 class AuthEvent {}
 

@@ -9,9 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
 import 'package:flutter/services.dart';
 
-import '../../domain/blocs_partern/app_auth_bloc/auth_bloc.dart';
-import '../../domain/blocs_partern/app_auth_bloc/auth_event.dart';
 import '../../main.dart';
+import '../../repositories/authentication/auth_bloc.dart';
+import '../../repositories/authentication/auth_event.dart';
 
 class FetchClient {
   String get domain {

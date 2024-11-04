@@ -1,10 +1,11 @@
-import '../../models/user_model.dart';
+import '../models/user_model.dart';
 
 class AuthState {
   String token;
   bool isLogout;
   bool isLoadingOverLay;
   bool isShowMessage;
+  bool isRegisterSuccess;
   String message;
   bool isShowSplash;
   bool isShowIntroApp;
@@ -17,6 +18,7 @@ class AuthState {
       this.isShowSplash = false,
       this.isShowMessage = false,
       this.isShowIntroApp = false,
+      this.isRegisterSuccess = false,
       this.message = '',
       this.accounts = const [],
       this.token = '',
@@ -27,6 +29,7 @@ class AuthState {
     bool? isLoadingOverLay,
     bool? isShowSplash,
     bool? isShowMessage,
+    bool? isRegisterSuccess,
     bool? isShowIntroApp,
     String? message,
     UserModel? currentAccount,
@@ -37,6 +40,7 @@ class AuthState {
       isLogout: isLogout ?? this.isLogout,
       isShowIntroApp: isShowIntroApp ?? this.isShowIntroApp,
       isLoadingOverLay: isLoadingOverLay ?? false,
+      isRegisterSuccess: isRegisterSuccess ?? false,
       isShowMessage: isShowMessage ?? false,
       message: message ?? this.message,
       isShowSplash: isShowSplash ?? this.isShowSplash,

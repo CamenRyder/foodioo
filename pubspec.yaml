@@ -31,10 +31,14 @@ dependencies:
 
 dev_dependencies:
   flutter_gen: ^5.8.0
+  flutter_launcher_icons: ^0.13.1
   flutter_gen_runner: ^5.8.0
   build_runner: ^2.4.11
   flutter_lints: ^4.0.0
 
+# bash to change app icon:v
+# flutter pub get
+# flutter pub run flutter_launcher_icons
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
