@@ -98,23 +98,20 @@ class _RegisterAuthorizatorScreenState
                   isEnable: true,
                 ),
                 const SpacingVerticalWidget(height: 20),
-                LoginTextWidget(
-                  onTap: () => handleOnPressMoveLoginPage() 
-                )
+                LoginTextWidget(onTap: () => handleOnPressMoveLoginPage())
               ],
             ),
           ),
         ));
   }
 
-  handleOnPressMoveLoginPage()
- {
-   setState(() {
-                    widget.pageController.animateToPage(0,
-                        duration: const Duration(milliseconds: 150),
-                        curve: Curves.easeIn);
-                  });
- }
+  handleOnPressMoveLoginPage() {
+    setState(() {
+      widget.pageController.animateToPage(0,
+          duration: const Duration(milliseconds: 150), curve: Curves.easeIn);
+    });
+  }
+
   handleOnPressRegisterButton(BuildContext context) {
     if (textControllerEmail.text.isEmpty) {
       MessageToast.showToast(context, "Vui lòng nhập Email của bạn");
