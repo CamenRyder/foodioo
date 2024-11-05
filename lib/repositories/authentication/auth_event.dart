@@ -10,6 +10,10 @@ class RegisterUser extends AuthEvent {
   RegisterUser({required this.user});
 }
 
+class ChangeVisibleMode extends AuthEvent {
+  ChangeVisibleMode();
+}
+
 class LoginUser extends AuthEvent {
   final LoginViewModel user;
   LoginUser({required this.user});

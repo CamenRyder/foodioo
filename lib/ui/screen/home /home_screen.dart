@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:foodioo/Core/Theme/app_typography.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,7 +7,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Trang chủ"),)
-    );
+        body: Center(
+      child: Text(
+        "Trang chủ",
+        style: AppTypographyLight.textContent,
+      ),
+    ));
   }
 }

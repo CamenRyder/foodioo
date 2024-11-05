@@ -100,7 +100,7 @@ class MainApp extends StatelessWidget {
                 : state.isLogout
                     ? const AuthorizatorScreen()
                     : const BottomTabbarScreen(),
-            initialRoute: NavigatorNames.SPLASH,
+            // initialRoute: NavigatorNames.SPLASH,
             onGenerateRoute: RouteGenerator.generateRoute,
           );
         });

@@ -21,6 +21,10 @@ class ProfileScreen extends StatelessWidget {
             },
             child:
                 const Text("Đăng xuất", style: AppTypographyDark.textContent),
+          ),
+          Switch(
+            value: false,
+            onChanged: (value) {},
           )
         ],
       ),
