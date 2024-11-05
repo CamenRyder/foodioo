@@ -34,59 +34,61 @@ class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorPage> {
     final String headerScreen =
         widget.isBack ? "Chào mừng trở lại" : "Đăng nhập";
     return Scaffold(
-        backgroundColor: AppColorsLight.background,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppConstant.paddingHorizontalApp),
-            child: Column(
-              children: [
-                const SpacingVerticalWidget(height: 80),
-                Center(
-                  child: Text(
-                    headerScreen,
-                    style: AppTypographyLight.textHeader,
-                  ),
-                ),
-                SpacingVerticalWidget(height: marginComponent),
-                InputWidget(
-                  icon: SvgGenSizeWidget(icon: Assets.icons.mail.svg()),
-                  controller: textLogin,
-                  hintText: "Tài khoản",
-                  isPasswordTextField: false,
-                ),
-                SpacingVerticalWidget(height: marginComponent),
-                InputWidget(
-                    icon: SvgGenSizeWidget(icon: Assets.icons.key.svg()),
-                    controller: textPassword,
-                    hintText: "Mật khẩu",
-                    isPasswordTextField: true),
-                const SpacingVerticalWidget(height: 12),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                      margin: const EdgeInsets.only(right: 25),
-                      child: GestureDetector(
-                        onTap: () => handleOnPressForgotPasswordButton(context),
-                        child: const Text(
-                          "Quên mật khẩu",
-                          style: AppTypographyLight.textContentPrimaryBold,
-                        ),
-                      )),
-                ),
-                const Expanded(child: SizedBox()),
-                CustomizeButtonWidget(
-                  onPressed: () => handleOnPressLoginButton(context),
-                  title: "Đăng nhập",
-                  isEnable: true,
-                ),
-                const SpacingVerticalWidget(height: 20),
-                RegisterTextWidget(
-                    onTap: () => handleOnPressMoveRegisterScreen())
-              ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppConstant.paddingHorizontalApp),
+        child: Column(
+          children: [
+            const SpacingVerticalWidget(height: 80),
+            Center(
+              child: Text(
+                headerScreen,
+                style: (Theme.of(context).textTheme).headlineMedium,
+              ),
             ),
-          ),
-        ));
+            SpacingVerticalWidget(height: marginComponent),
+            InputWidget(
+              icon: SvgGenSizeWidget(
+                  icon: Assets.icons.mail
+                      .svg(color: Theme.of(context).primaryColor)),
+              controller: textLogin,
+              hintText: "Tài khoản",
+              isPasswordTextField: false,
+            ),
+            SpacingVerticalWidget(height: marginComponent),
+            InputWidget(
+                icon: SvgGenSizeWidget(
+                    icon: Assets.icons.key
+                        .svg(color: Theme.of(context).primaryColor)),
+                controller: textPassword,
+                hintText: "Mật khẩu",
+                isPasswordTextField: true),
+            const SpacingVerticalWidget(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                  margin: const EdgeInsets.only(right: 25),
+                  child: GestureDetector(
+                    onTap: () => handleOnPressForgotPasswordButton(context),
+                    child: const Text(
+                      "Quên mật khẩu",
+                      style: AppTypographyLight.textContentPrimaryBold,
+                    ),
+                  )),
+            ),
+            const Expanded(child: SizedBox()),
+            CustomizeButtonWidget(
+              onPressed: () => handleOnPressLoginButton(context),
+              title: "Đăng nhập",
+              isEnable: true,
+            ),
+            const SpacingVerticalWidget(height: 20),
+            RegisterTextWidget(onTap: () => handleOnPressMoveRegisterScreen())
+          ],
+        ),
+      ),
+    ));
   }
 
   handleOnPressMoveRegisterScreen() {

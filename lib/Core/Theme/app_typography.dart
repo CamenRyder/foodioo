@@ -48,13 +48,14 @@ class AppTypographyLight {
     fontWeight: FontWeight.w800,
   );
 
-  static TextTheme get textTheme => TextThemeCustomer(
-      textHintBold: textHintBold,
-      textContent: textContent,
-      textContentPrimaryBold: textContentPrimaryBold,
-      textContentPrimary: textContentPrimary,
-      textContentBold: textContentBold,
-      textHeader: textHeader);
+  static TextTheme get textTheme => const TextTheme(
+        headlineMedium: textHeader,
+        bodyLarge: textContentBold,
+        bodyMedium: textContentPrimary,
+        bodySmall: textContent,
+        titleMedium: textContentPrimaryBold,
+        titleSmall: textHintBold,
+      );
 }
 
 class AppTypographyDark {
@@ -93,18 +94,26 @@ class AppTypographyDark {
   );
 
   static const textHintBold = TextStyle(
-    color: AppColorsLight.textHint,
+    color: AppColorsDark.textHint,
     fontSize: AppConstant.textSizeHint,
     fontWeight: FontWeight.w800,
   );
+  // static TextTheme get textTheme => TextThemeCustomer(
+  //     textHintBold: textHintBold,
+  //     textContent: textContent,
+  //     textContentPrimaryBold: textContentPrimaryBold,
+  //     textContentPrimary: textContentPrimary,
+  //     textContentBold: textContentBold,
+  //     textHeader: textHeader);
 
-  static TextTheme get textTheme => TextThemeCustomer(
-      textHintBold: textHintBold,
-      textContent: textContent,
-      textContentPrimaryBold: textContentPrimaryBold,
-      textContentPrimary: textContentPrimary,
-      textContentBold: textContentBold,
-      textHeader: textHeader);
+  static TextTheme get textTheme => const TextTheme(
+        headlineMedium: textHeader,
+        bodyLarge: textContentBold,
+        bodyMedium: textContentPrimary,
+        bodySmall: textContent,
+        titleMedium: textContentPrimaryBold,
+        titleSmall: textHintBold,
+      );
 }
 
 class TextThemeCustomer extends TextTheme {
@@ -120,5 +129,6 @@ class TextThemeCustomer extends TextTheme {
       required this.textContentPrimaryBold,
       required this.textContentPrimary,
       required this.textContentBold,
-      required this.textHeader});
+      required this.textHeader})
+      : super();
 }

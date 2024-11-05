@@ -39,7 +39,7 @@ class _InputWidgetState extends State<InputWidget> {
                     widget.isPasswordTextField ? passwordVisible : false,
                 keyboardType: TextInputType.visiblePassword,
                 cursorColor: Theme.of(context).primaryColor,
-                style: AppTypographyLight.textContentBold,
+                style: Theme.of(context).textTheme.bodyLarge,
                 textInputAction: TextInputAction.done,
                 decoration: widget.isPasswordTextField
                     ? InputDecoration(
@@ -48,7 +48,7 @@ class _InputWidgetState extends State<InputWidget> {
                             passwordVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Colors.black,
+                            color: Theme.of(context).hintColor,
                           ),
                           onPressed: () {
                             setState(

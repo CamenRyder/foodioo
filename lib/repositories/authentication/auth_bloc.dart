@@ -107,7 +107,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       String token = GetStorage().read(keyToken) ?? '';
       bool isDarkModeOn = GetStorage().read(keyVisibleMode) ?? false;
       FetchClient.token = token;
-      bool isShowIntro = GetStorage().read(introkey) ?? true;
+      bool isShowIntro = GetStorage().read(introkey) ?? false;
       if (isShowIntro) {
         emit(state.copyWith(isShowIntroApp: true, isDarkMode: false));
         GetStorage().write(introkey, false);

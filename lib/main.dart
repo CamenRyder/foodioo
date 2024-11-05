@@ -59,9 +59,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         child: LoaderOverLayWidget(
             child: BlocBuilder<AuthBloc, AuthState>(
           bloc: widget.authBloc,
-          // buildWhen: (previous, current) {
-          //   return previous != current;
-          // },
+          buildWhen: (previous, current) {
+            return previous.isDarkMode != current.isDarkMode;
+          },
           builder: (context, state) {
             return Listener(
                 onPointerDown: (_) {
@@ -93,7 +93,7 @@ class MainApp extends StatelessWidget {
             title: AppConstant.APP_NAME,
             color: Colors.white,
             navigatorKey: navigatorKey,
-            theme: AppTheme.lightTheme,
+            theme: AppTheme.darkTheme,
             debugShowCheckedModeBanner: false,
             home: state.isShowSplash
                 ? const SplashScreen()
