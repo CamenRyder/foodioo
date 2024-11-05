@@ -58,9 +58,9 @@ class _CustomMessage extends State<CustomMessage> {
       child: Container(
         padding: const EdgeInsets.all(AppConstant.paddingHorizontalApp),
         decoration: BoxDecoration(
-            color: AppColorsLight.background,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-            boxShadow: AppTheme.shadowLight),
+            boxShadow: AppTheme.shadowDark),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -75,8 +75,8 @@ class _CustomMessage extends State<CustomMessage> {
               child: Text(
                 widget.message!,
                 overflow: TextOverflow.visible,
-                style: const TextStyle(
-                    color: AppColorsLight.textContent,
+                style: TextStyle(
+                    color: Theme.of(context).hintColor,
                     fontWeight: FontWeight.w500,
                     fontSize: AppConstant.textSizeTitle),
                 textAlign: widget.center != null && widget.center!

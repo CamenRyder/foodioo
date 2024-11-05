@@ -14,10 +14,10 @@ class LoginTextWidget extends StatelessWidget {
       child: RichText(
           text: TextSpan(
         children: [
-          TextSpan(text: suffixText, style: AppTypographyLight.textHintBold),
           TextSpan(
-              text: prefixText,
-              style: AppTypographyLight.textContentPrimaryBold),
+              text: suffixText, style: Theme.of(context).textTheme.titleSmall),
+          TextSpan(
+              text: prefixText, style: Theme.of(context).textTheme.titleMedium),
         ],
       )),
     );

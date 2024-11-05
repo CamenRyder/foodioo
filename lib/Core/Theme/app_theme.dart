@@ -10,6 +10,7 @@ class AppTheme {
         brightness: Brightness.light,
         primaryColor: AppColorsLight.primary,
         hintColor: AppColorsLight.textContent,
+        cardColor: AppColorsLight.background,
         scaffoldBackgroundColor:
             AppColorsLight.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(
@@ -94,6 +95,7 @@ class AppTheme {
         brightness: Brightness.dark,
         primaryColor: AppColorsDark.primary,
         hintColor: AppColorsDark.textContent,
+        cardColor: AppColorsDark.primary,
         scaffoldBackgroundColor:
             AppColorsDark.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(

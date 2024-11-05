@@ -71,9 +71,9 @@ class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorPage> {
                   margin: const EdgeInsets.only(right: 25),
                   child: GestureDetector(
                     onTap: () => handleOnPressForgotPasswordButton(context),
-                    child: const Text(
+                    child: Text(
                       "Quên mật khẩu",
-                      style: AppTypographyLight.textContentPrimaryBold,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   )),
             ),
