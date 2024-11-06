@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/Core/Theme/assets.gen.dart';
-import 'package:foodioo/core/constants/constant_stataue.dart';
-import 'package:foodioo/ui/General/image_customize_widget.dart';
 import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/general/svg_gen_size_widget.dart';
 import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart';
 
 import 'package:foodioo/ui/screen/home%20/widget/app_bar_home_widget.dart';
-
-import '../../../Core/theme/app_colors.dart';
+import 'package:scroll_to_hide/scroll_to_hide.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
+  const HomeScreen({super.key, required this.scrollController});
+  final ScrollController scrollController;
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
       child: Column(
         children: [
-          const AppBarHome(),
+          ScrollToHide(
+              scrollController: scrollController,
+              hideDirection: Axis.vertical,
+              child: const AppBarHome()),
           Expanded(
               child: ListView(
+            controller: scrollController,
             children: [
               const SpacingVerticalWidget(
                 height: 12,
