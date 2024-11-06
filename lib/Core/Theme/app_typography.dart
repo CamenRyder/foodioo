@@ -25,6 +25,12 @@ class AppTypographyLight {
     fontWeight: FontWeight.w800,
   );
 
+  static const textHeaderPrimay = TextStyle(
+    color: AppColorsLight.primary,
+    fontSize: AppConstant.textSizeHeader,
+    fontWeight: FontWeight.w800,
+  );
+
   static const textContentBold = TextStyle(
     color: AppColorsLight.textContent,
     fontSize: AppConstant.textSizeContent,
@@ -50,6 +56,7 @@ class AppTypographyLight {
 
   static TextTheme get textTheme => const TextTheme(
         headlineMedium: textHeader,
+        headlineLarge: textHeaderPrimay,
         bodyLarge: textContentBold,
         bodyMedium: textContentPrimary,
         bodySmall: textContent,
@@ -82,6 +89,12 @@ class AppTypographyDark {
     fontWeight: FontWeight.w800,
   );
 
+  static const textHeaderPrimay = TextStyle(
+    color: AppColorsDark.primary,
+    fontSize: AppConstant.textSizeHeader,
+    fontWeight: FontWeight.w800,
+  );
+
   static const textContentBold = TextStyle(
     color: AppColorsDark.textContent,
     fontSize: AppConstant.textSizeContent,
@@ -108,6 +121,7 @@ class AppTypographyDark {
 
   static TextTheme get textTheme => const TextTheme(
         headlineMedium: textHeader,
+        headlineLarge: textHeaderPrimay,
         bodyLarge: textContentBold,
         bodyMedium: textContentPrimary,
         bodySmall: textContent,
