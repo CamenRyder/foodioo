@@ -5,8 +5,6 @@ import 'package:foodioo/core/theme/assets.gen.dart';
 import 'package:foodioo/ui/General/message_over_screen.dart';
 
 import '../../../../core/constants/constant_stataue.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../../repositories/authentication/auth_event.dart';
 import '../../../../repositories/view/register_vm.dart';
@@ -112,15 +110,15 @@ class _RegisterAuthorizatorScreenState
 
   handleOnPressRegisterButton(BuildContext context) {
     if (textControllerEmail.text.isEmpty) {
-      MessageToast.showToast(context, "Vui lòng nhập Email của bạn");
+      MessageToast.showToast(context, message: "Vui lòng nhập Email của bạn");
     } else if (textControllerFullname.text.isEmpty) {
-      MessageToast.showToast(context, "Vui lòng nhập tên của bạn");
+      MessageToast.showToast(context, message: "Vui lòng nhập tên của bạn");
     } else if (textControllerGenter.text.isEmpty) {
-      MessageToast.showToast(context, "Hãy chọn giới tính của bạn");
+      MessageToast.showToast(context, message: "Hãy chọn giới tính của bạn");
     } else if (textControllerPassword.text.isEmpty) {
-      MessageToast.showToast(context, "Hãy nhập mật khẩu của bạn");
+      MessageToast.showToast(context, message: "Hãy nhập mật khẩu của bạn");
     } else if (textControllerUsername.text.isEmpty) {
-      MessageToast.showToast(context, "Hãy nhập tài khoản của bạn");
+      MessageToast.showToast(context, message: "Hãy nhập tài khoản của bạn");
     } else {
       final userRegister = RegisterViewModel(
           email: textControllerEmail.text,

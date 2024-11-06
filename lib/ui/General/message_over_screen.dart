@@ -3,11 +3,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/Core/Theme/app_theme.dart';
 import 'package:foodioo/Core/Theme/assets.gen.dart';
-import 'package:foodioo/core/theme/app_colors.dart';
 import 'package:foodioo/ui/General/spacing_horizontal_widget.dart';
 
 class MessageToast {
-  static showToast(BuildContext context, String message, {int? duration}) {
+  static showToast(BuildContext context, {int? duration, String? message}) {
     FToast fToast = FToast();
     fToast.init(context);
 
@@ -21,7 +20,7 @@ class MessageToast {
         },
         child: SafeArea(
           child: CustomMessage(
-            message: message,
+            message: message ?? "Tính năng đang phát trieenr",
           ),
         ),
         gravity: ToastGravity.TOP_RIGHT,

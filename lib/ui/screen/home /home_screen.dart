@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodioo/Core/Theme/app_typography.dart';
-import 'package:foodioo/core/constants/constant_stataue.dart';
+
 import 'package:foodioo/ui/screen/home%20/widget/app_bar_home_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,7 +10,11 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         body: SafeArea(
       child: Column(
-        children: [AppBarHome()],
+        children: [AppBarHome(), Expanded(child: ListView( children: [
+            Row( 
+              
+             )
+         ],))],
       ),
     ));
   }

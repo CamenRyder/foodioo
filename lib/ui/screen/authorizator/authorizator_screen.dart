@@ -25,7 +25,7 @@ class AuthorizatorScreenState extends State<AuthorizatorScreen> {
           if (state.isShowMessage) {
             MessageToast.showToast(
               context,
-              state.message,
+              message: state.message,
             );
           }
           if (state.isRegisterSuccess) {

@@ -99,14 +99,14 @@ class _LoginAuthorizatorScreenState extends State<LoginAuthorizatorPage> {
   }
 
   handleOnPressForgotPasswordButton(BuildContext context) {
-    MessageToast.showToast(context, "Tính năng đang bảo trì!");
+    MessageToast.showToast(context,message:  "Tính năng đang bảo trì!");
   }
 
   handleOnPressLoginButton(BuildContext context) {
     if (textLogin.text.isEmpty) {
-      MessageToast.showToast(context, "Vui lòng nhập tài khoản!");
+      MessageToast.showToast(context,message:  "Vui lòng nhập tài khoản!");
     } else if (textPassword.text.isEmpty) {
-      MessageToast.showToast(context, "Vui lòng nhập mật khẩu!");
+      MessageToast.showToast(context,message:  "Vui lòng nhập mật khẩu!");
     } else {
       LoginViewModel data =
           LoginViewModel(password: textPassword.text, username: textLogin.text);
