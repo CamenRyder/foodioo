@@ -42,6 +42,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
+  /// File path: assets/icons/image_picker.svg
+  SvgGenImage get imagePicker =>
+      const SvgGenImage('assets/icons/image_picker.svg');
+
   /// File path: assets/icons/key.svg
   SvgGenImage get key => const SvgGenImage('assets/icons/key.svg');
 
@@ -72,6 +76,7 @@ class $AssetsIconsGen {
         bag,
         creditCard,
         home,
+        imagePicker,
         key,
         locationMarker,
         mail,
