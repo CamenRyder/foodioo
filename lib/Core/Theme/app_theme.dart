@@ -11,7 +11,7 @@ class AppTheme {
         primaryColor: AppColorsLight.primary,
         hintColor: AppColorsLight.textContent,
         splashColor: AppColorsLight.background,
-        cardColor: AppColorsLight.background,
+        cardColor: AppColors.spaceGrey,
         scaffoldBackgroundColor:
             AppColorsLight.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(
@@ -85,7 +85,7 @@ class AppTheme {
   ];
   static List<BoxShadow> shadowDark = [
     BoxShadow(
-      color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+      color: const Color.fromARGB(255, 37, 33, 33).withOpacity(0.8),
       blurRadius: 9,
       offset: const Offset(0, 3),
     )
@@ -95,7 +95,7 @@ class AppTheme {
     return ThemeData(
         brightness: Brightness.dark,
         primaryColor: AppColorsDark.primary,
-         splashColor: AppColorsDark.background,
+        splashColor: AppColorsDark.background,
         hintColor: AppColorsDark.textContent,
         cardColor: AppColorsDark.primary,
         scaffoldBackgroundColor:

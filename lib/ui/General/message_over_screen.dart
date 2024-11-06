@@ -60,7 +60,7 @@ class _CustomMessage extends State<CustomMessage> {
         decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-            boxShadow: AppTheme.shadowDark),
+            boxShadow: AppTheme.shadowLight),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
