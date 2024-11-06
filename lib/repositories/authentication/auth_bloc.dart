@@ -20,6 +20,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _onChangeVisibleMode(ChangeVisibleMode event, Emitter emit) async {
     bool isDarkMode = state.isDarkMode;
+    String keyVisibleMode = dotenv.env['KEY_STORAGE'] ?? '';
+
+    await GetStorage().write(keyVisibleMode, !isDarkMode);
     emit(state.copyWith(isDarkMode: !isDarkMode));
   }
 

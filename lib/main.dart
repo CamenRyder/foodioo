@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodioo/Core/routes/routes_name.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
 import 'package:foodioo/ui/screen/authorizator/authorizator_screen.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -57,22 +56,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           BlocProvider<AuthBloc>(create: (context) => widget.authBloc),
         ],
         child: LoaderOverLayWidget(
-            child: BlocBuilder<AuthBloc, AuthState>(
-          bloc: widget.authBloc,
-          buildWhen: (previous, current) {
-            return previous.isDarkMode != current.isDarkMode;
-          },
-          builder: (context, state) {
-            return Listener(
+            child: Listener(
                 onPointerDown: (_) {
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   if (!currentFocus.hasPrimaryFocus) {
                     currentFocus.focusedChild?.unfocus();
                   }
                 },
-                child: const MainApp());
-          },
-        )));
+                child: const MainApp())));
   }
 }
 
@@ -83,6 +74,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
         bloc: context.read<AuthBloc>(),
+        buildWhen: (previous, current) {
+          return current.isLoadingOverLay != previous.isLoadingOverLay ||
+              current.isDarkMode != previous.isDarkMode;
+        },
         builder: (context, state) {
           if (state.isLoadingOverLay) {
             context.loaderOverlay.show();
@@ -93,7 +88,7 @@ class MainApp extends StatelessWidget {
             title: AppConstant.APP_NAME,
             color: Colors.white,
             navigatorKey: navigatorKey,
-            theme: AppTheme.darkTheme,
+            theme: state.isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
             debugShowCheckedModeBanner: false,
             home: state.isShowSplash
                 ? const SplashScreen()

@@ -4,6 +4,7 @@ import 'package:foodioo/core/theme/app_typography.dart';
 
 import '../../../repositories/authentication/auth_bloc.dart';
 import '../../../repositories/authentication/auth_event.dart';
+import 'widget/switch_dark_mode.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -22,10 +23,7 @@ class ProfileScreen extends StatelessWidget {
             child:
                 const Text("Đăng xuất", style: AppTypographyDark.textContent),
           ),
-          Switch(
-            value: false,
-            onChanged: (value) {},
-          )
+          const SwitchDarkMode(),
         ],
       ),
     ));
