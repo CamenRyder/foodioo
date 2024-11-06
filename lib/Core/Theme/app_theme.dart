@@ -10,6 +10,7 @@ class AppTheme {
         brightness: Brightness.light,
         primaryColor: AppColorsLight.primary,
         hintColor: AppColorsLight.textContent,
+        splashColor: AppColorsLight.background,
         cardColor: AppColorsLight.background,
         scaffoldBackgroundColor:
             AppColorsLight.background, // ddoori laji khi xong
@@ -94,6 +95,7 @@ class AppTheme {
     return ThemeData(
         brightness: Brightness.dark,
         primaryColor: AppColorsDark.primary,
+         splashColor: AppColorsDark.background,
         hintColor: AppColorsDark.textContent,
         cardColor: AppColorsDark.primary,
         scaffoldBackgroundColor:
