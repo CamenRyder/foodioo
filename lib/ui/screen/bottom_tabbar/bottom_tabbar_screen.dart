@@ -3,7 +3,6 @@ import 'package:foodioo/ui/screen/home%20/home_screen.dart';
 import 'package:foodioo/ui/screen/notification/not%C3%ACication_screen.dart';
 import 'package:foodioo/ui/screen/profile/profile_screen.dart';
 import 'package:foodioo/ui/screen/search/search_screen.dart';
-import 'package:scroll_to_hide/scroll_to_hide.dart';
 
 import '../food_store/store_screen.dart';
 import 'widget/bottom_navbar_widget.dart';
@@ -35,8 +34,12 @@ class _BottomTabbarScreenState extends State<BottomTabbarScreen> {
           const ProfileScreen()
         ],
       ),
-      bottomNavigationBar: BottomNavBarWidget(
-        pageController: pageController,
+      bottomNavigationBar: AnimatedSlide(
+        duration: const Duration(milliseconds: 300),
+        offset: const Offset(0, 2), // Offset.zero 
+        child: BottomNavBarWidget(
+          pageController: pageController,
+        ),
       ),
     );
   }
