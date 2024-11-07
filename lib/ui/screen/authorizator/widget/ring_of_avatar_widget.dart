@@ -9,8 +9,14 @@ enum RingStyle { normal, vip }
 class RingOfAvatarWidget extends StatelessWidget {
   final String url;
   final RingStyle ringStyle;
+  final double? sizeAvatar;
+  final double? widthRing;
   const RingOfAvatarWidget(
-      {super.key, this.ringStyle = RingStyle.normal, required this.url});
+      {super.key,
+      this.ringStyle = RingStyle.normal,
+      required this.url,
+      this.widthRing,
+      this.sizeAvatar});
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +28,11 @@ class RingOfAvatarWidget extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: colorRinger, width: 4),
+          border: Border.all(color: colorRinger, width: widthRing ?? 3),
         ),
         child: CustomImage(
           url: url,
-          size: sizeYourAvatar,
+          size: sizeAvatar ?? sizeYourAvatar,
           radius: AppConstant.radiusExtra,
         ));
   }

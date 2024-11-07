@@ -26,6 +26,12 @@ class $AssetsAvatarGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/Add User.svg
+  SvgGenImage get addUser => const SvgGenImage('assets/icons/Add User.svg');
+
+  /// File path: assets/icons/Edit.svg
+  SvgGenImage get edit => const SvgGenImage('assets/icons/Edit.svg');
+
   /// File path: assets/icons/Heart.svg
   SvgGenImage get heart => const SvgGenImage('assets/icons/Heart.svg');
 
@@ -34,6 +40,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/bag.svg
   SvgGenImage get bag => const SvgGenImage('assets/icons/bag.svg');
+
+  /// File path: assets/icons/ban.svg
+  SvgGenImage get ban => const SvgGenImage('assets/icons/ban.svg');
 
   /// File path: assets/icons/credit-card.svg
   SvgGenImage get creditCard =>
@@ -71,9 +80,12 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+        addUser,
+        edit,
         heart,
         account,
         bag,
+        ban,
         creditCard,
         home,
         imagePicker,

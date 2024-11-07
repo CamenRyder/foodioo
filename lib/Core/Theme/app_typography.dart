@@ -42,6 +42,12 @@ class AppTypographyLight {
     fontWeight: FontWeight.w500,
   );
 
+  static const textHint = TextStyle(
+    color: AppColorsLight.textContent,
+    fontSize: AppConstant.textSizeHint,
+    fontWeight: FontWeight.w500,
+  );
+
   static const textButtonBold = TextStyle(
     color: AppColors.white,
     fontSize: AppConstant.textSizeButton,
@@ -55,14 +61,14 @@ class AppTypographyLight {
   );
 
   static TextTheme get textTheme => const TextTheme(
-        headlineMedium: textHeader,
-        headlineLarge: textHeaderPrimay,
-        bodyLarge: textContentBold,
-        bodyMedium: textContentPrimary,
-        bodySmall: textContent,
-        titleMedium: textContentPrimaryBold,
-        titleSmall: textHintBold,
-      );
+      headlineMedium: textHeader,
+      headlineLarge: textHeaderPrimay,
+      bodyLarge: textContentBold,
+      bodyMedium: textContentPrimary,
+      bodySmall: textContent,
+      titleMedium: textContentPrimaryBold,
+      titleSmall: textHintBold,
+      titleLarge: textHint);
 }
 
 class AppTypographyDark {
@@ -106,6 +112,12 @@ class AppTypographyDark {
     fontWeight: FontWeight.w500,
   );
 
+  static const textHint = TextStyle(
+    color: AppColorsDark.textContent,
+    fontSize: AppConstant.textSizeHint,
+    fontWeight: FontWeight.w500,
+  );
+
   static const textHintBold = TextStyle(
     color: AppColorsDark.textHint,
     fontSize: AppConstant.textSizeHint,
@@ -127,6 +139,7 @@ class AppTypographyDark {
         bodySmall: textContent,
         titleMedium: textContentPrimaryBold,
         titleSmall: textHintBold,
+        titleLarge: textHint,
       );
 }
 

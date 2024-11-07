@@ -5,6 +5,7 @@ import 'package:foodioo/repositories/blocs/systems/system_bloc.dart';
 import 'package:foodioo/ui/screen/home%20/widget/app_bar_home_widget.dart';
 
 import 'widget/create_post_widget.dart';
+import 'widget/post_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,12 +31,7 @@ class _HomeScreenState extends State<HomeScreen>
                 controller: scrollController,
                 children: [
                   const CreatePostWidget(),
-                  Container(
-                    height: 300,
-                    width: 400,
-                    color: Colors.green,
-                  ),
-                  const Divider(),
+                  PostWidget(),
                   Container(
                     height: 300,
                     width: 400,
