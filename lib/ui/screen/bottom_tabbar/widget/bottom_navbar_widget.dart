@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 
 import 'package:flutter/material.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
 
 import 'package:foodioo/core/theme/app_colors.dart';
 
@@ -27,24 +28,25 @@ class _BottomNavBarState extends State<BottomNavBarWidget> {
           border: Border(
               top: BorderSide(color: AppColorsLight.textHint, width: 0.5))),
       child: BottomNavigationBar(
-          backgroundColor: AppColorsLight.background,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           currentIndex: index,
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: true,
-          selectedItemColor: AppColorsLight.primary,
-          unselectedItemColor: AppColorsLight.textContent,
-          elevation: 0,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Theme.of(context).hintColor,
+          elevation: 3,
           selectedLabelStyle: AppTypographyLight.textHintBold,
           unselectedLabelStyle: AppTypographyLight.textHintBold,
-          selectedFontSize: 16,
-          unselectedFontSize: 16,
+          selectedFontSize: AppConstant.textSizeButton,
+          unselectedFontSize: AppConstant.textSizeButton,
           items: [
             BottomNavigationBarItem(
                 // icon: Icon(Icons.home, size: 28),
                 icon: Assets.icons.home.svg(
-                    width: widthIcon,
-                    height: heightIcon,
-                    color: AppColorsLight.textContent),
+                  width: widthIcon,
+                  height: heightIcon,
+                  color: Theme.of(context).hintColor,
+                ),
                 activeIcon: Assets.icons.home.svg(
                     width: widthIcon,
                     height: heightIcon,
@@ -53,9 +55,10 @@ class _BottomNavBarState extends State<BottomNavBarWidget> {
             BottomNavigationBarItem(
                 // icon: Icon(Icons.home, size: 28),
                 icon: Assets.icons.bag.svg(
-                    width: widthIcon,
-                    height: heightIcon,
-                    color: AppColorsLight.textContent),
+                  width: widthIcon,
+                  height: heightIcon,
+                  color: Theme.of(context).hintColor,
+                ),
                 activeIcon: Assets.icons.bag.svg(
                     width: widthIcon,
                     height: heightIcon,
@@ -64,9 +67,10 @@ class _BottomNavBarState extends State<BottomNavBarWidget> {
             BottomNavigationBarItem(
                 // icon: Icon(Icons.home, size: 28),
                 icon: Assets.icons.search.svg(
-                    width: widthIcon,
-                    height: heightIcon,
-                    color: AppColorsLight.textContent),
+                  width: widthIcon,
+                  height: heightIcon,
+                  color: Theme.of(context).hintColor,
+                ),
                 activeIcon: Assets.icons.search.svg(
                     width: widthIcon,
                     height: heightIcon,
@@ -75,9 +79,10 @@ class _BottomNavBarState extends State<BottomNavBarWidget> {
             BottomNavigationBarItem(
                 // icon: Icon(Icons.home, size: 28),
                 icon: Assets.icons.notification.svg(
-                    width: widthIcon,
-                    height: heightIcon,
-                    color: AppColorsLight.textContent),
+                  width: widthIcon,
+                  height: heightIcon,
+                  color: Theme.of(context).hintColor,
+                ),
                 activeIcon: Assets.icons.notification.svg(
                     width: widthIcon,
                     height: heightIcon,
@@ -86,9 +91,10 @@ class _BottomNavBarState extends State<BottomNavBarWidget> {
             BottomNavigationBarItem(
                 // icon: Icon(Icons.home, size: 28),
                 icon: Assets.icons.profile.svg(
-                    width: widthIcon,
-                    height: heightIcon,
-                    color: AppColorsLight.textContent),
+                  width: widthIcon,
+                  height: heightIcon,
+                  color: Theme.of(context).hintColor,
+                ),
                 activeIcon: Assets.icons.profile.svg(
                     width: widthIcon,
                     height: heightIcon,

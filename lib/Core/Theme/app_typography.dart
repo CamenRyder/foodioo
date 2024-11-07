@@ -25,6 +25,12 @@ class AppTypographyLight {
     fontWeight: FontWeight.w800,
   );
 
+  static const textHeaderPrimay = TextStyle(
+    color: AppColorsLight.primary,
+    fontSize: AppConstant.textSizeHeader,
+    fontWeight: FontWeight.w800,
+  );
+
   static const textContentBold = TextStyle(
     color: AppColorsLight.textContent,
     fontSize: AppConstant.textSizeContent,
@@ -48,13 +54,15 @@ class AppTypographyLight {
     fontWeight: FontWeight.w800,
   );
 
-  static TextTheme get textTheme => TextThemeCustomer(
-      textHintBold: textHintBold,
-      textContent: textContent,
-      textContentPrimaryBold: textContentPrimaryBold,
-      textContentPrimary: textContentPrimary,
-      textContentBold: textContentBold,
-      textHeader: textHeader);
+  static TextTheme get textTheme => const TextTheme(
+        headlineMedium: textHeader,
+        headlineLarge: textHeaderPrimay,
+        bodyLarge: textContentBold,
+        bodyMedium: textContentPrimary,
+        bodySmall: textContent,
+        titleMedium: textContentPrimaryBold,
+        titleSmall: textHintBold,
+      );
 }
 
 class AppTypographyDark {
@@ -81,6 +89,12 @@ class AppTypographyDark {
     fontWeight: FontWeight.w800,
   );
 
+  static const textHeaderPrimay = TextStyle(
+    color: AppColorsDark.primary,
+    fontSize: AppConstant.textSizeHeader,
+    fontWeight: FontWeight.w800,
+  );
+
   static const textContentBold = TextStyle(
     color: AppColorsDark.textContent,
     fontSize: AppConstant.textSizeContent,
@@ -93,18 +107,27 @@ class AppTypographyDark {
   );
 
   static const textHintBold = TextStyle(
-    color: AppColorsLight.textHint,
+    color: AppColorsDark.textHint,
     fontSize: AppConstant.textSizeHint,
     fontWeight: FontWeight.w800,
   );
+  // static TextTheme get textTheme => TextThemeCustomer(
+  //     textHintBold: textHintBold,
+  //     textContent: textContent,
+  //     textContentPrimaryBold: textContentPrimaryBold,
+  //     textContentPrimary: textContentPrimary,
+  //     textContentBold: textContentBold,
+  //     textHeader: textHeader);
 
-  static TextTheme get textTheme => TextThemeCustomer(
-      textHintBold: textHintBold,
-      textContent: textContent,
-      textContentPrimaryBold: textContentPrimaryBold,
-      textContentPrimary: textContentPrimary,
-      textContentBold: textContentBold,
-      textHeader: textHeader);
+  static TextTheme get textTheme => const TextTheme(
+        headlineMedium: textHeader,
+        headlineLarge: textHeaderPrimay,
+        bodyLarge: textContentBold,
+        bodyMedium: textContentPrimary,
+        bodySmall: textContent,
+        titleMedium: textContentPrimaryBold,
+        titleSmall: textHintBold,
+      );
 }
 
 class TextThemeCustomer extends TextTheme {
@@ -120,5 +143,6 @@ class TextThemeCustomer extends TextTheme {
       required this.textContentPrimaryBold,
       required this.textContentPrimary,
       required this.textContentBold,
-      required this.textHeader});
+      required this.textHeader})
+      : super();
 }

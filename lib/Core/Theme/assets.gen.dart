@@ -35,11 +35,23 @@ class $AssetsIconsGen {
   /// File path: assets/icons/bag.svg
   SvgGenImage get bag => const SvgGenImage('assets/icons/bag.svg');
 
+  /// File path: assets/icons/credit-card.svg
+  SvgGenImage get creditCard =>
+      const SvgGenImage('assets/icons/credit-card.svg');
+
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
+  /// File path: assets/icons/image_picker.svg
+  SvgGenImage get imagePicker =>
+      const SvgGenImage('assets/icons/image_picker.svg');
+
   /// File path: assets/icons/key.svg
   SvgGenImage get key => const SvgGenImage('assets/icons/key.svg');
+
+  /// File path: assets/icons/location-marker.svg
+  SvgGenImage get locationMarker =>
+      const SvgGenImage('assets/icons/location-marker.svg');
 
   /// File path: assets/icons/mail.svg
   SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
@@ -54,9 +66,25 @@ class $AssetsIconsGen {
   /// File path: assets/icons/search.svg
   SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
 
+  /// File path: assets/icons/template.svg
+  SvgGenImage get template => const SvgGenImage('assets/icons/template.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values =>
-      [heart, account, bag, home, key, mail, notification, profile, search];
+  List<SvgGenImage> get values => [
+        heart,
+        account,
+        bag,
+        creditCard,
+        home,
+        imagePicker,
+        key,
+        locationMarker,
+        mail,
+        notification,
+        profile,
+        search,
+        template
+      ];
 }
 
 class $AssetsImagesGen {

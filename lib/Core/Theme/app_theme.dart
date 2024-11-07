@@ -7,8 +7,11 @@ import 'app_typography.dart';
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primaryColor: AppColorsLight.primary,
+        hintColor: AppColorsLight.textContent,
+        splashColor: AppColorsLight.background,
+        cardColor: AppColors.spaceGrey,
         scaffoldBackgroundColor:
             AppColorsLight.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(
@@ -73,73 +76,89 @@ class AppTheme {
         ));
   }
 
+  static List<BoxShadow> shadowLight = [
+    BoxShadow(
+      color: Colors.grey.withOpacity(0.8),
+      blurRadius: 9,
+      offset: const Offset(0, 3),
+    )
+  ];
+  static List<BoxShadow> shadowDark = [
+    BoxShadow(
+      color: const Color.fromARGB(255, 37, 33, 33).withOpacity(0.8),
+      blurRadius: 9,
+      offset: const Offset(0, 3),
+    )
+  ];
+
   static ThemeData get darkTheme {
     return ThemeData(
-      brightness: Brightness.dark,
-      primaryColor: AppColorsDark.primary,
-      scaffoldBackgroundColor: AppColorsDark.background, // ddoori laji khi xong
-      appBarTheme: const AppBarTheme(
-        backgroundColor: AppColorsDark.primary,
-      ),
-      bottomSheetTheme: const BottomSheetThemeData(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(AppConstant.radiusExtra),
-              topRight: Radius.circular(AppConstant.radiusExtra)),
+        brightness: Brightness.dark,
+        primaryColor: AppColorsDark.primary,
+        splashColor: AppColorsDark.background,
+        hintColor: AppColorsDark.textContent,
+        cardColor: AppColorsDark.primary,
+        scaffoldBackgroundColor:
+            AppColorsDark.background, // ddoori laji khi xong
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColorsDark.primary,
         ),
-        backgroundColor: AppColorsDark.background,
-      ),
-      textSelectionTheme:
-          const TextSelectionThemeData(cursorColor: AppColorsDark.textContent),
-      // inputDecorationTheme: InputDecorationTheme(
-      //     filled: true,
-      //     hintStyle: AppTypographyLight.disableTextFieldDarkMode,
-      //     contentPadding: const EdgeInsets.symmetric(
-      //         vertical: AppConfigConstant.paddingVerticalTextField,
-      //         horizontal: AppConfigConstant.paddingHorizontalTextField),
-      //     labelStyle: AppTypography.disableTextFieldDarkMode,
-      //     floatingLabelBehavior: FloatingLabelBehavior.never,
-      //     fillColor: AppColors.textFieldColorDarkMode,
-      //     border: OutlineInputBorder(
-      //         borderRadius: BorderRadius.circular(
-      //             AppConfigConstant.radiusButtonMediumSize),
-      //         borderSide: BorderSide.none)),
-      textTheme: AppTypographyDark.textTheme,
-      // textButtonTheme: TextButtonThemeData(
-      //   style: ButtonStyle(
-      //     textStyle: const WidgetStatePropertyAll<TextStyle>(
-      //         AppTypography.textContainerBoldDarkMode),
-      //     backgroundColor: WidgetStateProperty.all<Color>(
-      //         AppColors.containerMissedMediumColorBox),
-      //     foregroundColor: WidgetStateProperty.all<Color>(AppColors.white),
-      //     shape: WidgetStatePropertyAll<OutlinedBorder>(
-      //       RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(
-      //             AppConfigConstant.radiusButtonSmallSize),
-      //       ),
-      //     ),
-      //     padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
-      //         EdgeInsets.symmetric(
-      //             vertical: AppConfigConstant.paddingVerticalButtonMin)),
-      //   ),
-      // ),
-      // elevatedButtonTheme: ElevatedButtonThemeData(
-      //   style: ButtonStyle(
-      //     textStyle: const WidgetStatePropertyAll<TextStyle>(
-      //         AppTypography.textButtonExtraBold),
-      //     backgroundColor: WidgetStateProperty.all<Color>(AppColors.primary),
-      //     foregroundColor: WidgetStateProperty.all<Color>(AppColors.white),
-      //     shape: WidgetStatePropertyAll<OutlinedBorder>(
-      //       RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(
-      //             AppConfigConstant.radiusButtonBigSize),
-      //       ),
-      //     ),
-      //     padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
-      //         EdgeInsets.symmetric(
-      //             vertical: AppConfigConstant.paddingVerticalButton)),
-      //   ),
-      // )
-    );
+        bottomSheetTheme: const BottomSheetThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(AppConstant.radiusExtra),
+                topRight: Radius.circular(AppConstant.radiusExtra)),
+          ),
+          backgroundColor: AppColorsDark.background,
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: AppColorsDark.textContent),
+        inputDecorationTheme: const InputDecorationTheme(
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: AppColorsDark.textHint),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: AppColorsDark.textHint),
+            ),
+            hintStyle: AppTypographyDark.textHintBold,
+            contentPadding:
+                EdgeInsets.symmetric(vertical: AppConstant.paddingContent),
+            labelStyle: AppTypographyDark.textHintBold,
+            floatingLabelStyle: AppTypographyDark.textHintBold,
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            activeIndicatorBorder: BorderSide(color: AppColorsDark.primary)),
+        textTheme: AppTypographyDark.textTheme,
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor:
+                WidgetStateProperty.all<Color>(AppColorsDark.primary),
+            foregroundColor: WidgetStateProperty.all<Color>(AppColors.white),
+            textStyle: const WidgetStatePropertyAll<TextStyle>(
+                AppTypographyDark.textButtonBold),
+            shape: WidgetStatePropertyAll<OutlinedBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppConstant.radiusExtra),
+              ),
+            ),
+            padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
+                EdgeInsets.symmetric(vertical: AppConstant.paddingButton)),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            textStyle: const WidgetStatePropertyAll<TextStyle>(
+                AppTypography.textButtonExtraBold),
+            backgroundColor:
+                WidgetStateProperty.all<Color>(AppColorsDark.primary),
+            foregroundColor: WidgetStateProperty.all<Color>(AppColors.white),
+            shape: WidgetStatePropertyAll<OutlinedBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppConstant.radiusExtra),
+              ),
+            ),
+            padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
+                EdgeInsets.symmetric(vertical: AppConstant.paddingButton)),
+          ),
+        ));
   }
 }

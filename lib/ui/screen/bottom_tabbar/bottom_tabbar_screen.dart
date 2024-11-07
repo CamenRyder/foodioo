@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:foodioo/ui/screen/home%20/home_screen.dart';
 import 'package:foodioo/ui/screen/notification/not%C3%ACication_screen.dart';
 import 'package:foodioo/ui/screen/profile/profile_screen.dart';
@@ -17,6 +16,7 @@ class BottomTabbarScreen extends StatefulWidget {
 
 class _BottomTabbarScreenState extends State<BottomTabbarScreen> {
   final PageController pageController = PageController();
+  final PageController scrollControllerHome = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +25,21 @@ class _BottomTabbarScreenState extends State<BottomTabbarScreen> {
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          const HomeScreen(),
+          HomeScreen(
+            scrollController: scrollControllerHome,
+          ),
           StoreScreen(),
           SearchScreen(),
           NotificationScreen(),
-         const ProfileScreen()
+          const ProfileScreen()
         ],
       ),
-      bottomNavigationBar: BottomNavBarWidget(
-        pageController: pageController,
+      bottomNavigationBar: AnimatedSlide(
+        duration: const Duration(milliseconds: 300),
+        offset: const Offset(0, 2), // Offset.zero 
+        child: BottomNavBarWidget(
+          pageController: pageController,
+        ),
       ),
     );
   }

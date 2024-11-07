@@ -20,9 +20,9 @@ class SelectGenderWidget extends StatefulWidget {
 }
 
 class _InputWidgetState extends State<SelectGenderWidget> {
-  final Color iconColor = AppColorsLight.primary;
   @override
   Widget build(BuildContext context) {
+    final Color iconColor = Theme.of(context).primaryColor;
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 28),
         child: Row(
@@ -58,9 +58,9 @@ class _InputWidgetState extends State<SelectGenderWidget> {
                               });
                             }
                           },
-                          child: const Icon(
+                          child: Icon(
                             Icons.keyboard_arrow_down_rounded,
-                            color: AppColorsLight.textContent,
+                            color: Theme.of(context).hintColor,
                           )),
                       labelText: "Giới tính")),
             ),

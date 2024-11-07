@@ -15,6 +15,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginUser>((event, emit) => _onLoginUser(event, emit));
     on<Logout>((event, emit) => _onLogout(event, emit));
     on<RegisterUser>((event, emit) => _onRegisterUser(event, emit));
+    on<ChangeVisibleMode>((event, emit) => _onChangeVisibleMode(event, emit));
+  }
+
+  _onChangeVisibleMode(ChangeVisibleMode event, Emitter emit) async {
+    bool isDarkMode = state.isDarkMode;
+    String keyVisibleMode = dotenv.env['KEY_STORAGE'] ?? '';
+
+    await GetStorage().write(keyVisibleMode, !isDarkMode);
+    emit(state.copyWith(isDarkMode: !isDarkMode));
   }
 
   _onRegisterUser(RegisterUser event, Emitter emit) async {
@@ -65,6 +74,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state.copyWith(
               isLoadingOverLay: false,
               accounts: accounts,
+              isShowMessage: true,
+              message: "Chào mừng - ${accounts[0].fullname}",
               isLogout: false,
               currentAccount: accounts[0],
               token: token));
@@ -87,7 +98,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _onAuthUserToken(AuthUserToken event, Emitter emit) async {
     try {
-      // String themeKey = "ThemeKey";
       String introkey = "IntroKey";
       emit(state.copyWith(isShowSplash: true));
       // await Future.delayed(const Duration(seconds: 3));
@@ -95,11 +105,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await Future.wait([dotenv.load(fileName: ".env"), GetStorage.init()]);
 
       String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
+      String keyVisibleMode = dotenv.env['KEY_STORAGE'] ?? '';
+
       String token = GetStorage().read(keyToken) ?? '';
+      bool isDarkModeOn = GetStorage().read(keyVisibleMode) ?? false;
       FetchClient.token = token;
-      bool isShowIntro = GetStorage().read(introkey) ?? true;
+      bool isShowIntro = GetStorage().read(introkey) ?? false;
       if (isShowIntro) {
-        emit(state.copyWith(isShowIntroApp: true));
+        emit(state.copyWith(isShowIntroApp: true, isDarkMode: false));
         GetStorage().write(introkey, false);
       }
 
@@ -110,9 +123,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
       emit(state.copyWith(isShowSplash: false));
       if (accounts.isNotEmpty) {
-        emit(state.copyWith(accounts: accounts, currentAccount: accounts[0]));
+        emit(state.copyWith(
+            accounts: accounts,
+            currentAccount: accounts[0],
+            isDarkMode: isDarkModeOn));
       } else {
-        emit(state.copyWith(isLogout: true));
+        emit(state.copyWith(isLogout: true, isDarkMode: isDarkModeOn));
       }
     } catch (err) {
       emit(state.copyWith(

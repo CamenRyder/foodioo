@@ -8,7 +8,6 @@ import '../../../core/constants/constant_stataue.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/assets.gen.dart';
-import '../../general/circle_point_marker_widget.dart';
 import 'widget/intro_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -86,7 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 20,
               ),
               RichText(
-                  textScaleFactor: 1.2,
                   text: const TextSpan(
                       text: "Tụ tập từ quán best choice từ đánh giá của",
                       children: [
@@ -101,7 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: AppTypographyLight.textContentPrimaryBold),
                         TextSpan(text: "thông minh.", style: textNormalStyle),
                       ],
-                      style: textNormalStyle)),
+                      style: textNormalStyle),
+                  textScaler: const TextScaler.linear(1.2)),
               const SpacingVerticalWidget(),
               Row(
                 children: [
