@@ -34,7 +34,7 @@ class UserInforPostWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Lê Quang Minh",
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   SpacingHorizontalWidget(
                     width: spacingComponent / 2,

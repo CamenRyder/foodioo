@@ -29,6 +29,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Add User.svg
   SvgGenImage get addUser => const SvgGenImage('assets/icons/Add User.svg');
 
+  /// File path: assets/icons/Chat.svg
+  SvgGenImage get chat => const SvgGenImage('assets/icons/Chat.svg');
+
   /// File path: assets/icons/Edit.svg
   SvgGenImage get edit => const SvgGenImage('assets/icons/Edit.svg');
 
@@ -81,6 +84,7 @@ class $AssetsIconsGen {
   /// List of all assets
   List<SvgGenImage> get values => [
         addUser,
+        chat,
         edit,
         heart,
         account,

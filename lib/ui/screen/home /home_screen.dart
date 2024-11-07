@@ -31,42 +31,7 @@ class _HomeScreenState extends State<HomeScreen>
                 controller: scrollController,
                 children: [
                   const CreatePostWidget(),
-                  PostWidget(),
-                  Container(
-                    height: 300,
-                    width: 400,
-                    color: Colors.green,
-                  ),
-                  const Divider(),
-                  Container(
-                    height: 300,
-                    width: 400,
-                    color: Colors.green,
-                  ),
-                  const Divider(),
-                  Container(
-                    height: 300,
-                    width: 400,
-                    color: Colors.green,
-                  ),
-                  const Divider(),
-                  Container(
-                    height: 300,
-                    width: 400,
-                    color: Colors.green,
-                  ),
-                  const Divider(),
-                  Container(
-                    height: 300,
-                    width: 400,
-                    color: Colors.green,
-                  ),
-                  const Divider(),
-                  Container(
-                    height: 300,
-                    width: 400,
-                    color: Colors.green,
-                  ),
+                  const PostWidget(),
                 ],
               ))
             ],
