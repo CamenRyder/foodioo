@@ -46,7 +46,7 @@ class PostWidget extends StatelessWidget {
   Widget _dividerCustomeize(double widthScreen) {
     return Container(
       color: AppColors.grey50,
-      height: paddingTextWithScreen,
+      height: paddingTextWithScreen - 3,
       width: widthScreen,
     );
   }

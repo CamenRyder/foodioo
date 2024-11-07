@@ -28,10 +28,16 @@ class _HomeScreenState extends State<HomeScreen>
               const AppBarHome(),
               Expanded(
                   child: ListView(
+                shrinkWrap: true,
                 controller: scrollController,
                 children: [
                   const CreatePostWidget(),
-                  const PostWidget(),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 10,
+                    itemBuilder: (context, index) => const PostWidget(),
+                  )
                 ],
               ))
             ],

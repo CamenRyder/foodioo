@@ -4,6 +4,7 @@ import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
+import 'button_react_widget.dart';
 
 class IntereactivePostWidget extends StatelessWidget {
   const IntereactivePostWidget({super.key});
@@ -14,24 +15,7 @@ class IntereactivePostWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: AppConstant.paddingButton),
       child: Row(
         children: [
-          Expanded(
-              child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgGenSizeWidget(
-                icon:
-                    Assets.icons.heart.svg(color: Theme.of(context).hintColor),
-              ),
-              const SpacingHorizontalWidget(
-                width: 12,
-              ),
-              Text(
-                "Cảm xúc (20)",
-                style: Theme.of(context).textTheme.bodyLarge,
-              )
-            ],
-          )),
+          const Expanded(child: ButtonReactWidget()),
           Expanded(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
