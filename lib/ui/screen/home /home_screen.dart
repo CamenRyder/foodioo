@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Theme/assets.gen.dart';
+import 'package:foodioo/repositories/blocs/systems/system_bloc.dart';
 import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/general/svg_gen_size_widget.dart';
 import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart';
 
 import 'package:foodioo/ui/screen/home%20/widget/app_bar_home_widget.dart';
-import 'package:scroll_to_hide/scroll_to_hide.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key, required this.scrollController});
-  final ScrollController scrollController;
+  const HomeScreen({super.key});
+
+  @override
   Widget build(BuildContext context) {
+    final scrollController = context.read<SystemBloc>().state.scrollController;
     return Scaffold(
         body: SafeArea(
       child: Column(
         children: [
-          ScrollToHide(
-              scrollController: scrollController,
-              hideDirection: Axis.vertical,
-              child: const AppBarHome()),
+          const AppBarHome(),
           Expanded(
               child: ListView(
             controller: scrollController,
@@ -45,6 +45,47 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               const Divider(),
+              Container(
+                height: 300,
+                width: 400,
+                color: Colors.green,
+              ),
+              const Divider(),
+              Container(
+                height: 300,
+                width: 400,
+                color: Colors.green,
+              ),
+              const Divider(),
+              Container(
+                height: 300,
+                width: 400,
+                color: Colors.green,
+              ),
+              const Divider(),
+              Container(
+                height: 300,
+                width: 400,
+                color: Colors.green,
+              ),
+              const Divider(),
+              Container(
+                height: 300,
+                width: 400,
+                color: Colors.green,
+              ),
+              const Divider(),
+              Container(
+                height: 300,
+                width: 400,
+                color: Colors.green,
+              ),
+              const Divider(),
+              Container(
+                height: 300,
+                width: 400,
+                color: Colors.green,
+              ),
             ],
           ))
         ],

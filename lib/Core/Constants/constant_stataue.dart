@@ -24,4 +24,6 @@ class AppConstant {
   static const double paddingContent = 3.0;
   static const double paddingHorizontalApp = 18.0;
   static const double paddingVerticalApp = 22.0;
+
+  static const int durationAnimationSystemGeneral = 300;  
 }

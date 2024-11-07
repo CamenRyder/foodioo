@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/repositories/blocs/systems/system_bloc.dart';
 import 'package:foodioo/ui/screen/home%20/home_screen.dart';
 import 'package:foodioo/ui/screen/notification/not%C3%ACication_screen.dart';
 import 'package:foodioo/ui/screen/profile/profile_screen.dart';
 import 'package:foodioo/ui/screen/search/search_screen.dart';
 
+import '../../../repositories/blocs/systems/system_state.dart';
 import '../food_store/store_screen.dart';
 import 'widget/bottom_navbar_widget.dart';
 
@@ -25,20 +29,23 @@ class _BottomTabbarScreenState extends State<BottomTabbarScreen> {
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          HomeScreen(
-            scrollController: scrollControllerHome,
-          ),
+          const HomeScreen(),
           StoreScreen(),
           SearchScreen(),
           NotificationScreen(),
           const ProfileScreen()
         ],
       ),
-      bottomNavigationBar: AnimatedSlide(
-        duration: const Duration(milliseconds: 300),
-        offset: const Offset(0, 2), // Offset.zero 
-        child: BottomNavBarWidget(
-          pageController: pageController,
+      bottomNavigationBar: BlocBuilder<SystemBloc, SystemState>(
+        buildWhen: (previous, current) =>
+            previous.isShowBottomNavBar != current.isShowBottomNavBar,
+        builder: (context, state) => AnimatedContainer(
+          duration: const Duration(
+              milliseconds: AppConstant.durationAnimationSystemGeneral),
+          height: state.isShowBottomNavBar ? null : 0,
+          child: BottomNavBarWidget(
+            pageController: pageController,
+          ),
         ),
       ),
     );

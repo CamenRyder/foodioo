@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/repositories/blocs/systems/system_event.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 import '../../Core/Constants/constant_stataue.dart';
@@ -9,6 +10,7 @@ import '../../Core/routes/routes.dart';
 import '../../main.dart';
 import '../../repositories/authentication/auth_bloc.dart';
 import '../../repositories/authentication/auth_state.dart';
+import '../../repositories/blocs/systems/system_bloc.dart';
 import '../General/loader_over_lay_widget.dart';
 import 'authorizator/authorizator_screen.dart';
 import 'bottom_tabbar/bottom_tabbar_screen.dart';
@@ -29,7 +31,7 @@ class AppConfig extends StatelessWidget {
             ? const SplashScreen()
             : state.isLogout
                 ? const AuthorizatorScreen()
-                : const BottomTabbarScreen(); 
+                : const BottomTabbarScreen();
       },
     );
   }
@@ -58,15 +60,13 @@ class MainApp extends StatelessWidget {
             navigatorKey: navigatorKey,
             theme: state.isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
             debugShowCheckedModeBanner: false,
-            home: const AppConfig(),  
+            home: const AppConfig(),
             // initialRoute: NavigatorNames.SPLASH,
             onGenerateRoute: RouteGenerator.generateRoute,
           );
         });
   }
 }
-
-
 
 class MyApp extends StatefulWidget {
   final AuthBloc authBloc;
@@ -98,6 +98,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(create: (context) => widget.authBloc),
+          BlocProvider<SystemBloc>(create: (context) {
+            final systemBloc = SystemBloc();
+            systemBloc.add(InitialSystem());
+            return systemBloc;
+          }),
         ],
         child: LoaderOverLayWidget(
             child: Listener(
