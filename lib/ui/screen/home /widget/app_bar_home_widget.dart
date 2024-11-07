@@ -7,6 +7,7 @@ import 'package:foodioo/repositories/blocs/systems/system_state.dart';
 import 'package:foodioo/ui/General/message_over_screen.dart';
 import 'package:foodioo/ui/General/spacing_horizontal_widget.dart';
 import 'package:foodioo/ui/screen/home%20/widget/foodioo_widget.dart';
+import 'package:hidable/hidable.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../General/icon_button_customize.dart';
@@ -18,14 +19,11 @@ class AppBarHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SystemBloc, SystemState>(
       buildWhen: (previous, current) =>
-          previous.isShowAppBar != current.isShowAppBar,
-      builder: (context, state) {
-        return AnimatedContainer(
-            height: !state.isShowAppBar ? 0 : null,
-            duration: const Duration(
-                milliseconds: AppConstant.durationAnimationSystemGeneral),
-            child: appBarWidget(context));
-      },
+          current.scrollController != previous.scrollController,
+      builder: (context, state) => Hidable(
+        controller: context.read<SystemBloc>().state.scrollController,
+        child: appBarWidget(context),
+      ),
     );
   }
 

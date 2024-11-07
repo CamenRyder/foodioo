@@ -30,6 +30,7 @@ dependencies:
   smooth_page_indicator: ^1.2.0+3
   toastification: ^2.3.0
   scroll_to_hide: ^2.1.0
+  hidable: ^1.0.6
 
 dev_dependencies:
   flutter_gen: ^5.8.0

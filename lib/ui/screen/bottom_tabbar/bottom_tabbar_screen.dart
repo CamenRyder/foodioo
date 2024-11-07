@@ -6,6 +6,7 @@ import 'package:foodioo/ui/screen/home%20/home_screen.dart';
 import 'package:foodioo/ui/screen/notification/not%C3%ACication_screen.dart';
 import 'package:foodioo/ui/screen/profile/profile_screen.dart';
 import 'package:foodioo/ui/screen/search/search_screen.dart';
+import 'package:hidable/hidable.dart';
 
 import '../../../repositories/blocs/systems/system_state.dart';
 import '../food_store/store_screen.dart';
@@ -37,17 +38,29 @@ class _BottomTabbarScreenState extends State<BottomTabbarScreen> {
         ],
       ),
       bottomNavigationBar: BlocBuilder<SystemBloc, SystemState>(
-        buildWhen: (previous, current) =>
-            previous.isShowBottomNavBar != current.isShowBottomNavBar,
-        builder: (context, state) => AnimatedContainer(
-          duration: const Duration(
-              milliseconds: AppConstant.durationAnimationSystemGeneral),
-          height: state.isShowBottomNavBar ? null : 0,
-          child: BottomNavBarWidget(
-            pageController: pageController,
-          ),
-        ),
+        buildWhen: (previous, current) {
+          return current.scrollController != previous.scrollController;
+        },
+        builder: (context, state) => Hidable(
+            controller: state.scrollController,
+            deltaFactor: 0.06,
+            preferredWidgetSize: const Size.fromHeight(100),
+            child: BottomNavBarWidget(pageController: pageController)),
       ),
     );
   }
 }
+
+/*
+
+ AnimatedContainer(
+            duration: const Duration(
+                milliseconds: AppConstant.durationAnimationSystemGeneral),
+            height: !state.isShowBottomNavBar ? 0 : 100,
+            curve: Curves.fastEaseInToSlowEaseOut,
+            child: BottomNavBarWidget(
+              pageController: pageController,
+            ),
+          ),
+
+*/
