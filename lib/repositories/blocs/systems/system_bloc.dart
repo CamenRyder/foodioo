@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/systems/system_event.dart';
 import 'package:foodioo/repositories/blocs/systems/system_state.dart';
 
+import '../../service/location_service.dart';
+
 class SystemBloc extends Bloc<SystemEvent, SystemState> {
   SystemBloc()
       : super(SystemState(
@@ -14,6 +16,12 @@ class SystemBloc extends Bloc<SystemEvent, SystemState> {
     on<OffBottomNavBar>((event, emit) => _onOffBottomNavBar(event, emit));
     on<ShowAppBar>((event, emit) => _onShowAppBar(event, emit));
     on<OffAppBar>((event, emit) => _onOffAppBar(event, emit));
+    on<GetCurrentLocation>((event, emit) => _onGetCurrentLocation(event, emit));
+  }
+
+  _onGetCurrentLocation(GetCurrentLocation event, Emitter emit) async {
+    final currentPosition = await LocationService().getCurrentPosition();
+    emit(state.copyWith(currentPosition: currentPosition));
   }
 
   _onShowBottomNavBar(ShowBottomNavBar event, Emitter emit) {
@@ -32,7 +40,7 @@ class SystemBloc extends Bloc<SystemEvent, SystemState> {
     emit(state.copyWith(isShowAppBar: false));
   }
 
-  _onInitialSystem(InitialSystem event, Emitter emit) {
+  _onInitialSystem(InitialSystem event, Emitter emit) async {
     ScrollController controller = ScrollController();
 
     double oldOffset = 0.0;
@@ -49,5 +57,9 @@ class SystemBloc extends Bloc<SystemEvent, SystemState> {
       oldOffset = controller.offset;
     });
     emit(state.copyWith(scrollController: controller));
+    final currentPosition = await LocationService().getCurrentPosition();
+    if (currentPosition != null) {
+      emit(state.copyWith(currentPosition: currentPosition));
+    }
   }
 }

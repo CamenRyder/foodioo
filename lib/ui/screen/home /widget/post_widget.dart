@@ -4,6 +4,7 @@ import 'package:foodioo/Core/Theme/assets.gen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../General/image_customize_widget.dart';
+import 'button_show_map_widget.dart';
 import 'intereactive_post_widget.dart';
 import 'user_infor_post_widget.dart';
 
@@ -18,9 +19,9 @@ class _PostWidgetState extends State<PostWidget> {
   final double heightImageDefault = 300;
 
   final double paddingTextWithScreen = 9;
-  final double sizeIconLocationMarker = 14;
+
   final double dotSize = 8.5;
-  final double marginIconLcoation = 7;
+
   PageController pageController = PageController();
   @override
   Widget build(BuildContext context) {
@@ -58,26 +59,9 @@ class _PostWidgetState extends State<PostWidget> {
                       );
                     },
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.topRight,
-                    child: Container(
-                      padding:
-                          const EdgeInsets.all(AppConstant.paddingIndicator),
-                      margin: EdgeInsets.only(
-                          top: marginIconLcoation, right: marginIconLcoation),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Theme.of(context).scaffoldBackgroundColor),
-                      child: Container(
-                        padding: const EdgeInsets.all(AppConstant.paddingIcon),
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: AppColors.grey50),
-                        child: Assets.icons.locationMarker.svg(
-                            color: AppColors.black,
-                            height: sizeIconLocationMarker,
-                            width: sizeIconLocationMarker),
-                      ),
-                    ),
+                    child: ButtonShowMapWidget(),
                   ),
                   Align(
                       alignment: Alignment.bottomCenter,
