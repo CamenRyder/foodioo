@@ -41,6 +41,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/account.svg
   SvgGenImage get account => const SvgGenImage('assets/icons/account.svg');
 
+  /// File path: assets/icons/arrow-left.svg
+  SvgGenImage get arrowLeft => const SvgGenImage('assets/icons/arrow-left.svg');
+
   /// File path: assets/icons/bag.svg
   SvgGenImage get bag => const SvgGenImage('assets/icons/bag.svg');
 
@@ -50,6 +53,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/credit-card.svg
   SvgGenImage get creditCard =>
       const SvgGenImage('assets/icons/credit-card.svg');
+
+  /// File path: assets/icons/device-mobile.svg
+  SvgGenImage get deviceMobile =>
+      const SvgGenImage('assets/icons/device-mobile.svg');
 
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
@@ -88,9 +95,11 @@ class $AssetsIconsGen {
         edit,
         heart,
         account,
+        arrowLeft,
         bag,
         ban,
         creditCard,
+        deviceMobile,
         home,
         imagePicker,
         key,
@@ -106,6 +115,9 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/device.png
+  AssetGenImage get device => const AssetGenImage('assets/images/device.png');
+
   /// File path: assets/images/intro_01.png
   AssetGenImage get intro01 =>
       const AssetGenImage('assets/images/intro_01.png');
@@ -119,7 +131,7 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/intro_03.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [intro01, intro02, intro03];
+  List<AssetGenImage> get values => [device, intro01, intro02, intro03];
 }
 
 class Assets {
