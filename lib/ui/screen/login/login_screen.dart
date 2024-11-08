@@ -35,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
         fontWeight: FontWeight.w800,
         wordSpacing: 1.3);
     return Scaffold(
-        body: Stack(children: [
+        body: Stack(
+          children: [
       PageView(
         // physics: const NeverScrollableScrollPhysics(),
         controller: pageController,

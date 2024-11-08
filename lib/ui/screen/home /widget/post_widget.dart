@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/Core/Theme/assets.gen.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../General/image_customize_widget.dart';
 import 'intereactive_post_widget.dart';
 import 'user_infor_post_widget.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   const PostWidget({super.key});
+
+  @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
   final double heightImageDefault = 300;
+
   final double paddingTextWithScreen = 9;
+  final double sizeIconLocationMarker = 14;
+  final double dotSize = 8.5;
+  final double marginIconLcoation = 7;
+  PageController pageController = PageController();
   @override
   Widget build(BuildContext context) {
     final widthScreen = MediaQuery.of(context).size.width;
@@ -25,28 +39,83 @@ class PostWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodySmall,
               )),
           Container(
-            height: heightImageDefault,
-            width: widthScreen,
-            color: AppColors.grey50,
-            child: CustomImageForLangscope(
-              fit: BoxFit.cover,
-              url:
-                  'https://img-global.cpcdn.com/recipes/cab5d5aa25abd81a/1200x630cq70/photo.jpg',
               height: heightImageDefault,
               width: widthScreen,
-            ),
-          ),
+              color: AppColors.grey50,
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    scrollDirection: Axis.horizontal,
+                    controller: pageController,
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return CustomImageForLangscope(
+                        fit: BoxFit.cover,
+                        url:
+                            'https://img-global.cpcdn.com/recipes/cab5d5aa25abd81a/1200x630cq70/photo.jpg',
+                        height: heightImageDefault,
+                        width: widthScreen,
+                      );
+                    },
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      padding:
+                          const EdgeInsets.all(AppConstant.paddingIndicator),
+                      margin: EdgeInsets.only(
+                          top: marginIconLcoation, right: marginIconLcoation),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).scaffoldBackgroundColor),
+                      child: Container(
+                        padding: const EdgeInsets.all(AppConstant.paddingIcon),
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: AppColors.grey50),
+                        child: Assets.icons.locationMarker.svg(
+                            color: AppColors.black,
+                            height: sizeIconLocationMarker,
+                            width: sizeIconLocationMarker),
+                      ),
+                    ),
+                  ),
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            bottom: AppConstant.paddingIndicator),
+                        padding:
+                            const EdgeInsets.all(AppConstant.paddingIndicator),
+                        decoration: BoxDecoration(
+                            color: Colors.black45,
+                            borderRadius:
+                                BorderRadius.circular(AppConstant.radiusSmall)),
+                        child: SmoothPageIndicator(
+                          controller: pageController,
+                          count: 4,
+                          effect: WormEffect(
+                              dotHeight: dotSize,
+                              dotWidth: dotSize,
+                              spacing: AppConstant.paddingIcon,
+                              dotColor: AppColorsLight.textHint,
+                              activeDotColor: AppColorsLight.primary),
+                        ),
+                      )),
+                ],
+              )),
+          _dividerCustomeize(widthScreen, context, 1),
           const IntereactivePostWidget(),
-          _dividerCustomeize(widthScreen)
+          _dividerCustomeize(widthScreen, context, paddingTextWithScreen - 6),
         ],
       ),
     );
   }
 
-  Widget _dividerCustomeize(double widthScreen) {
+  Widget _dividerCustomeize(
+      double widthScreen, BuildContext context, double heightDivider) {
     return Container(
       color: AppColors.grey50,
-      height: paddingTextWithScreen - 3,
+      height: heightDivider,
       width: widthScreen,
     );
   }

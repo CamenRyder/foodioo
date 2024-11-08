@@ -20,6 +20,7 @@ class AppConstant {
   static const double radiusExtra = 32.0;
 
   static const double paddingIcon = 3.0;
+  static const double paddingIndicator = 4.0;
   static const double paddingButton = 18.0;
   static const double paddingContent = 3.0;
   static const double paddingHorizontalApp = 18.0;
