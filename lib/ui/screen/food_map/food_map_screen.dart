@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:foodioo/Core/Constants/constant_stataue.dart';
-import 'package:foodioo/Core/Theme/assets.gen.dart';
-import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
-import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'widget/button_map_floating_widget.dart';
 
 class FoodMapScreen extends StatefulWidget {
   const FoodMapScreen({super.key});
@@ -18,16 +16,23 @@ class FoodMapScreen extends StatefulWidget {
 
 class FoodMapScreenState extends State<FoodMapScreen> {
   late GoogleMapController _mapController;
-  late BitmapDescriptor myIcon;
-  @override
-  void initState() {
-    super.initState();
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(48, 48)),
-            Assets.icons.deviceMobile.path)
-        .then((onValue) {
-      myIcon = onValue;
+  BitmapDescriptor currentLocationMarker = BitmapDescriptor.defaultMarker;
+  Set<Marker> markerShowing = <Marker>{};
+
+  createCurrentLocationMarker() {
+    BitmapDescriptor.asset(const ImageConfiguration(size: Size(32, 32)),
+            "assets/images/device.png")
+        .then((value) {
+      setState(() {
+        currentLocationMarker = value;
+      });
     });
+  }
+
+  @override
+void initState() {
+    createCurrentLocationMarker();
+    super.initState();
   }
 
   Set<Marker> createMakers(
@@ -35,15 +40,14 @@ class FoodMapScreenState extends State<FoodMapScreen> {
     Set<Marker> makers = {};
     makers.add(
       Marker(
-          icon:
-             myIcon ,
+          icon: currentLocationMarker,
           markerId: const MarkerId("currentLocation"),
-          infoWindow: const InfoWindow(title: "Vị trí hiện tại"),
+          infoWindow: const InfoWindow(title: "Vị trí của bạn"),
           position: currentLocation),
     );
     int index = 0;
     for (var element in sharingLocation) {
-      final latlng = LatLng(element.latitude ?? 0, element.longitude ?? 0);
+      final latlng = LatLng(element.latitude, element.longitude);
       makers.add(
           Marker(markerId: MarkerId("$index"), position: latlng, onTap: () {}));
       index++;
@@ -51,11 +55,8 @@ class FoodMapScreenState extends State<FoodMapScreen> {
     return makers;
   }
 
-  final radiusButton = const Radius.circular(AppConstant.radiusLarge);
-
   @override
   Widget build(BuildContext context) {
-    double paddingButton = 12.0;
     return Scaffold(
         body: Stack(
       children: [
@@ -78,67 +79,7 @@ class FoodMapScreenState extends State<FoodMapScreen> {
             zoom: 15.0,
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(AppConstant.paddingVerticalApp),
-          alignment: Alignment.bottomCenter,
-          child: Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: radiusButton, bottomLeft: radiusButton)),
-                    padding: EdgeInsets.all(paddingButton),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SvgGenSizeWidget(
-                            icon: Assets.icons.arrowLeft
-                                .svg(color: Colors.black)),
-                        Text(
-                          "Quay lại",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: 40,
-                width: 1,
-                color: Colors.black,
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: radiusButton, bottomRight: radiusButton)),
-                    padding: EdgeInsets.all(paddingButton),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SvgGenSizeWidget(
-                            icon: Assets.icons.deviceMobile
-                                .svg(color: Colors.black)),
-                        Text(
-                          "Vị trí hiện tại",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const ButtonMapFloatingWidget(),
       ],
     ));
   }
