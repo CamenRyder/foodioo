@@ -84,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen>
                           ),
                         );
                       }
+
                       isLoading = false;
                       return ListView(
                         shrinkWrap: true,

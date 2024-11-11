@@ -8,7 +8,7 @@ import '../../../General/svg_gen_size_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
 
 class UserInforPostWidget extends StatelessWidget {
-   UserInforPostWidget({super.key, this.postModel});
+  UserInforPostWidget({super.key, this.postModel});
   final PostModel? postModel;
   final String urlBase = AppConstant.baseURL;
   @override
@@ -16,8 +16,8 @@ class UserInforPostWidget extends StatelessWidget {
     final widthScreen = MediaQuery.of(context).size.width;
     double spacingComponent = 9;
     String avatar = postModel?.account?.urlAvatar ?? "";
-    String name =  postModel?.account?.fullname ?? "Foodioo";
-    String urlAvatar = urlBase + avatar;  
+    String name = postModel?.account?.fullname ?? "Foodioo";
+    String urlAvatar = urlBase + avatar;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -28,8 +28,7 @@ class UserInforPostWidget extends StatelessWidget {
           RingOfAvatarWidget(
               sizeAvatar: widthScreen / 8.5,
               ringStyle: RingStyle.normal,
-              url:
-                  urlAvatar),
+              url: urlAvatar),
           SpacingHorizontalWidget(
             width: spacingComponent,
           ),
@@ -39,7 +38,7 @@ class UserInforPostWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    name ,   
+                    name,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   SpacingHorizontalWidget(
