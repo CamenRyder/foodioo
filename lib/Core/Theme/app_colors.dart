@@ -9,7 +9,9 @@ class AppColors {
   static const Color pink = Color.fromARGB(255, 234, 0, 255);
   static const Color brown = Color(0xFFa2845e);
   static const Color grey = Color.fromARGB(255, 68, 67, 66);
+  static const Color grey50 = Color.fromARGB(255, 202, 202, 202);
   static const Color spaceGrey = Color.fromARGB(255, 236, 233, 233);
+  static const Color black = Color(0xFF000000);
 }
 
 class AppColorsLight {

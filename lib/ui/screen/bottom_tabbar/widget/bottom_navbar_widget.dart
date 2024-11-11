@@ -34,7 +34,7 @@ class _BottomNavBarState extends State<BottomNavBarWidget> {
           showUnselectedLabels: true,
           selectedItemColor: Theme.of(context).primaryColor,
           unselectedItemColor: Theme.of(context).hintColor,
-          elevation: 3,
+          elevation: 1,
           selectedLabelStyle: AppTypographyLight.textHintBold,
           unselectedLabelStyle: AppTypographyLight.textHintBold,
           selectedFontSize: AppConstant.textSizeButton,

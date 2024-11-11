@@ -4,6 +4,8 @@ class AppConstant {
   static const String APP_NAME = "Foodioo";
   static const String APP_VERSION = "1.0.0";
   static String apiBaseURL = "${dotenv.env['API_BASE_URL']}/api";
+  static  String baseURL =  "${dotenv.env['API_BASE_URL']}/";
+  static int pageSize = 20 ;  
 
   static const double sizeIconLarge = 32.0;
   static const double sizeIconMedium = 24.0;
@@ -20,8 +22,11 @@ class AppConstant {
   static const double radiusExtra = 32.0;
 
   static const double paddingIcon = 3.0;
+  static const double paddingIndicator = 4.0;
   static const double paddingButton = 18.0;
   static const double paddingContent = 3.0;
   static const double paddingHorizontalApp = 18.0;
   static const double paddingVerticalApp = 22.0;
+
+  static const int durationAnimationSystemGeneral = 300;
 }
