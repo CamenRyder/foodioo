@@ -4,6 +4,7 @@ class AppConstant {
   static const String APP_NAME = "Foodioo";
   static const String APP_VERSION = "1.0.0";
   static String apiBaseURL = "${dotenv.env['API_BASE_URL']}/api";
+  static  String baseURL =  "${dotenv.env['API_BASE_URL']}/";
   static int pageSize = 20 ;  
 
   static const double sizeIconLarge = 32.0;

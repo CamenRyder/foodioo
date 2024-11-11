@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:foodioo/repositories/models/post_model.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 
 class ButtonReactWidget extends StatefulWidget {
-  const ButtonReactWidget({super.key});
+  const ButtonReactWidget(
+      {super.key, required this.postModel, required this.totalLike});
+  final PostModel postModel;
+  final int totalLike;
 
   @override
   State<ButtonReactWidget> createState() => _ButtonReactWidgetState();
@@ -13,7 +17,12 @@ class ButtonReactWidget extends StatefulWidget {
 
 class _ButtonReactWidgetState extends State<ButtonReactWidget> {
   bool reactPost = false;
-  int count = 20;
+  int count = 0;
+  @override
+  void initState() {
+    super.initState();
+    count = widget.totalLike;
+  }
 
   @override
   Widget build(BuildContext context) {

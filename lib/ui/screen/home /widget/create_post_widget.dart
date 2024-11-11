@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../General/svg_gen_size_widget.dart';
@@ -6,7 +7,6 @@ import '../../authorizator/widget/ring_of_avatar_widget.dart';
 
 class CreatePostWidget extends StatelessWidget {
   const CreatePostWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Column(
