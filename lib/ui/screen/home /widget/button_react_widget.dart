@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
+import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 
@@ -22,6 +24,16 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
   void initState() {
     super.initState();
     count = widget.totalLike;
+    int accountCurrent =
+        (context.read<AuthBloc>().state).currentAccount?.id ?? 0;
+    if (widget.postModel.accountLikes != null) {
+      int index = widget.postModel.accountLikes!.indexOf(accountCurrent);
+      if (index == -1) {
+        reactPost = false;
+      } else {
+        reactPost = true;
+      }
+    }
   }
 
   @override

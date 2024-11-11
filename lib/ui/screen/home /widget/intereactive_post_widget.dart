@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/repositories/authentication/auth_bloc.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
+import 'package:foodioo/ui/screen/app_config.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/assets.gen.dart';
@@ -14,6 +17,7 @@ class IntereactivePostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     int totalComment = postModel.totalComment ?? 0;
     int totalLike = postModel.totalLike ?? 0;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppConstant.paddingButton),
       child: Row(

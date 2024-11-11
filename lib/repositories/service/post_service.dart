@@ -23,4 +23,14 @@ class PostService extends FetchClient {
       return [];
     }
   }
+
+  Future<void> likePost({required int postId, required int accountId}) async {
+    await super.postData(
+        path: '/react', params: {"post_id": postId, "account_id": accountId});
+  }
+
+  Future<void> unlikePost({required int postId, required int accountId}) async {
+    await super.deleteData(
+        path: '/react', params: {"post_id": postId, "account_id": accountId});
+  }
 }

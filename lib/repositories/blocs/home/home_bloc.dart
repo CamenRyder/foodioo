@@ -9,11 +9,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeState()) {
     on<FetchNewFeed>(_fetchNewFeed);
     on<InitalLoading>(_initalLoading);
+    on<LikePost>(_likePost);  
+    on<DislikePost>(_disLikePost);
   }
 
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
 
+  _likePost(LikePost event ,  Emitter<HomeState> emit) async {
+      
+  }
+
+  _disLikePost(DislikePost event ,  Emitter<HomeState> emit) async {
+    
+  }
   _fetchNewFeed(FetchNewFeed event, Emitter<HomeState> emit) async {
     try {
       if (event.page == 1) {
@@ -28,7 +37,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         emit(state.copyWith(
             postModels: [...state.postModels, ...posts],
-            hasReachedPost: posts.isEmpty, // trả rỗng thì đến cuối data. ko gọi data nữa
+            hasReachedPost:
+                posts.isEmpty, // trả rỗng thì đến cuối data. ko gọi data nữa
             isLoadingNewFeed: false));
       }
     } catch (err) {

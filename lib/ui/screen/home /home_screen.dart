@@ -8,6 +8,7 @@ import 'package:foodioo/ui/General/message_over_screen.dart';
 import 'package:foodioo/ui/screen/home%20/widget/app_bar_home_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../repositories/authentication/auth_bloc.dart';
 import 'widget/create_post_widget.dart';
 import 'widget/post_widget.dart';
 
@@ -25,9 +26,13 @@ class _HomeScreenState extends State<HomeScreen>
   bool isLoading = false;
   int page = 1;
   @override
+  /// Initializes the state of the HomeScreen widget by setting up
+  /// the ScrollController and adding an event listener to it. Also
+  /// triggers the initial loading of data through the HomeBloc.
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(InitalLoading());
+    int currentAccountId =  context.read<AuthBloc>().state.currentAccount?.id ?? 0;
+    context.read<HomeBloc>().add(InitalLoading(currentAccountId: currentAccountId));
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
   }
@@ -86,20 +91,28 @@ class _HomeScreenState extends State<HomeScreen>
                       }
 
                       isLoading = false;
-                      return ListView(
-                        shrinkWrap: true,
-                        controller: _scrollController,
-                        children: [
-                          const CreatePostWidget(),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: state.postModels.length,
-                            itemBuilder: (context, index) => PostWidget(
-                              postModel: state.postModels[index],
-                            ),
-                          )
-                        ],
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          page = 1;
+                          context
+                              .read<HomeBloc>()
+                              .add(FetchNewFeed(page: page));
+                        },
+                        child: ListView(
+                          shrinkWrap: true,
+                          controller: _scrollController,
+                          children: [
+                            const CreatePostWidget(),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: state.postModels.length,
+                              itemBuilder: (context, index) => PostWidget(
+                                postModel: state.postModels[index],
+                              ),
+                            )
+                          ],
+                        ),
                       );
                     },
                   ))

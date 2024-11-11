@@ -2,6 +2,7 @@ import 'package:foodioo/repositories/models/post_model.dart';
 
 class HomeState {
   List<PostModel> postModels;
+  int currentAccountId;
   bool isLoadingNewFeed;
   bool isShowMessage = false;
   bool hasReachedPost = false;
@@ -11,6 +12,7 @@ class HomeState {
       {this.postModels = const [],
       this.isLoadingNewFeed = false,
       this.isShowMessage = false,
+      this.currentAccountId = 0,
       this.hasReachedPost = false,
       this.message = ""});
 
@@ -19,6 +21,7 @@ class HomeState {
     bool? isLoadingNewFeed,
     bool? isShowMessage,
     bool? hasReachedPost,
+    int? currentAccountId,
     String? message,
   }) {
     return HomeState(
@@ -26,6 +29,7 @@ class HomeState {
         isLoadingNewFeed: isLoadingNewFeed ?? this.isLoadingNewFeed,
         isShowMessage: isShowMessage ?? false,
         message: message ?? this.message,
+        currentAccountId: currentAccountId ?? this.currentAccountId,
         hasReachedPost: hasReachedPost ?? this.hasReachedPost);
   }
 }

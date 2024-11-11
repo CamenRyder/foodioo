@@ -7,6 +7,7 @@ class PostModel {
   double? lat;
   String? createdAt;
   List<Images>? images;
+  List<int>? accountLikes;
   Account? account;
   int? totalLike;
   int? totalComment;
@@ -21,6 +22,7 @@ class PostModel {
       this.createdAt,
       this.images,
       this.account,
+      this.accountLikes,
       this.totalLike,
       this.totalComment});
 
@@ -29,6 +31,7 @@ class PostModel {
     postTypeId = json['post_type_id'];
     accountId = json['account_id'];
     description = json['description'];
+    accountLikes = json['list_account_id_react'].cast<int>();
     lng = json['lng'];
     lat = json['lat'];
     createdAt = json['created_at'];
