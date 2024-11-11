@@ -16,7 +16,7 @@ class LikePost extends HomeEvent {
   LikePost({required this.postId});
 }
 
-class DislikePost extends HomeEvent {
+class UnLikePost extends HomeEvent {
   final int postId;
-  DislikePost({required this.postId});
+  UnLikePost({required this.postId});
 }

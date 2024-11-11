@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
+import 'package:foodioo/repositories/blocs/home/home_event.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
@@ -44,8 +46,14 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
             reactPost = !reactPost;
             if (reactPost) {
               ++count;
+              context
+                  .read<HomeBloc>()
+                  .add(LikePost(postId: widget.postModel.id ?? 0));
             } else {
               --count;
+              context
+                  .read<HomeBloc>()
+                  .add(UnLikePost(postId: widget.postModel.id ?? 0));
             }
           });
         },

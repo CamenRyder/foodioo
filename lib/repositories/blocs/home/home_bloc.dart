@@ -9,20 +9,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeState()) {
     on<FetchNewFeed>(_fetchNewFeed);
     on<InitalLoading>(_initalLoading);
-    on<LikePost>(_likePost);  
-    on<DislikePost>(_disLikePost);
+    on<LikePost>(_likePost);
+    on<UnLikePost>(_disLikePost);
   }
 
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
 
-  _likePost(LikePost event ,  Emitter<HomeState> emit) async {
-      
+  _likePost(LikePost event, Emitter<HomeState> emit) {
+    postService.likePost(
+        postId: event.postId, accountId: state.currentAccountId);
   }
 
-  _disLikePost(DislikePost event ,  Emitter<HomeState> emit) async {
-    
+  _disLikePost(UnLikePost event, Emitter<HomeState> emit) {
+    postService.unlikePost(
+        postId: event.postId, accountId: state.currentAccountId);
   }
+
   _fetchNewFeed(FetchNewFeed event, Emitter<HomeState> emit) async {
     try {
       if (event.page == 1) {
@@ -54,7 +57,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(isLoadingNewFeed: true));
       final posts = await postService.getNewFeed(page: 1, pageSize: pageSize);
 
-      emit(state.copyWith(postModels: posts, isLoadingNewFeed: false));
+      emit(state.copyWith(
+          postModels: posts,
+          isLoadingNewFeed: false,
+          currentAccountId: event.currentAccountId));
     } catch (err) {
       emit(state.copyWith(
           isLoadingNewFeed: false,
