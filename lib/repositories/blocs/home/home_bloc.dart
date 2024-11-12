@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/repositories/models/react_model.dart';
 import 'package:foodioo/repositories/service/post_service.dart';
 import 'package:foodioo/repositories/view/login_vm.dart';
 
@@ -13,10 +14,50 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<InitalLoading>(_initalLoading);
     on<LikePost>(_likePost);
     on<UnLikePost>(_disLikePost);
+    on<GetAccountReactPost>(_getAccountReactPost);
   }
 
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+
+  _getAccountReactPost(
+      GetAccountReactPost event, Emitter<HomeState> emit) async {
+    try {
+      if (event.page == null) {
+        emit(state.copyWith(isLoadingAccountsReact: true));
+        ResponseModel res = await postService.getAccountsReactPost(
+            postId: event.postId, page: 1, pageSize: AppConstant.pageSize);
+        if (res.getSuccess) {
+          emit(state.copyWith(
+              isLoadingAccountsReact: false,
+              reactModels: res.data,
+              hasReachedReactPost: false));
+        } else {
+          throw Exception(res.message);
+        }
+      } else if (!state.hasReachedReactPost) {
+        ResponseModel res = await postService.getAccountsReactPost(
+            postId: event.postId,
+            page: event.page!,
+            pageSize: AppConstant.pageSize);
+        if (res.getSuccess) {
+          List<ReactModel> reactBuff = res.data;
+          final dataaa = [...state.reactModels, ...reactBuff];
+          emit(state.copyWith(
+            reactModels: dataaa,
+            hasReachedReactPost: reactBuff.isEmpty,
+          ));
+        } else {
+          throw Exception(res.message);
+        }
+      }
+    } catch (err) {
+      emit(state.copyWith(
+          isLoadingAccountsReact: false,
+          isShowMessage: true,
+          message: err.toString()));
+    }
+  }
 
   _likePost(LikePost event, Emitter<HomeState> emit) {
     postService.likePost(

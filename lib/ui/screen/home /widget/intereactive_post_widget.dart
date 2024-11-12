@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodioo/repositories/authentication/auth_bloc.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
-import 'package:foodioo/ui/screen/app_config.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/assets.gen.dart';

@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_event.dart';
+import 'package:foodioo/repositories/blocs/home/home_state.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/authentication/auth_bloc.dart';
@@ -12,6 +14,7 @@ import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
 import 'account_like_widget.dart';
+import 'list_account_react_widget.dart';
 
 class ButtonReactWidget extends StatefulWidget {
   const ButtonReactWidget(
@@ -52,6 +55,10 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
               builder: (context) {
                 final widthBottomSheet = MediaQuery.sizeOf(context).width;
                 const radiusRuler = Radius.circular(AppConstant.paddingContent);
+
+                context
+                    .read<HomeBloc>()
+                    .add(GetAccountReactPost(postId: widget.postModel.id ?? 0));
                 return Container(
                   width: widthBottomSheet,
                   decoration: BoxDecoration(
@@ -76,12 +83,9 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
                           width: widthBottomSheet,
                           height: 1,
                           color: Theme.of(context).hintColor),
-                      Expanded(
-                          child: ListView.builder(
-                        itemCount: 10,
-                        itemBuilder: (context, index) =>
-                            const AccountLikeWidget(),
-                      ))
+                      ListAccountReactWidget(
+                        postModel: widget.postModel,
+                      ),
                     ],
                   ),
                 );

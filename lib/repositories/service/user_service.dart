@@ -20,7 +20,7 @@ class UserService extends FetchClient {
           userModels.add(UserModel.fromJson(e));
         }
         return ResponseModel(
-            data: result,
+            data: userModels,
             getSuccess: true,
             message: "Lấy thông tin thành công");
       }
