@@ -30,8 +30,25 @@ class PostService extends FetchClient {
         path: '/react', params: {"post_id": postId, "account_id": accountId});
   }
 
-  Future<ReactModel> getAccountsReact() async {
-    
+  Future<List<ReactModel>> getAccountsReact(
+      {required int accountId, required int postId}) async {
+    try {
+      final Response<dynamic> results = await super.getData(
+          path: '/react',
+          queryParameters: {"post_id": postId, "account_id": accountId});
+      List<ReactModel> accounts = [];
+      if (results.data['code'] >= 200 && results.data['code'] < 300) {
+        final accountLiked = results.data['data'];
+
+        for (var e in accountLiked) {
+          accounts.add(ReactModel.fromJson(e));
+        }
+      }
+
+      return accounts;
+    } catch (err) {
+      return [];
+    }
   }
 
   Future<void> unlikePost({required int postId, required int accountId}) async {
