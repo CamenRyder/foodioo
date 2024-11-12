@@ -24,6 +24,10 @@ class _ListAccountReactWidgetState extends State<ListAccountReactWidget> {
   @override
   void initState() {
     super.initState();
+
+    context
+        .read<HomeBloc>()
+        .add(GetAccountReactPost(postId: widget.postModel.id ?? 0));
     _scrollController.addListener(_onScroll);
   }
 
@@ -53,14 +57,22 @@ class _ListAccountReactWidgetState extends State<ListAccountReactWidget> {
           }
           final accountReacts = state.reactModels;
           isLoading = false;
-          return ListView.builder(
-            controller: _scrollController,
-            itemCount: accountReacts.length,
-            itemBuilder: (context, index) {
-              return AccountLikeWidget(
-                model: accountReacts[index],
-              );
+          return RefreshIndicator(
+            onRefresh: () async {
+              page = 0;
+              context
+                  .read<HomeBloc>()
+                  .add(GetAccountReactPost(postId: widget.postModel.id ?? 0));
             },
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: accountReacts.length,
+              itemBuilder: (context, index) {
+                return AccountLikeWidget(
+                  model: accountReacts[index],
+                );
+              },
+            ),
           );
         },
       ),

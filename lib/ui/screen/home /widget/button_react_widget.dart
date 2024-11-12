@@ -55,10 +55,6 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
               builder: (context) {
                 final widthBottomSheet = MediaQuery.sizeOf(context).width;
                 const radiusRuler = Radius.circular(AppConstant.paddingContent);
-
-                context
-                    .read<HomeBloc>()
-                    .add(GetAccountReactPost(postId: widget.postModel.id ?? 0));
                 return Container(
                   width: widthBottomSheet,
                   decoration: BoxDecoration(
