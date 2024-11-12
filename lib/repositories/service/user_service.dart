@@ -28,7 +28,6 @@ class UserService extends FetchClient {
           data: null,
           getSuccess: false,
           message: ValidateCodeResponse.showErorrResponse(result.data['code']));
-      ;
     } catch (e) {
       return ResponseModel(
           getSuccess: false, message: "Đã có lỗi: $e", data: null);

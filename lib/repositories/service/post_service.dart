@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
+import 'package:foodioo/repositories/view/login_vm.dart';
 
 import '../../Core/Helper/dio_sepecificate.dart';
+import '../../Core/Helper/validate_code_response.dart';
 import '../models/react_model.dart';
 
 class PostService extends FetchClient {
-  Future<List<PostModel>> getNewFeed(
+  Future<ResponseModel> getNewFeed(
       {required int page, required int pageSize}) async {
     try {
       List<PostModel> postModels = [];
@@ -18,36 +21,53 @@ class PostService extends FetchClient {
         for (var e in posts) {
           postModels.add(PostModel.fromJson(e));
         }
+        return ResponseModel(
+            data: postModels,
+            getSuccess: true,
+            message: AppConstant.messageGetSuccesData);
       }
-      return postModels;
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
     } catch (e) {
-      return [];
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
     }
   }
 
-  Future<void> likePost({required int postId, required int accountId}) async {
+   Future<void> likePost({required int postId, required int accountId}) async {
     await super.postData(
         path: '/react', params: {"post_id": postId, "account_id": accountId});
   }
 
-  Future<List<ReactModel>> getAccountsReact(
+  Future<ResponseModel> getAccountsReact(
       {required int accountId, required int postId}) async {
     try {
-      final Response<dynamic> results = await super.getData(
+      final Response<dynamic> result = await super.getData(
           path: '/react',
           queryParameters: {"post_id": postId, "account_id": accountId});
       List<ReactModel> accounts = [];
-      if (results.data['code'] >= 200 && results.data['code'] < 300) {
-        final accountLiked = results.data['data'];
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        final accountLiked = result.data['data'];
 
         for (var e in accountLiked) {
           accounts.add(ReactModel.fromJson(e));
         }
+        return ResponseModel(
+            data: accountLiked,
+            getSuccess: true,
+            message: AppConstant.messageGetSuccesData);
       }
-
-      return accounts;
-    } catch (err) {
-      return [];
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
     }
   }
 
