@@ -7,7 +7,7 @@ import '../view/login_vm.dart';
 import '../view/register_vm.dart';
 
 class UserService extends FetchClient {
-  Future<List<UserModel>> getUser() async {
+  Future<ResponseModel> getUser() async {
     try {
       List<UserModel> userModels = [];
 
@@ -19,10 +19,19 @@ class UserService extends FetchClient {
         for (var e in accounts) {
           userModels.add(UserModel.fromJson(e));
         }
+        return ResponseModel(
+            data: result,
+            getSuccess: true,
+            message: "Lấy thông tin thành công");
       }
-      return userModels;
+      return ResponseModel(
+          data: null,
+          getSuccess: false,
+          message: ValidateCodeResponse.showErorrResponse(result.data['code']));
+      ;
     } catch (e) {
-      return [];
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
     }
   }
 
