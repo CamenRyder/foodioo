@@ -36,7 +36,6 @@ class _ListAccountReactWidgetState extends State<ListAccountReactWidget> {
             _scrollController.position.maxScrollExtent - 200 &&
         isLoading == false) {
       isLoading = true;
-      page = 0;
       context.read<HomeBloc>().add(
           GetAccountReactPost(page: ++page, postId: widget.postModel.id ?? 0));
     }

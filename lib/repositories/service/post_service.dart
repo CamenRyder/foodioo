@@ -17,7 +17,12 @@ class PostService extends FetchClient {
           await super.getData(path: '/posts?page=$page&page_size=$pageSize');
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final posts = result.data['data'];
-
+        if (posts == null) {
+          return ResponseModel(
+              data: postModels,
+              getSuccess: true,
+              message: AppConstant.messageGetSuccesData);
+        }
         for (var e in posts) {
           postModels.add(PostModel.fromJson(e));
         }
