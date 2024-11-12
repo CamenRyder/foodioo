@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 
 import '../../Core/Helper/dio_sepecificate.dart';
+import '../models/react_model.dart';
 
 class PostService extends FetchClient {
   Future<List<PostModel>> getNewFeed(
@@ -27,6 +28,10 @@ class PostService extends FetchClient {
   Future<void> likePost({required int postId, required int accountId}) async {
     await super.postData(
         path: '/react', params: {"post_id": postId, "account_id": accountId});
+  }
+
+  Future<ReactModel> getAccountsReact() async {
+    
   }
 
   Future<void> unlikePost({required int postId, required int accountId}) async {

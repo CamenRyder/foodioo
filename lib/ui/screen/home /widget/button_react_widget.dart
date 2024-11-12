@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_event.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
+import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
+import '../../authorizator/widget/ring_of_avatar_widget.dart';
+import 'account_like_widget.dart';
 
 class ButtonReactWidget extends StatefulWidget {
   const ButtonReactWidget(
@@ -22,6 +26,7 @@ class ButtonReactWidget extends StatefulWidget {
 class _ButtonReactWidgetState extends State<ButtonReactWidget> {
   bool reactPost = false;
   int count = 0;
+  final radius = const Radius.circular(AppConstant.radiusExtra);
   @override
   void initState() {
     super.initState();
@@ -41,6 +46,47 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+        onLongPress: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                final widthBottomSheet = MediaQuery.sizeOf(context).width;
+                const radiusRuler = Radius.circular(AppConstant.paddingContent);
+                return Container(
+                  width: widthBottomSheet,
+                  decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.only(topLeft: radius, topRight: radius),
+                      color: Theme.of(context).scaffoldBackgroundColor),
+                  child: Column(
+                    children: [
+                      SpacingVerticalWidget(height: widthBottomSheet / 25),
+                      Container(
+                        height: widthBottomSheet / 100,
+                        width: widthBottomSheet / 8,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).hintColor,
+                            borderRadius: const BorderRadius.all(radiusRuler)),
+                      ),
+                      SpacingVerticalWidget(height: widthBottomSheet / 20),
+                      Text("Cảm xúc ($count)",
+                          style: Theme.of(context).textTheme.headlineSmall),
+                      SpacingVerticalWidget(height: widthBottomSheet / 18),
+                      Container(
+                          width: widthBottomSheet,
+                          height: 1,
+                          color: Theme.of(context).hintColor),
+                      Expanded(
+                          child: ListView.builder(
+                        itemCount: 10,
+                        itemBuilder: (context, index) =>
+                            const AccountLikeWidget(),
+                      ))
+                    ],
+                  ),
+                );
+              });
+        },
         onTap: () {
           setState(() {
             reactPost = !reactPost;
