@@ -47,10 +47,10 @@ class PostWidget extends StatefulWidget {
                         );
                       },
                     ),
-                    const Align(
-                      alignment: Alignment.topRight,
-                      child: ButtonShowMapWidget(),
-                    ),
+                    // const Align(
+                    //   alignment: Alignment.topRight,
+                    //   child: ButtonShowMapWidget(),
+                    // ),
                   ],
                 )),
             IntereactivePostWidget(
@@ -108,10 +108,10 @@ class _PostWidgetState extends State<PostWidget> {
                           );
                         },
                       ),
-                      const Align(
-                        alignment: Alignment.topRight,
-                        child: ButtonShowMapWidget(),
-                      ),
+                      // const Align(
+                      //   alignment: Alignment.topRight,
+                      //   child: ButtonShowMapWidget(),
+                      // ),
                       widget.postModel.images!.isEmpty ||
                               widget.postModel.images!.length == 1
                           ? const SizedBox()

@@ -62,22 +62,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
         await GetStorage().write(keyToken, token);
         FetchClient.token = token;
-        List<UserModel> accounts = await UserService().getUser();
-        if (accounts.isEmpty) {
-          emit(state.copyWith(
-              isLoadingOverLay: false,
-              isLogout: true,
-              message: "Không tìm thấy tài khoản.",
-              isShowMessage: true,
-              token: token));
+        ResponseModel response = await UserService().getUser();
+        if (response.getSuccess) {
+          List<UserModel> accounts = response.data ?? [];
+          if (accounts.isEmpty) {
+            emit(state.copyWith(
+                isLoadingOverLay: false,
+                isLogout: true,
+                message: "Không tìm thấy tài khoản.",
+                isShowMessage: true,
+                token: token));
+          } else {
+            emit(state.copyWith(
+                isLoadingOverLay: false,
+                accounts: accounts,
+                isShowMessage: true,
+                message: "Chào mừng - ${accounts[0].fullname}",
+                isLogout: false,
+                currentAccount: accounts[0],
+                token: token));
+          }
         } else {
           emit(state.copyWith(
               isLoadingOverLay: false,
-              accounts: accounts,
+              isLogout: true,
+              message: response.message,
               isShowMessage: true,
-              message: "Chào mừng - ${accounts[0].fullname}",
-              isLogout: false,
-              currentAccount: accounts[0],
               token: token));
         }
       } else {
@@ -116,19 +126,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         GetStorage().write(introkey, false);
       }
 
-      List<UserModel> accounts = [];
-
       if (token.isNotEmpty) {
-        accounts = await UserService().getUser();
-      }
-      emit(state.copyWith(isShowSplash: false));
-      if (accounts.isNotEmpty) {
-        emit(state.copyWith(
-            accounts: accounts,
-            currentAccount: accounts[0],
-            isDarkMode: isDarkModeOn));
+        List<UserModel> accounts = [];
+        ResponseModel reponse = await UserService().getUser();
+        if (reponse.getSuccess) {
+          accounts = reponse.data;
+        }
+        emit(state.copyWith(isShowSplash: false));
+        if (accounts.isNotEmpty) {
+          emit(state.copyWith(
+              accounts: accounts,
+              currentAccount: accounts[0],
+              isDarkMode: isDarkModeOn));
+        } else {
+          emit(state.copyWith(isLogout: true, isDarkMode: isDarkModeOn));
+        }
       } else {
-        emit(state.copyWith(isLogout: true, isDarkMode: isDarkModeOn));
+        emit(state.copyWith(
+        message: "Hệ thống không phản hồi!!",
+        isShowMessage: true,
+        isLoadingOverLay: false,
+      ));
+        add(Logout());
       }
     } catch (err) {
       emit(state.copyWith(
