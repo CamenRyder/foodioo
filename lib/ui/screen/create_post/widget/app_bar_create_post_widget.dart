@@ -6,34 +6,38 @@ class AppBarCreatePostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.pop(context),
-        ),
-        Text(
-          "Chia sẻ bài viết",
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-        Container(
-          margin: const EdgeInsets.only(right: AppConstant.paddingContent + 9),
-          padding: const EdgeInsets.symmetric(
-              vertical: AppConstant.paddingContent,
-              horizontal: AppConstant.paddingContent + 9),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-            color: Theme.of(context).primaryColor,
+    return Padding(
+      padding: const EdgeInsets.all(AppConstant.paddingComponent),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
           ),
-          child: Center(
-              child: Text("Đăng",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall!
-                      .copyWith(color: Colors.white))),
-        )
-      ],
-    ); 
+          Text(
+            "Chia sẻ bài viết",
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          Container(
+            margin:
+                const EdgeInsets.only(right: AppConstant.paddingContent + 9),
+            padding: const EdgeInsets.symmetric(
+                vertical: AppConstant.paddingContent,
+                horizontal: AppConstant.paddingContent + 9),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
+              color: Theme.of(context).primaryColor,
+            ),
+            child: Center(
+                child: Text("Đăng",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: Colors.white))),
+          )
+        ],
+      ),
+    );
   }
 }

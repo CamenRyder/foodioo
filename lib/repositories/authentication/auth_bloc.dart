@@ -143,10 +143,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       } else {
         emit(state.copyWith(
-        message: "Hệ thống không phản hồi!!",
-        isShowMessage: true,
-        isLoadingOverLay: false,
-      ));
+          message: "Hệ thống không phản hồi!!",
+          isShowMessage: true,
+          isLoadingOverLay: false,
+          isShowSplash: false,
+        ));
         add(Logout());
       }
     } catch (err) {
@@ -163,8 +164,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
       await GetStorage().write(keyToken, '');
       FetchClient.token = '';
-      emit(state
-          .copyWith(isLogout: true, currentAccount: null, accounts: const []));
+      emit(state.copyWith(
+          isLogout: true,
+          isShowSplash: false,
+          currentAccount: null,
+          accounts: const []));
     } catch (e) {
       emit(state.copyWith(message: e.toString(), isShowMessage: true));
     }
