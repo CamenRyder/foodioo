@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../Core/theme/app_colors.dart';
+import '../../../../repositories/blocs/create_post/create_post_bloc.dart';
+import '../../../../repositories/blocs/create_post/create_post_event.dart';
 import '../../../General/svg_gen_size_widget.dart';
 
 class GetImageWidget extends StatelessWidget {
@@ -12,15 +15,11 @@ class GetImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        // await showModalBottomSheet(
-        //   context: context,
-        //   builder: (context) => Container(),
-        // );
         showModalBottomSheet(
           constraints:
               BoxConstraints(minWidth: MediaQuery.of(context).size.width),
           context: context,
-          builder: (context) {
+          builder: (contextA) {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Column(
@@ -37,10 +36,7 @@ class GetImageWidget extends StatelessWidget {
                       // style: TextStyle(
                       //     color: AppColors.secondary, fontSize: 14),
                     ),
-                    onTap: () {
-                      // Navigator.pop(context);
-                      _pickImage();
-                    },
+                    onTap: () async => _pickImage(context),
                   ),
                   const Divider(
                     height: 1,
@@ -56,8 +52,8 @@ class GetImageWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     onTap: () {
-                      // Navigator.pop(context);
-                      _takePicture();
+                      Navigator.pop(context);
+                      _takePicture(context);
                     },
                   ),
                 ],
@@ -74,25 +70,23 @@ class GetImageWidget extends StatelessWidget {
     );
   }
 
-  Future<void> _pickImage() async {
-    final image = await ImagePicker().pickMultiImage();
+  Future<void> _pickImage(BuildContext context) async {
+    Navigator.pop(context);
+    final images = await ImagePicker().pickMultiImage();
 
-    if (image == null) {
+    if (images.isEmpty) {
       return;
     }
-    // setState(() {
-    //   widget.listImage.addAll(image);
-    // });
+
+    context.read<CreatePostBloc>().add(GetImageDevice(images: images));
   }
 
-  Future<void> _takePicture() async {
+  Future<void> _takePicture(BuildContext context) async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (image == null) {
       return;
     }
-    // setState(() {
-    //   widget.listImage.addAll([image]);
-    // });
+    context.read<CreatePostBloc>().add(GetImageDevice(images: [image]));
   }
 }
