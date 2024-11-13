@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 
+import '../../../../Core/Theme/app_colors.dart';
+
 class AppBarCreatePostWidget extends StatelessWidget {
   const AppBarCreatePostWidget({super.key});
 
@@ -26,9 +28,9 @@ class AppBarCreatePostWidget extends StatelessWidget {
                 vertical: AppConstant.paddingContent,
                 horizontal: AppConstant.paddingContent + 9),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-              color: Theme.of(context).primaryColor,
-            ),
+                borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
+                color: AppColors.grey50 // Theme.of(context).primaryColor,
+                ),
             child: Center(
                 child: Text("Đăng",
                     style: Theme.of(context)

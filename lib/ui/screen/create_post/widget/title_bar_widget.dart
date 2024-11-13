@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
+import '../../../../Core/Theme/app_colors.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
 import 'get_image_widget.dart';
@@ -43,7 +44,7 @@ class TitleBarWidget extends StatelessWidget {
                     horizontal: AppConstant.paddingContent + 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-                  color: Theme.of(context).cardColor,
+                  color: AppColors.grey50,
                 ),
                 child: Center(
                     child: Text("Thêm thẻ",
@@ -53,7 +54,7 @@ class TitleBarWidget extends StatelessWidget {
                             .copyWith(color: Colors.white))),
               ),
               const SpacingHorizontalWidget(
-                width: 3,
+                width: 7,
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -61,7 +62,7 @@ class TitleBarWidget extends StatelessWidget {
                     horizontal: AppConstant.paddingContent + 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-                  color: Theme.of(context).cardColor,
+                  color: AppColors.grey50,
                 ),
                 child: Center(
                     child: Text("Chia sẻ vị trí",

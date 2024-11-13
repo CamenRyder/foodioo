@@ -14,4 +14,11 @@ class RemoveImage extends CreatePostEvent {
   RemoveImage({required this.index});
 }
 
-class CreatePost extends CreatePostEvent {}
+class EnableButtonCreatePost extends CreatePostEvent {}
+
+class DisableButtonCreatePost extends CreatePostEvent {}
+
+class CreatePost extends CreatePostEvent {
+  final String description;
+  CreatePost({required this.description});
+}
