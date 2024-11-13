@@ -64,7 +64,7 @@ class GetImageWidget extends StatelessWidget {
         // final a = await ImagePicker().pickMultiImage();
       },
       child: SvgGenSizeWidget(
-        icon: Assets.icons.imagePicker.svg(),
+        icon: Assets.icons.imagePicker.svg(color: Theme.of(context).hintColor),
         isLargeSize: true,
       ),
     );

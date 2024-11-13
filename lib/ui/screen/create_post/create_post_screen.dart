@@ -33,7 +33,17 @@ class CreatePostScreen extends StatelessWidget {
               child: TextField(
                 maxLines: 5,
                 // controller: textEdt02,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  if (value.isEmpty) {
+                    context
+                        .read<CreatePostBloc>()
+                        .add(DisableButtonCreatePost());
+                  } else {
+                    context
+                        .read<CreatePostBloc>()
+                        .add(EnableButtonCreatePost());
+                  }
+                },
                 // autofocus: false,
                 style: Theme.of(context).textTheme.bodyLarge, // displaySmall
                 decoration: const InputDecoration(
