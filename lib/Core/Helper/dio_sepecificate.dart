@@ -50,16 +50,18 @@ class FetchClient {
           return handler.next(response);
         } else if (response.statusCode == 200 && response.data != null) {
           var responseData = response.data;
-          if (responseData['errors'] != null) {
-            var errors = responseData['errors'];
-            if (errors is List) {
-              if (errors[0]['message'] != null) {
-                if (errors[0]['message'] == 'Unauthorized') {
-                  _handleUnauthorized(response, handler);
-                  return handler.next(response);
-                }
-              }
-            }
+          if (responseData['code'] == 40101) {
+            _handleUnauthorized(response, handler);
+              return handler.next(response);
+            // var errors = responseData['code'];
+            // if (errors is List) {
+            //   if (errors[0]['message'] != null) {
+            //     if (errors[0]['message'] == 'Unauthorized') {
+            //       _handleUnauthorized(response, handler);
+            //       return handler.next(response);
+            //     }
+            //   }
+            // }
           }
         }
         handler.next(response);
