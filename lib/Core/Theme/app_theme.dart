@@ -27,20 +27,23 @@ class AppTheme {
         ),
         textSelectionTheme: const TextSelectionThemeData(
             cursorColor: AppColorsLight.textContent),
-        inputDecorationTheme: const InputDecorationTheme(
+        inputDecorationTheme: InputDecorationTheme(
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColorsLight.textHint),
+              borderRadius: BorderRadius.circular(AppConstant.radiusLarge),
+              borderSide: const BorderSide(color: AppColorsDark.textHint),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColorsLight.textHint),
+              borderRadius: BorderRadius.circular(AppConstant.radiusLarge),
+              borderSide: const BorderSide(color: AppColorsDark.textHint),
             ),
             hintStyle: AppTypographyLight.textHintBold,
-            contentPadding:
-                EdgeInsets.symmetric(vertical: AppConstant.paddingContent),
+            contentPadding: const EdgeInsets.symmetric(
+                vertical: AppConstant.paddingContent),
             labelStyle: AppTypographyLight.textHintBold,
             floatingLabelStyle: AppTypographyLight.textHintBold,
             floatingLabelBehavior: FloatingLabelBehavior.auto,
-            activeIndicatorBorder: BorderSide(color: AppColorsLight.primary)),
+            activeIndicatorBorder:
+                const BorderSide(color: AppColorsLight.primary)),
         textTheme: AppTypographyLight.textTheme,
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(

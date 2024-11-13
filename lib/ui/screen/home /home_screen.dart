@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_event.dart';
 import 'package:foodioo/repositories/blocs/home/home_state.dart';
+import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:foodioo/ui/General/message_over_screen.dart';
 
 import 'package:foodioo/ui/screen/home%20/widget/app_bar_home_widget.dart';
@@ -25,14 +26,16 @@ class _HomeScreenState extends State<HomeScreen>
   late ScrollController _scrollController;
   bool isLoading = false;
   int page = 1;
+  late UserModel userModel;
   @override
-  /// Initializes the state of the HomeScreen widget by setting up
-  /// the ScrollController and adding an event listener to it. Also
-  /// triggers the initial loading of data through the HomeBloc.
   void initState() {
     super.initState();
-    int currentAccountId =  context.read<AuthBloc>().state.currentAccount?.id ?? 0;
-    context.read<HomeBloc>().add(InitalLoading(currentAccountId: currentAccountId));
+    int currentAccountId =
+        context.read<AuthBloc>().state.currentAccount?.id ?? 0;
+    context
+        .read<HomeBloc>()
+        .add(InitalLoading(currentAccountId: currentAccountId));
+    userModel = context.read<AuthBloc>().state.currentAccount ?? UserModel();
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
   }
@@ -48,9 +51,9 @@ class _HomeScreenState extends State<HomeScreen>
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     super.build(context);
-    // final scrollController = context.read<SystemBloc>().state.scrollController;\
 
     return BlocBuilder<HomeBloc, HomeState>(
       buildWhen: (previous, current) {
@@ -93,16 +96,18 @@ class _HomeScreenState extends State<HomeScreen>
                       isLoading = false;
                       return RefreshIndicator(
                         onRefresh: () async {
-                          page = 1;
-                          context
-                              .read<HomeBloc>()
-                              .add(FetchNewFeed(page: page));
+                          refresh();
                         },
                         child: ListView(
                           shrinkWrap: true,
                           controller: _scrollController,
                           children: [
-                            const CreatePostWidget(),
+                            CreatePostWidget(
+                              refresh: () {
+                                refresh();
+                              },
+                              user: userModel,
+                            ),
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
@@ -121,6 +126,11 @@ class _HomeScreenState extends State<HomeScreen>
             ));
       },
     );
+  }
+
+  void refresh() {
+    page = 1;
+    context.read<HomeBloc>().add(FetchNewFeed(page: page));
   }
 
   @override

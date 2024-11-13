@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:foodioo/ui/screen/splash/splash_screen.dart';
 import '../../ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
+import '../../ui/screen/create_post/create_post_screen.dart';
 import '../../ui/screen/food_map/food_map_screen.dart';
 import 'routes_name.dart';
 
@@ -21,6 +22,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const BottomTabbarScreen());
       case NavigatorNames.FOOD_MAP:
         return MaterialPageRoute(builder: (_) => const FoodMapScreen());
+      case NavigatorNames.CREATE_POST:
+        return MaterialPageRoute(builder: (_) => CreatePostScreen());
 
       // case NavigatorNames.LOGIN_WEB:
       //   return MaterialPageRoute(
