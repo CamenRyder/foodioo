@@ -23,7 +23,7 @@ class RouteGenerator {
       case NavigatorNames.FOOD_MAP:
         return MaterialPageRoute(builder: (_) => const FoodMapScreen());
       case NavigatorNames.CREATE_POST:
-        return MaterialPageRoute(builder: (_) => const CreatePostScreen());
+        return MaterialPageRoute(builder: (_) => CreatePostScreen());
 
       // case NavigatorNames.LOGIN_WEB:
       //   return MaterialPageRoute(

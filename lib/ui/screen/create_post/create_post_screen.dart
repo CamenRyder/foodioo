@@ -7,9 +7,11 @@ import 'package:foodioo/ui/General/spacing_horizontal_widget.dart';
 import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
 import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart';
 import 'package:foodioo/ui/screen/create_post/widget/app_bar_create_post_widget.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreatePostScreen extends StatelessWidget {
-  const CreatePostScreen({super.key});
+  CreatePostScreen({super.key});
+  final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +88,14 @@ class CreatePostScreen extends StatelessWidget {
                 ],
               ),
               const SpacingHorizontalWidget(),
-              SvgGenSizeWidget(
-                icon: Assets.icons.imagePicker.svg(),
-                isLargeSize: true,
+              GestureDetector(
+                onTap: () async {
+                  final a = await ImagePicker().pickMultiImage();
+                },
+                child: SvgGenSizeWidget(
+                  icon: Assets.icons.imagePicker.svg(),
+                  isLargeSize: true,
+                ),
               ),
               const SpacingHorizontalWidget(
                 width: 12,

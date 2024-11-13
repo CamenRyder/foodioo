@@ -1,0 +1,2 @@
+class CreatePostState {
+  const CreatePostState();}
