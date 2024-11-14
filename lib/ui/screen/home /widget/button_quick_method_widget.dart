@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/ui/screen/home%20/widget/button_delete_post_widget.dart';
 
-import '../../../../Core/Theme/app_colors.dart';
-import '../../../../Core/Theme/assets.gen.dart';
+
 import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../../repositories/models/post_model.dart';
-import '../../../General/svg_gen_size_widget.dart';
 import 'button_edit_post_widget.dart';
 
 class ButtonQuickMethodWidget extends StatelessWidget {

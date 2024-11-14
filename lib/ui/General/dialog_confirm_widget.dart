@@ -57,9 +57,9 @@ class _DialogConfirmState extends State<DialogConfirm> {
                   child: Text(
                     widget.textCancel,
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14),
+                        color: Theme.of(context).hintColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13),
                   ),
                 ),
                 CupertinoDialogAction(
@@ -68,8 +68,8 @@ class _DialogConfirmState extends State<DialogConfirm> {
                     widget.textConfirm,
                     style: const TextStyle(
                         color: AppColors.red,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13),
                   ),
                 )
               ]);

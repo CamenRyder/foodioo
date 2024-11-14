@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodioo/Core/Theme/app_colors.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
+import '../../../General/dialog_confirm_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 
 class ButtonEditPostWidget extends StatelessWidget {
@@ -15,7 +16,7 @@ class ButtonEditPostWidget extends StatelessWidget {
           constraints:
               BoxConstraints(minWidth: MediaQuery.of(context).size.width),
           context: context,
-          builder: (contextA) {
+          builder: (context) {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Column(
@@ -45,8 +46,22 @@ class ButtonEditPostWidget extends StatelessWidget {
                       'Xóa bài viết',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    onTap: () {
-                      Navigator.pop(context);
+                    onTap: () async {
+                      await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return DialogConfirm(
+                              content: "Chắc chắn xóa bài viết này ?",
+                              textConfirm: "Xóa",
+                              textCancel: "Trở lại",
+                              func: () {
+                                Navigator.pop(context);
+                              },
+                              fucCancel: () {
+                                Navigator.pop(context);
+                              },
+                            );
+                          });
                       // _takePicture(context);
                     },
                   ),
