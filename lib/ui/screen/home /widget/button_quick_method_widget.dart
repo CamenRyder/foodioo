@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/ui/screen/home%20/widget/button_delete_post_widget.dart';
 
 import '../../../../Core/Theme/app_colors.dart';
 import '../../../../Core/Theme/assets.gen.dart';
@@ -27,10 +28,6 @@ class ButtonQuickMethodWidget extends StatelessWidget {
     }
     return isYours
         ? const ButtonEditPostWidget()
-        : GestureDetector(
-            onTap: () {},
-            child: SvgGenSizeWidget(
-                icon: Assets.icons.ban.svg(color: Theme.of(context).hintColor)),
-          );
+        : const ButtonDeletePostWidget();
   }
 }
