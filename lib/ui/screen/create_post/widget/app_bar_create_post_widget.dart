@@ -31,24 +31,32 @@ class AppBarCreatePostWidget extends StatelessWidget {
                   current.enableButtonCreatePost;
             },
             builder: (context, state) {
-              return Container(
-                margin: const EdgeInsets.only(
-                    right: AppConstant.paddingContent + 9),
-                padding: const EdgeInsets.symmetric(
-                    vertical: AppConstant.paddingContent,
-                    horizontal: AppConstant.paddingContent + 9),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-                  color: state.enableButtonCreatePost
-                      ? Theme.of(context).primaryColor
-                      : AppColors.grey50,
+              return GestureDetector(
+                onTap: () {
+                  if (state.enableButtonCreatePost) {
+                    context.read<CreatePostBloc>().add(CreatePost());
+                  }
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      right: AppConstant.paddingContent + 9),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: AppConstant.paddingContent,
+                      horizontal: AppConstant.paddingContent + 9),
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(AppConstant.radiusMedium),
+                    color: state.enableButtonCreatePost
+                        ? Theme.of(context).primaryColor
+                        : AppColors.grey50,
+                  ),
+                  child: Center(
+                      child: Text("Đăng",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: Colors.white))),
                 ),
-                child: Center(
-                    child: Text("Đăng",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .copyWith(color: Colors.white))),
               );
             },
           )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/Core/routes/routes_name.dart';
 import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_event.dart';
 import 'package:foodioo/repositories/blocs/home/home_state.dart';
@@ -57,11 +58,15 @@ class _HomeScreenState extends State<HomeScreen>
 
     return BlocBuilder<HomeBloc, HomeState>(
       buildWhen: (previous, current) {
-        return current.message != previous.message;
+        return current.message != previous.message ||
+            current.isRefreshFeed == true;
       },
       builder: (context, state) {
         if (state.isShowMessage) {
           MessageToast.showToast(context, message: state.message);
+        }
+        if (state.isRefreshFeed) {
+          refresh();
         }
         return Scaffold(
             // floatingActionButton: FloatingActionButton(
@@ -103,7 +108,9 @@ class _HomeScreenState extends State<HomeScreen>
                           controller: _scrollController,
                           children: [
                             CreatePostWidget(
-                              refresh: () {
+                              onTap: () async {
+                                await Navigator.pushNamed(
+                                    context, NavigatorNames.CREATE_POST);
                                 refresh();
                               },
                               user: userModel,

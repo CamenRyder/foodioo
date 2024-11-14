@@ -52,7 +52,7 @@ class FetchClient {
           var responseData = response.data;
           if (responseData['code'] == 40101) {
             _handleUnauthorized(response, handler);
-              return handler.next(response);
+            return handler.next(response);
             // var errors = responseData['code'];
             // if (errors is List) {
             //   if (errors[0]['message'] != null) {
@@ -247,6 +247,19 @@ class FetchClient {
             'file': [await MultipartFile.fromFile(fileUrl)],
           }),
           options: options());
+      return response;
+    } on DioException catch (e) {
+      return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+    }
+  }
+
+  Future<Response> createPost(
+      String url, Map<String, dynamic> mapDataForm) async {
+    try {
+      logRequest();
+      final response = await dio.post(url,
+          data: FormData.fromMap(mapDataForm), options: options());
       return response;
     } on DioException catch (e) {
       return e.response ??

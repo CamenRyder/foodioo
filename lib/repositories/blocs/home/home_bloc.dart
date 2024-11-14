@@ -15,10 +15,35 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LikePost>(_likePost);
     on<UnLikePost>(_disLikePost);
     on<GetAccountReactPost>(_getAccountReactPost);
+    on<DeletePost>(_onDeletePost);
+    on<RefreshNewFeed>(_onRefreshNewFeed);
   }
 
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+
+  _onRefreshNewFeed(RefreshNewFeed event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(isRefreshFeed: true));
+  }
+
+  _onDeletePost(DeletePost event, Emitter<HomeState> emit) async {
+    try {
+      emit(state.copyWith(isLoadingDeletePost: true));
+      ResponseModel res = await postService.deletePost(postId: event.postId);
+      if (res.getSuccess) {
+        emit(state.copyWith(
+            isLoadingDeletePost: false,
+            isShowMessage: true,
+            isRefreshFeed: true,
+            message: "Xóa bài viết thành công!"));
+      } else {
+        throw Exception(res.message);
+      }
+    } catch (e) {
+      emit(state.copyWith(isLoadingDeletePost: false));
+      emit(state.copyWith(isShowMessage: true, message: e.toString()));
+    }
+  }
 
   _getAccountReactPost(
       GetAccountReactPost event, Emitter<HomeState> emit) async {

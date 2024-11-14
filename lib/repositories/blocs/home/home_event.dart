@@ -11,6 +11,10 @@ class FetchNewFeed extends HomeEvent {
   FetchNewFeed({required this.page});
 }
 
+class RefreshNewFeed extends HomeEvent {
+  RefreshNewFeed();
+}
+
 class LikePost extends HomeEvent {
   final int postId;
   LikePost({required this.postId});
@@ -19,6 +23,11 @@ class LikePost extends HomeEvent {
 class UnLikePost extends HomeEvent {
   final int postId;
   UnLikePost({required this.postId});
+}
+
+class DeletePost extends HomeEvent {
+  final int postId;
+  DeletePost({required this.postId});
 }
 
 class GetAccountReactPost extends HomeEvent {
