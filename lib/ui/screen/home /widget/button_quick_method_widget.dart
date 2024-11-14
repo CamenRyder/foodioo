@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/ui/screen/home%20/widget/button_delete_post_widget.dart';
 
-
 import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../../repositories/models/post_model.dart';
 import 'button_edit_post_widget.dart';
@@ -21,11 +20,14 @@ class ButtonQuickMethodWidget extends StatelessWidget {
     int currentAccountId =
         context.read<AuthBloc>().state.currentAccount?.id ?? 0;
     int postAccountId = postModel?.accountId ?? -1;
+    int postId = postModel?.id ?? 0;
     if (currentAccountId == postAccountId) {
       isYours = true;
     }
     return isYours
-        ? const ButtonEditPostWidget()
+        ? ButtonEditPostWidget(
+            postId: postId,
+          )
         : const ButtonDeletePostWidget();
   }
 }

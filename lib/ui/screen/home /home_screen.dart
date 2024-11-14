@@ -58,11 +58,15 @@ class _HomeScreenState extends State<HomeScreen>
 
     return BlocBuilder<HomeBloc, HomeState>(
       buildWhen: (previous, current) {
-        return current.message != previous.message;
+        return current.message != previous.message ||
+            current.isRefreshFeed == true;
       },
       builder: (context, state) {
         if (state.isShowMessage) {
           MessageToast.showToast(context, message: state.message);
+        }
+        if (state.isRefreshFeed) {
+          refresh();
         }
         return Scaffold(
             // floatingActionButton: FloatingActionButton(

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Theme/app_colors.dart';
+import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
+import 'package:foodioo/repositories/blocs/home/home_event.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
+import '../../../../repositories/blocs/home/home_state.dart';
 import '../../../General/dialog_confirm_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 
 class ButtonEditPostWidget extends StatelessWidget {
-  const ButtonEditPostWidget({super.key});
+  const ButtonEditPostWidget({super.key, this.postId});
+
+  final int? postId;
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +56,40 @@ class ButtonEditPostWidget extends StatelessWidget {
                       await showDialog(
                           context: context,
                           builder: (context) {
-                            return DialogConfirm(
-                              content: "Chắc chắn xóa bài viết này ?",
-                              textConfirm: "Xóa",
-                              textCancel: "Trở lại",
-                              func: () {
-                                Navigator.pop(context);
-                              },
-                              fucCancel: () {
-                                Navigator.pop(context);
-                              },
-                            );
+                            return BlocBuilder<HomeBloc, HomeState>(
+                                buildWhen: (previous, current) =>
+                                    current.isLoadingDeletePost !=
+                                    previous.isLoadingDeletePost,
+                                builder: (context, state) {
+                                  if (state.isLoadingDeletePost) {
+                                    return DialogConfirm(
+                                      content: "Chắc chắn xóa bài viết này ?",
+                                      textConfirm: "Xóa",
+                                      textCancel: "Trở lại",
+                                      isLoading: true,
+                                      func: () {
+                                        // Navigator.pop(context);
+                                      },
+                                      fucCancel: () {
+                                        Navigator.pop(context);
+                                      },
+                                    );
+                                  }
+                                  return DialogConfirm(
+                                    content: "Chắc chắn xóa bài viết này ?",
+                                    textConfirm: "Xóa",
+                                    textCancel: "Trở lại",
+                                    func: () {
+                                      context
+                                          .read<HomeBloc>()
+                                          .add(DeletePost(postId: postId ?? 0));
+                                      Navigator.pop(context);
+                                    },
+                                    fucCancel: () {
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                });
                           });
                       // _takePicture(context);
                     },

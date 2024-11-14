@@ -11,6 +11,10 @@ class FetchNewFeed extends HomeEvent {
   FetchNewFeed({required this.page});
 }
 
+class RefreshNewFeed extends HomeEvent {
+  RefreshNewFeed();
+}
+
 class LikePost extends HomeEvent {
   final int postId;
   LikePost({required this.postId});
