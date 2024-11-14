@@ -14,7 +14,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<DisableButtonCreatePost>(
         (event, emit) => _onDisableButtonCreatePost(event, emit));
   }
-  _onInitalLoadingCreatePost(InitalLoadingCreatePost event, Emitter emit) {}
+  _onInitalLoadingCreatePost(InitalLoadingCreatePost event, Emitter emit) {
+    emit(state.copyWith(currentAccountID: event.currrentAccountId));
+  }
 
   _onEnableButtonCreatePost(EnableButtonCreatePost event, Emitter emit) {
     emit(state.copyWith(enableButtonCreatePost: true));

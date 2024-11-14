@@ -2,7 +2,10 @@ import 'package:image_picker/image_picker.dart';
 
 class CreatePostEvent {}
 
-class InitalLoadingCreatePost extends CreatePostEvent {}
+class InitalLoadingCreatePost extends CreatePostEvent {
+  int currrentAccountId;   
+  InitalLoadingCreatePost({required this.currrentAccountId});
+}
 
 class GetImageDevice extends CreatePostEvent {
   final List<XFile> images;
@@ -14,11 +17,16 @@ class RemoveImage extends CreatePostEvent {
   RemoveImage({required this.index});
 }
 
-class EnableButtonCreatePost extends CreatePostEvent {}
+class EnableButtonCreatePost extends CreatePostEvent {
+  final String description;
+  EnableButtonCreatePost({required this.description});
+}
 
-class DisableButtonCreatePost extends CreatePostEvent {}
+class DisableButtonCreatePost extends CreatePostEvent {
+  final String description;
+  DisableButtonCreatePost({required this.description});
+}
 
 class CreatePost extends CreatePostEvent {
-  final String description;
-  CreatePost({required this.description});
+  CreatePost();
 }
