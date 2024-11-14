@@ -35,7 +35,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             isLoadingDeletePost: false,
             isShowMessage: true,
             isRefreshFeed: true,
-            message: "Xóa bài viết thành coong"));
+            message: "Xóa bài viết thành công!"));
       } else {
         throw Exception(res.message);
       }

@@ -53,14 +53,20 @@ class ButtonEditPostWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     onTap: () async {
+                      Navigator.pop(context);
+
                       await showDialog(
                           context: context,
                           builder: (context) {
                             return BlocBuilder<HomeBloc, HomeState>(
                                 buildWhen: (previous, current) =>
                                     current.isLoadingDeletePost !=
-                                    previous.isLoadingDeletePost,
+                                        previous.isLoadingDeletePost ||
+                                    current.isRefreshFeed == true,
                                 builder: (context, state) {
+                                  if (state.isRefreshFeed) {
+                                    Navigator.pop(context);
+                                  }
                                   if (state.isLoadingDeletePost) {
                                     return DialogConfirm(
                                       content: "Chắc chắn xóa bài viết này ?",
@@ -83,7 +89,6 @@ class ButtonEditPostWidget extends StatelessWidget {
                                       context
                                           .read<HomeBloc>()
                                           .add(DeletePost(postId: postId ?? 0));
-                                      Navigator.pop(context);
                                     },
                                     fucCancel: () {
                                       Navigator.pop(context);
