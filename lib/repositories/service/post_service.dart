@@ -213,4 +213,25 @@ class PostService extends FetchClient {
     await super.deleteData(
         path: '/react', params: {"post_id": postId, "account_id": accountId});
   }
+
+  Future<ResponseModel> deletePost({required int postId}) async {
+    try {
+      final Response<dynamic> result =
+          await super.postData(path: '/posts/soft-delete/$postId');
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: result.data['data'],
+            getSuccess: true,
+            message: "Xóa bài viết thành công");
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
 }

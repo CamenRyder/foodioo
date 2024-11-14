@@ -7,7 +7,9 @@ class HomeState {
   int currentAccountId;
   bool isLoadingNewFeed;
   bool isLoadingAccountsReact;
+  bool isLoadingDeletePost;
   bool isShowMessage = false;
+  bool isDeteledPost = false;
   bool hasReachedPost = false;
   bool hasReachedReactPost = false;
   String message;
@@ -18,7 +20,9 @@ class HomeState {
       this.isLoadingAccountsReact = false,
       this.isLoadingNewFeed = false,
       this.isShowMessage = false,
+      this.isLoadingDeletePost = false,
       this.hasReachedReactPost = false,
+      this.isDeteledPost = false,
       this.currentAccountId = 0,
       this.hasReachedPost = false,
       this.message = ""});
@@ -28,7 +32,9 @@ class HomeState {
     List<ReactModel>? reactModels,
     bool? isLoadingNewFeed,
     bool? isLoadingAccountsReact,
+    bool? isLoadingDeletePost,
     bool? isShowMessage,
+    bool? isDeteledPost,
     bool? hasReachedPost,
     bool? hasReachedReactPost,
     int? currentAccountId,
@@ -36,10 +42,12 @@ class HomeState {
   }) {
     return HomeState(
         postModels: postModels ?? this.postModels,
-        reactModels: reactModels ?? this.reactModels, 
+        reactModels: reactModels ?? this.reactModels,
         isLoadingNewFeed: isLoadingNewFeed ?? this.isLoadingNewFeed,
         isShowMessage: isShowMessage ?? false,
         hasReachedReactPost: hasReachedReactPost ?? this.hasReachedReactPost,
+        isLoadingDeletePost: isLoadingDeletePost ?? this.isLoadingDeletePost,
+        isDeteledPost: isDeteledPost ?? false,
         isLoadingAccountsReact:
             isLoadingAccountsReact ?? this.isLoadingAccountsReact,
         message: message ?? this.message,

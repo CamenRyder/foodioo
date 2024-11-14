@@ -38,7 +38,7 @@ class _DialogConfirmState extends State<DialogConfirm> {
           children: [
             const SizedBox(
               height: 8,
-            ),
+          ),
             Text(widget.content)
           ],
         ),

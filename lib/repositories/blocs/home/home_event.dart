@@ -21,6 +21,11 @@ class UnLikePost extends HomeEvent {
   UnLikePost({required this.postId});
 }
 
+class DeletePost extends HomeEvent {
+  final int postId;
+  DeletePost({required this.postId});
+}
+
 class GetAccountReactPost extends HomeEvent {
   final int postId;
   final int? page;
