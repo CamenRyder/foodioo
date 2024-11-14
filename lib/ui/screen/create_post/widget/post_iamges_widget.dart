@@ -13,11 +13,7 @@ class PostIamgesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: BlocBuilder<CreatePostBloc, CreatePostState>(
-      buildWhen: (previous, current) {
-        return current.images != previous.images;
-      },
+    return Expanded(child: BlocBuilder<CreatePostBloc, CreatePostState>(
       builder: (context, state) {
         if (state.images.isNotEmpty) {
           return ListView.builder(

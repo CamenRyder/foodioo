@@ -13,7 +13,7 @@ class CreatePostState {
     this.images = const [],
     this.description = '',
     this.isLoadingOverLay = false,
-    this.currentAccountID = 0 ,
+    this.currentAccountID = 0,
     this.isShowMessage = false,
     this.message = '',
     this.enableButtonCreatePost = false,
@@ -33,7 +33,8 @@ class CreatePostState {
         isLoadingOverLay: isLoadingOverLay ?? false,
         isShowMessage: isShowMessage ?? false,
         currentAccountID: currentAccountID ?? this.currentAccountID,
-        enableButtonCreatePost: enableButtonCreatePost ?? false,
+        enableButtonCreatePost:
+            enableButtonCreatePost ?? this.enableButtonCreatePost,
         message: message ?? '',
         description: description ?? this.description);
   }

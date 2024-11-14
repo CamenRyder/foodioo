@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/authentication/auth_bloc.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_bloc.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_event.dart';
+import 'package:foodioo/repositories/blocs/create_post/create_post_state.dart';
 import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/screen/create_post/widget/app_bar_create_post_widget.dart';
 import 'package:foodioo/ui/screen/create_post/widget/post_iamges_widget.dart';
@@ -30,21 +30,25 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: const SafeArea(
-        child: Column(
-          children: [
-            AppBarCreatePostWidget(),
-            SpacingVerticalWidget(
-              height: 3,
+    return BlocListener<CreatePostBloc, CreatePostState>(
+        listenWhen: (previous, current) =>
+            current.isShowMessage != previous.isShowMessage,
+        listener: (context, state) {},
+        child: Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          body: const SafeArea(
+            child: Column(
+              children: [
+                AppBarCreatePostWidget(),
+                SpacingVerticalWidget(
+                  height: 3,
+                ),
+                TitleBarWidget(),
+                InputDescriptionWidget(),
+                PostIamgesWidget(),
+              ],
             ),
-            TitleBarWidget(),
-            InputDescriptionWidget(),
-            PostIamgesWidget(),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

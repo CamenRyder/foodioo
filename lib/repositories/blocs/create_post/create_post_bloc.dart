@@ -9,21 +9,23 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<GetImageDevice>((event, emit) => _onGetImageDevice(event, emit));
     on<RemoveImage>((event, emit) => _onRemoveImage(event, emit));
     on<CreatePost>((event, emit) => _onCreatePost(event, emit));
-    on<EnableButtonCreatePost>(
-        (event, emit) => _onEnableButtonCreatePost(event, emit));
-    on<DisableButtonCreatePost>(
-        (event, emit) => _onDisableButtonCreatePost(event, emit));
+    on<InputContentPost>((event, emit) => _onInputContentPost(event, emit));
   }
   _onInitalLoadingCreatePost(InitalLoadingCreatePost event, Emitter emit) {
-    emit(state.copyWith(currentAccountID: event.currrentAccountId));
+    emit(state.copyWith(
+        currentAccountID: event.currrentAccountId,
+        images: [],
+        enableButtonCreatePost: false,
+        description: ''));
   }
 
-  _onEnableButtonCreatePost(EnableButtonCreatePost event, Emitter emit) {
-    emit(state.copyWith(enableButtonCreatePost: true));
-  }
-
-  _onDisableButtonCreatePost(DisableButtonCreatePost event, Emitter emit) {
-    emit(state.copyWith(enableButtonCreatePost: false));
+  _onInputContentPost(InputContentPost event, Emitter emit) {
+    if (event.description.isEmpty) {
+      emit(state.copyWith(enableButtonCreatePost: false, description: ''));
+    } else {
+      emit(state.copyWith(
+          enableButtonCreatePost: true, description: event.description));
+    }
   }
 
   _onGetImageDevice(GetImageDevice event, Emitter emit) {
@@ -37,5 +39,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     emit(state.copyWith(images: currentImagesState));
   }
 
-  _onCreatePost(CreatePost event, Emitter emit) {}
+  _onCreatePost(CreatePost event, Emitter emit) async {
+    emit(state.copyWith(isLoadingOverLay: true));
+    await Future.delayed(const Duration(seconds: 2));
+    emit(state.copyWith(isLoadingOverLay: false, isShowMessage: true));
+  }
 }

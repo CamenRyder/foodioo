@@ -77,6 +77,34 @@ class PostService extends FetchClient {
     }
   }
 
+  Future<ResponseModel> createPostData({
+    required String description,
+    required int accountId,
+    String? lng,
+    String? lat,
+    List<String>? imageUrl,
+  }) async {
+    try {
+      final Response<dynamic> result = await super.createPost(
+          'http://foodioo.camenryder.xyz/api/posts', imageUrl![0],
+          accountId: accountId, description: description, lng: lng, lat: lat);
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: result.data['data'],
+            getSuccess: true,
+            message: AppConstant.messageGetSuccesData);
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
   Future<ResponseModel> getAccountsReactPost(
       {required int postId, required int page, required int pageSize}) async {
     try {

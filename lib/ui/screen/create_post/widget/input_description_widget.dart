@@ -18,15 +18,9 @@ class InputDescriptionWidget extends StatelessWidget {
       child: TextField(
         maxLines: 5,
         onChanged: (value) {
-          if (value.isEmpty) {
-            context
-                .read<CreatePostBloc>()
-                .add(DisableButtonCreatePost(description: value));
-          } else {
-            context
-                .read<CreatePostBloc>()
-                .add(EnableButtonCreatePost(description: value));
-          }
+          context
+              .read<CreatePostBloc>()
+              .add(InputContentPost(description: value));
         },
         // autofocus: false,
         style: Theme.of(context).textTheme.bodyLarge, // displaySmall
