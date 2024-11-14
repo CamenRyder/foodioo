@@ -20,7 +20,7 @@ class MessageToast {
         },
         child: SafeArea(
           child: CustomMessage(
-            message: message ?? "Tính năng đang phát trieenr",
+            message: message ?? "Tính năng đang phát triển!",
           ),
         ),
         gravity: ToastGravity.TOP_RIGHT,

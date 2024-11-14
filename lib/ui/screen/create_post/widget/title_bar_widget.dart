@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foodioo/repositories/models/user_model.dart';
+import 'package:foodioo/ui/General/message_over_screen.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
@@ -7,18 +9,22 @@ import '../../authorizator/widget/ring_of_avatar_widget.dart';
 import 'get_image_widget.dart';
 
 class TitleBarWidget extends StatelessWidget {
-  const TitleBarWidget({super.key});
+  const TitleBarWidget({super.key, this.userModels});
+  final UserModel? userModels;
 
   @override
   Widget build(BuildContext context) {
     final widthScreen = MediaQuery.sizeOf(context).width;
+    String name = userModels?.fullname ?? "Foodioo";
+
+    String subAvatar = userModels?.urlAvatar ?? "";
+    String avatarUrl = AppConstant.baseURL + subAvatar;
     return Row(children: [
       const SpacingHorizontalWidget(
         width: AppConstant.paddingComponent - 3,
       ),
       RingOfAvatarWidget(
-        url:
-            "https://suckhoedoisong.qltns.mediacdn.vn/thumb_w/600/Images/hahien/2015/12/31/gsts-nguyen-tran-hien1451555161.jpg",
+        url: avatarUrl,
         ringStyle: RingStyle.normal,
         sizeAvatar: widthScreen / 8.5,
       ),
@@ -30,7 +36,7 @@ class TitleBarWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Đoàn Minh Hiếu",
+            name,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SpacingHorizontalWidget(
@@ -38,38 +44,48 @@ class TitleBarWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: AppConstant.paddingContent,
-                    horizontal: AppConstant.paddingContent + 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-                  color: AppColors.grey50,
+              GestureDetector(
+                onTap: () {
+                  MessageToast.showToast(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: AppConstant.paddingContent,
+                      horizontal: AppConstant.paddingContent + 5),
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(AppConstant.radiusMedium),
+                    color: AppColors.grey50,
+                  ),
+                  child: Center(
+                      child: Text("Thêm thẻ",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(color: Colors.white))),
                 ),
-                child: Center(
-                    child: Text("Thêm thẻ",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: Colors.white))),
               ),
               const SpacingHorizontalWidget(
                 width: 7,
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: AppConstant.paddingContent,
-                    horizontal: AppConstant.paddingContent + 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
-                  color: AppColors.grey50,
+              GestureDetector(
+                onTap: () => MessageToast.showToast(context),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: AppConstant.paddingContent,
+                      horizontal: AppConstant.paddingContent + 5),
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(AppConstant.radiusMedium),
+                    color: AppColors.grey50,
+                  ),
+                  child: Center(
+                      child: Text("Chia sẻ vị trí",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(color: Colors.white))),
                 ),
-                child: Center(
-                    child: Text("Chia sẻ vị trí",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: Colors.white))),
               )
             ],
           )

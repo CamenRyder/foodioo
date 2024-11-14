@@ -45,6 +45,13 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
   _onCreatePost(CreatePost event, Emitter emit) async {
     try {
+      if (state.images.length > 4) {
+        emit(state.copyWith(
+          isShowMessage: true,
+          message: "Đăng bài tối đa 4 ảnh!",
+        ));
+        return;
+      }
       emit(state.copyWith(isLoadingOverLay: true));
       ResponseModel result = await postService.createPostData(
           description: state.description,

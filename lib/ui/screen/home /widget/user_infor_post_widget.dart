@@ -6,6 +6,7 @@ import '../../../../Core/Theme/assets.gen.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
+import 'button_quick_method_widget.dart';
 
 class UserInforPostWidget extends StatelessWidget {
   UserInforPostWidget({super.key, this.postModel});
@@ -56,8 +57,9 @@ class UserInforPostWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          SvgGenSizeWidget(
-              icon: Assets.icons.ban.svg(color: Theme.of(context).hintColor)),
+          ButtonQuickMethodWidget(
+            postModel: postModel,
+          ),
           SpacingHorizontalWidget(
             width: spacingComponent,
           ),

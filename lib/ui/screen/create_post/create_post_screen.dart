@@ -4,6 +4,7 @@ import 'package:foodioo/repositories/authentication/auth_bloc.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_bloc.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_event.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_state.dart';
+import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:foodioo/ui/General/loader_over_lay_widget.dart';
 import 'package:foodioo/ui/General/message_over_screen.dart';
 import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
@@ -22,10 +23,12 @@ class CreatePostScreen extends StatefulWidget {
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
   int currentAccountID = 0;
+  late UserModel currentUser;
   @override
   void initState() {
     super.initState();
     currentAccountID = context.read<AuthBloc>().state.currentAccount?.id ?? 0;
+    currentUser = context.read<AuthBloc>().state.currentAccount ?? UserModel();
     context
         .read<CreatePostBloc>()
         .add(InitalLoadingCreatePost(currrentAccountId: currentAccountID));
@@ -53,16 +56,16 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         },
         child: Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          body: const SafeArea(
+          body: SafeArea(
             child: Column(
               children: [
-                AppBarCreatePostWidget(),
-                SpacingVerticalWidget(
+                const AppBarCreatePostWidget(),
+                const SpacingVerticalWidget(
                   height: 3,
                 ),
-                TitleBarWidget(),
-                InputDescriptionWidget(),
-                PostIamgesWidget(),
+                TitleBarWidget(userModels: currentUser),
+                const InputDescriptionWidget(),
+                const PostIamgesWidget(),
               ],
             ),
           ),

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
-import 'package:foodioo/Core/routes/routes_name.dart';
-import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import '../../../../Core/Theme/assets.gen.dart';
-import '../../../../repositories/blocs/home/home_event.dart';
 import '../../../General/svg_gen_size_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
 
