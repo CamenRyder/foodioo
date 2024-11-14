@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_event.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_state.dart';
+import 'package:foodioo/repositories/service/post_service.dart';
+import 'package:foodioo/repositories/view/login_vm.dart';
 
 class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   CreatePostBloc() : super(const CreatePostState()) {
@@ -11,11 +13,13 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<CreatePost>((event, emit) => _onCreatePost(event, emit));
     on<InputContentPost>((event, emit) => _onInputContentPost(event, emit));
   }
+  PostService postService = PostService();
   _onInitalLoadingCreatePost(InitalLoadingCreatePost event, Emitter emit) {
     emit(state.copyWith(
         currentAccountID: event.currrentAccountId,
         images: [],
         enableButtonCreatePost: false,
+        isPosted: false,
         description: ''));
   }
 
@@ -40,8 +44,30 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   }
 
   _onCreatePost(CreatePost event, Emitter emit) async {
-    emit(state.copyWith(isLoadingOverLay: true));
-    await Future.delayed(const Duration(seconds: 2));
-    emit(state.copyWith(isLoadingOverLay: false, isShowMessage: true));
+    try {
+      emit(state.copyWith(isLoadingOverLay: true));
+      ResponseModel result = await postService.createPostData(
+          description: state.description,
+          accountId: state.currentAccountID,
+          imageUrl: state.images.map((e) => e.path).toList());
+      if (result.getSuccess) {
+        emit(state.copyWith(
+            isShowMessage: true,
+            message: result.message,
+            isPosted: true,
+            isLoadingOverLay: false));
+      } else {
+        emit(state.copyWith(
+            isShowMessage: true,
+            message: result.message,
+            isPosted: false,
+            isLoadingOverLay: false));
+      }
+    } catch (err) {
+      emit(state.copyWith(
+          isLoadingOverLay: false,
+          isShowMessage: true,
+          message: err.toString()));
+    }
   }
 }

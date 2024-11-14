@@ -77,6 +77,15 @@ class PostService extends FetchClient {
     }
   }
 
+/*
+
+{
+            'account_id': accountId,
+            'description': description,
+            'images': [await MultipartFile.fromFile(fileUrl)],
+          }
+
+*/
   Future<ResponseModel> createPostData({
     required String description,
     required int accountId,
@@ -85,14 +94,74 @@ class PostService extends FetchClient {
     List<String>? imageUrl,
   }) async {
     try {
-      final Response<dynamic> result = await super.createPost(
-          'http://foodioo.camenryder.xyz/api/posts', imageUrl![0],
-          accountId: accountId, description: description, lng: lng, lat: lat);
+      Map<String, dynamic> mapForm = {};
+      if (imageUrl != null) {
+        switch (imageUrl.length) {
+          case 1:
+            mapForm = {
+              'account_id': accountId,
+              'description': description,
+              'lng': lng,
+              'lat': lat,
+              'images': [await MultipartFile.fromFile(imageUrl[0])],
+            };
+            break;
+          case 2:
+            mapForm = {
+              'account_id': accountId,
+              'description': description,
+              'lng': lng,
+              'lat': lat,
+              'images': [
+                await MultipartFile.fromFile(imageUrl[0]),
+                await MultipartFile.fromFile(imageUrl[1])
+              ],
+            };
+            break;
+          case 3:
+            mapForm = {
+              'account_id': accountId,
+              'description': description,
+              'lng': lng,
+              'lat': lat,
+              'images': [
+                await MultipartFile.fromFile(imageUrl[0]),
+                await MultipartFile.fromFile(imageUrl[1]),
+                await MultipartFile.fromFile(imageUrl[2])
+              ],
+            };
+            break;
+          case 4:
+            mapForm = {
+              'account_id': accountId,
+              'description': description,
+              'lng': lng,
+              'lat': lat,
+              'images': [
+                await MultipartFile.fromFile(imageUrl[0]),
+                await MultipartFile.fromFile(imageUrl[1]),
+                await MultipartFile.fromFile(imageUrl[2]),
+                await MultipartFile.fromFile(imageUrl[3])
+              ],
+            };
+            break;
+          default:
+            mapForm = {
+              'account_id': accountId,
+              'description': description,
+              'lng': lng,
+              'lat': lat,
+            };
+            break;
+        }
+      }
+      final Response<dynamic> result = await super
+          .createPost('http://foodioo.camenryder.xyz/api/posts', mapForm);
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         return ResponseModel(
             data: result.data['data'],
             getSuccess: true,
-            message: AppConstant.messageGetSuccesData);
+            message: "Đăng bài viết thành công");
       }
       return ResponseModel(
         data: null,

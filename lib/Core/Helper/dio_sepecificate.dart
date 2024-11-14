@@ -254,20 +254,12 @@ class FetchClient {
     }
   }
 
-  Future<Response> createPost(String url, String fileUrl,
-      {required int accountId,
-      required String description,
-      String? lng,
-      String? lat}) async {
+  Future<Response> createPost(
+      String url, Map<String, dynamic> mapDataForm) async {
     try {
       logRequest();
       final response = await dio.post(url,
-          data: FormData.fromMap({
-            'account_id': accountId,
-            'description': description,
-            'images': [await MultipartFile.fromFile(fileUrl)],
-          }),
-          options: options());
+          data: FormData.fromMap(mapDataForm), options: options());
       return response;
     } on DioException catch (e) {
       return e.response ??
