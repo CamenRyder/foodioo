@@ -15,10 +15,40 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     on<GetImageFormGalary>((event, emit) => _onGetImageFormGalary(event, emit));
     on<RemoveImage>((event, emit) => _onRemoveImage(event, emit));
     on<PostComments>((event, emit) => _onPostComments(event, emit));
+    on<DeteleComment>((event, emit) => _onDeteleComment(event, emit));
   }
 
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+
+  _onDeteleComment(DeteleComment event, Emitter<CommentState> emit) async {
+    try {
+      emit(state.copyWith(isDeteling: true));
+      ResponseModel response = await postService.deleteComment(
+        commentId: event.commentId,
+      );
+      if (response.getSuccess) {
+        emit(state.copyWith(
+          isDeteling: false,
+          isShowMessage: true,
+          message: response.message,
+        ));
+        add(FetchedComments(page: 1));
+      } else {
+        emit(state.copyWith(
+          isDeteling: false,
+          isShowMessage: true,
+          message: response.message,
+        ));
+      }
+    } catch (err) {
+      emit(state.copyWith(
+        isDeteling: false,
+        isShowMessage: true,
+        message: err.toString(),
+      ));
+    }
+  }
 
   _onPostComments(PostComments event, Emitter<CommentState> emit) async {
     try {

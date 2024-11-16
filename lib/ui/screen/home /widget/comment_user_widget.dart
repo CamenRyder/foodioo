@@ -6,6 +6,7 @@ import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart
 
 import '../../../../Core/Helper/helper_function.dart';
 import '../../../General/image_customize_widget.dart';
+import 'button_more_hori_widget.dart';
 
 class CommentWidget extends StatelessWidget {
   final CommentModel? model;
@@ -13,6 +14,10 @@ class CommentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle styleCustomLocal = TextStyle(
+      color: Colors.grey[600],
+      fontSize: 12,
+    );
     final widthScreen = MediaQuery.sizeOf(context).width;
     final String sender = model?.account?.fullname ?? "Unknown";
     final String message = model?.description ??
@@ -25,6 +30,7 @@ class CommentWidget extends StatelessWidget {
     if (model?.image?.urlImage == "") {
       imageComment = '';
     }
+
     final String avatarUrl = baseUrl + subDomain;
     return Padding(
       padding: const EdgeInsets.all(AppConstant.paddingComponent),
@@ -35,25 +41,20 @@ class CommentWidget extends StatelessWidget {
             url: avatarUrl,
             sizeAvatar: widthScreen / 9,
           ),
-          SizedBox(width: widthScreen / 30),
+          SizedBox(width: widthScreen / 35),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SpacingVerticalWidget(height: widthScreen / 14 / 2),
+                SpacingVerticalWidget(height: widthScreen / 20 / 2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(sender, style: Theme.of(context).textTheme.bodyLarge),
-                    Text(
-                      time,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                      ),
-                    ),
+                    ButtonMoreHoriWidget(commentModel: model,),
                   ],
                 ),
+                Text(time, style: styleCustomLocal),
                 const SpacingVerticalWidget(height: 3),
                 Text(
                   message,

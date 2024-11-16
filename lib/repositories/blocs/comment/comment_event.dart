@@ -14,6 +14,11 @@ class GetImageFormGalary extends CommentEvent {
   GetImageFormGalary({required this.file});
 }
 
+class DeteleComment extends CommentEvent {
+  int commentId;
+  DeteleComment({required this.commentId});
+}
+
 class RemoveImage extends CommentEvent {}
 
 class FetchedComments extends CommentEvent {

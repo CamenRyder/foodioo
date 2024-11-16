@@ -302,4 +302,25 @@ class PostService extends FetchClient {
           getSuccess: false, message: "Đã có lỗi: $e", data: null);
     }
   }
+
+  Future<ResponseModel> deleteComment({required int commentId}) async {
+    try {
+      final Response<dynamic> result =
+          await super.deleteData(path: '/comments/$commentId');
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: result.data['data'],
+            getSuccess: true,
+            message: "Xóa bài viết thành công");
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
 }
