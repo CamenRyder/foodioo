@@ -11,10 +11,60 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     on<InitialLoaingComments>(
         (event, emit) => _onInitialLoaingComments(event, emit));
     on<FetchedComments>((event, emit) => _onFetchedComments(event, emit));
+    on<InputDescription>((event, emit) => _onInputDescription(event, emit));
+    on<GetImageFormGalary>((event, emit) => _onGetImageFormGalary(event, emit));
+    on<RemoveImage>((event, emit) => _onRemoveImage(event, emit));
+    on<PostComments>((event, emit) => _onPostComments(event, emit));
   }
 
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+
+  _onPostComments(PostComments event, Emitter<CommentState> emit) async {
+    try {
+      emit(state.copyWith(isPosting: true));
+      ResponseModel response = await postService.createCommentPost(
+          postId: state.postId,
+          accountId: state.currentAccountId,
+          description: state.description,
+          imageUrl: state.urlImages.isEmpty ? null : state.urlImages);
+      if (response.getSuccess) {
+        emit(state.copyWith(
+          isPosting: false,
+          isShowMessage: true,
+          message: response.message,
+          description: '',
+          urlImages: '',
+        ));
+        add(FetchedComments(page: 1));
+      } else {
+        emit(state.copyWith(
+          isPosting: false,
+          isShowMessage: true,
+          message: response.message,
+        ));
+      }
+    } catch (err) {
+      emit(state.copyWith(
+        isPosting: false,
+        isShowMessage: true,
+        message: err.toString(),
+      ));
+    }
+  }
+
+  _onGetImageFormGalary(GetImageFormGalary event, Emitter<CommentState> emit) {
+    emit(state.copyWith(urlImages: event.file.path));
+  }
+
+  _onRemoveImage(RemoveImage event, Emitter<CommentState> emit) {
+    emit(state.copyWith(urlImages: ''));
+  }
+
+  _onInputDescription(
+      InputDescription event, Emitter<CommentState> emit) async {
+    emit(state.copyWith(description: event.description));
+  }
 
   _onFetchedComments(FetchedComments event, Emitter<CommentState> emit) async {
     try {

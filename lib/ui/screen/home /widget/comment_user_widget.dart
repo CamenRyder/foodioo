@@ -4,6 +4,9 @@ import 'package:foodioo/repositories/models/comments_model.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart';
 
+import '../../../../Core/Helper/helper_function.dart';
+import '../../../General/image_customize_widget.dart';
+
 class CommentWidget extends StatelessWidget {
   final CommentModel? model;
   const CommentWidget({super.key, this.model});
@@ -14,9 +17,14 @@ class CommentWidget extends StatelessWidget {
     final String sender = model?.account?.fullname ?? "Unknown";
     final String message = model?.description ??
         "Bánh mì bò là đồ được làm từ đồ bỏ đi sơ bộ hay chưa kĩ thì suy nghĩ phần mềm người. Có cái là ăn ngon nếu có trứng mẹ nha cả nhà ơi";
-    String time = "2 giờ trước";
+    String time = convertTimeCreatePost(dateCreate: model?.createAt ?? "-");
     String baseUrl = AppConstant.baseURL;
     String subDomain = model?.account?.urlAvatar ?? "";
+    String subDomainImage = model?.image?.urlImage ?? "";
+    String imageComment = baseUrl + subDomainImage;
+    if (model?.image?.urlImage == "") {
+      imageComment = '';
+    }
     final String avatarUrl = baseUrl + subDomain;
     return Padding(
       padding: const EdgeInsets.all(AppConstant.paddingComponent),
@@ -51,6 +59,12 @@ class CommentWidget extends StatelessWidget {
                   message,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
+                imageComment.isEmpty
+                    ? const SizedBox()
+                    : CustomImageForLangscope(
+                        url: avatarUrl,
+                        height: widthScreen / 1.8,
+                      ),
               ],
             ),
           ),

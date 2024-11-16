@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/comment/comment_bloc.dart';
 import 'package:foodioo/repositories/blocs/comment/comment_event.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
+import 'package:foodioo/ui/General/loader_over_lay_widget.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/authentication/auth_bloc.dart';
+import '../../../../repositories/blocs/comment/comment_state.dart';
+import '../../../General/message_over_screen.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 import 'bottom_sheet_comments_widget.dart';
@@ -45,9 +49,22 @@ class ButtonCommentWidgetState extends State<ButtonCommentWidget> {
                         postId: widget.postModel.id ?? 0));
                     return commentBloc;
                   },
-                  child:  BottomSheetCommentsWidget(
-                    totalComments: widget.totalComments,
-                  ));
+                  child: BlocBuilder<CommentBloc, CommentState>(
+                      buildWhen: (previous, current) {
+                    return previous.isPosting != current.isPosting;
+                  }, builder: (context, state) {
+                    if (state.isPosting) {
+                      context.loaderOverlay.show();
+                    } else {
+                      context.loaderOverlay.hide();
+                    }
+                    // if (state.isShowMessage) {
+                    //   MessageToast.showToast(context, message: state.message);
+                    // }
+                    return BottomSheetCommentsWidget(
+                      totalComments: widget.totalComments,
+                    );
+                  }));
             });
       },
       child: Row(

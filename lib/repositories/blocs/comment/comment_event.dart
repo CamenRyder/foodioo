@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 class CommentEvent {}
 
 class InitialLoaingComments extends CommentEvent {
@@ -6,6 +8,13 @@ class InitialLoaingComments extends CommentEvent {
 
   InitialLoaingComments({required this.currentAccounId, required this.postId});
 }
+
+class GetImageFormGalary extends CommentEvent {
+  XFile file;
+  GetImageFormGalary({required this.file});
+}
+
+class RemoveImage extends CommentEvent {}
 
 class FetchedComments extends CommentEvent {
   int page;

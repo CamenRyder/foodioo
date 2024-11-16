@@ -2,6 +2,7 @@ class CommentModel {
   Account? account;
   int? accountId;
   String? description;
+  String? createAt;
   int? id;
   Image? image;
   int? postTopId;
@@ -22,6 +23,7 @@ class CommentModel {
     accountId = json['account_id'];
     description = json['description'];
     id = json['id'];
+    createAt = json['created_at'];
     image = json['image'] != null ? Image.fromJson(json['image']) : null;
     postTopId = json['post_top_id'];
     postTypeId = json['post_type_id'];
@@ -34,6 +36,7 @@ class CommentModel {
     }
     data['account_id'] = accountId;
     data['description'] = description;
+    data['create_at'] = createAt;
     data['id'] = id;
     if (image != null) {
       data['image'] = image!.toJson();

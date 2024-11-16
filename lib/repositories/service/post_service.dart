@@ -281,7 +281,7 @@ class PostService extends FetchClient {
             'post_id': postId,
             'description': description,
             if (imageUrl != null)
-              'images': [await MultipartFile.fromFile(imageUrl)]
+              'image': [await MultipartFile.fromFile(imageUrl)]
           });
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         return ResponseModel(

@@ -4,6 +4,7 @@ class CommentState {
   bool isLoading;
   bool isShowMessage;
   String message;
+  String urlImages;
   List<CommentModel> commentModels;
   int postId;
   int currentAccountId;
@@ -17,6 +18,7 @@ class CommentState {
     this.isShowMessage = false,
     this.message = '',
     this.description = '',
+    this.urlImages = '',
     this.isHasReachedCommnent = false,
     this.commentModels = const [],
     this.isEnableCommentPost = false,
@@ -32,6 +34,7 @@ class CommentState {
     bool? isHasReachedCommnent,
     String? description,
     String? message,
+    String? urlImages,
     List<CommentModel>? commentModels,
     int? postId,
     int? currentAccountId,
@@ -41,6 +44,7 @@ class CommentState {
       isLoading: isLoading ?? this.isLoading,
       isShowMessage: isShowMessage ?? false,
       message: message ?? '',
+      urlImages: urlImages ?? this.urlImages,
       isHasReachedCommnent: isHasReachedCommnent ?? this.isHasReachedCommnent,
       isEnableCommentPost: isEnableCommentPost ?? this.isEnableCommentPost,
       commentModels: commentModels ?? this.commentModels,
