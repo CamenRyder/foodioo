@@ -267,6 +267,19 @@ class FetchClient {
     }
   }
 
+  Future<Response> createComment(
+     {required String url,required Map<String, dynamic> mapDataForm}) async {
+    try {
+      logRequest();
+      final response = await dio.post(url,
+          data: FormData.fromMap(mapDataForm), options: options());
+      return response;
+    } on DioException catch (e) {
+      return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+    }
+  }
+
   Future<dynamic> getInvoiceDigital(String url) async {
     try {
       try {

@@ -236,4 +236,62 @@ class PostService extends FetchClient {
           getSuccess: false, message: "Đã có lỗi: $e", data: null);
     }
   }
+
+  Future<ResponseModel> getCommentsPost(
+      {required int postId, required int page, required int pageSize}) async {
+    try {
+      final Response<dynamic> results = await super.getData(
+        path: '/comments?post_id=$postId&page=$page&page_size=$pageSize',
+      );
+      if (results.data['code'] >= 200 && results.data['code'] < 300) {
+        return ResponseModel(
+            data: results.data['data'],
+            getSuccess: true,
+            message: AppConstant.messageGetSuccesData);
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(results.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: "Đã có lỗi: $e",
+      );
+    }
+  }
+
+  Future<ResponseModel> createCommentPost(
+      {required int postId,
+      required int accountId,
+      required String description,
+      String? imageUrl}) async {
+    try {
+      final Response<dynamic> result = await super.createComment(
+          url: 'http://foodioo.camenryder.xyz/api/comments',
+          mapDataForm: {
+            'account_id': accountId,
+            'post_id': postId,
+            'description': description,
+            if (imageUrl != null)
+              'images': [await MultipartFile.fromFile(imageUrl)]
+          });
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: result.data['data'],
+            getSuccess: true,
+            message: "Bình luận thành công");
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
 }

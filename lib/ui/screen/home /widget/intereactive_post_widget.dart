@@ -116,7 +116,7 @@ class IntereactivePostWidget extends StatelessWidget {
                                   Expanded(
                                     child: TextField(
                                       decoration: InputDecoration(
-                                        hintText: 'Viết bình luận công khai',
+                                        hintText: 'Viết bình luận của bạn',
                                         hintStyle:
                                             TextStyle(color: Colors.grey[600]),
                                         border: InputBorder.none,
