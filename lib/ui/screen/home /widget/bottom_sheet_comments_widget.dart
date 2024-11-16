@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/comment/comment_event.dart';
+import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
+import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/blocs/comment/comment_bloc.dart';
 import '../../../../repositories/blocs/comment/comment_state.dart';
 import '../../../General/spacing_vertical_widget.dart';
@@ -87,15 +89,33 @@ class _BottomSheetCommentsWidgetState extends State<BottomSheetCommentsWidget> {
                   page = 1;
                   context.read<CommentBloc>().add(FetchedComments(page: page));
                 },
-                child: ListView.builder(
-                  itemCount: state.commentModels.length,
-                  controller: _scrollController,
-                  itemBuilder: (context, index) {
-                    return CommentWidget(
-                      model: state.commentModels[index],
-                    );
-                  },
-                ),
+                child: state.commentModels.isEmpty
+                    ? Column(
+                        children: [
+                          SpacingVerticalWidget(
+                            height: widthBottomSheet / 2,
+                          ),
+                          Lottie.asset(
+                            'assets/icons/empty_box.json',
+                            fit: BoxFit.fill,
+                            height: 200,
+                            width: 200,
+                          ),
+                          Text(
+                            "Hỏng có bình luận",
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ],
+                      )
+                    : ListView.builder(
+                        itemCount: state.commentModels.length,
+                        controller: _scrollController,
+                        itemBuilder: (context, index) {
+                          return CommentWidget(
+                            model: state.commentModels[index],
+                          );
+                        },
+                      ),
               );
             },
           )),

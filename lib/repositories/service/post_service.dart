@@ -245,12 +245,15 @@ class PostService extends FetchClient {
         path: '/comments?post_id=$postId&page=$page&page_size=$pageSize',
       );
       if (results.data['code'] >= 200 && results.data['code'] < 300) {
-        List<CommentModel> comments =  [];
-        for(var e in results.data['data']){
-          comments.add(CommentModel.fromJson(e));
+        List<CommentModel> comments = [];
+        if (results.data['data'] != null) {
+          for (var e in results.data['data']) {
+            comments.add(CommentModel.fromJson(e));
+          }
         }
+
         return ResponseModel(
-            data: comments ,
+            data: comments,
             getSuccess: true,
             message: AppConstant.messageGetSuccesData);
       }
