@@ -4,7 +4,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../repositories/models/post_model.dart';
 import '../../../General/image_customize_widget.dart';
-import 'button_show_map_widget.dart';
 import 'intereactive_post_widget.dart';
 import 'user_infor_post_widget.dart';
 

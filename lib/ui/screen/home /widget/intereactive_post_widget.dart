@@ -32,12 +32,18 @@ class IntereactivePostWidget extends StatelessWidget {
                 const radius = Radius.circular(AppConstant.radiusExtra);
                 await showModalBottomSheet(
                     context: context,
+                    isScrollControlled: true,
                     builder: (context) {
                       final widthBottomSheet = MediaQuery.sizeOf(context).width;
+                      final heighBottomSheet =
+                          MediaQuery.sizeOf(context).height * 0.9;
                       const radiusRuler =
                           Radius.circular(AppConstant.paddingContent);
                       return Container(
                         width: widthBottomSheet,
+                        height: heighBottomSheet,
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
                         decoration: BoxDecoration(
                             borderRadius: const BorderRadius.only(
                                 topLeft: radius, topRight: radius),

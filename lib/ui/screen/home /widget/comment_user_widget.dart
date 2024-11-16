@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
-import 'package:foodioo/ui/General/spacing_horizontal_widget.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart';
 
