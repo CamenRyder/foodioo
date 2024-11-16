@@ -109,7 +109,7 @@ class _BottomSheetCommentsWidgetState extends State<BottomSheetCommentsWidget> {
             padding: const EdgeInsets.symmetric(
                 horizontal: AppConstant.paddingComponent,
                 vertical: AppConstant.paddingComponent),
-            child: const TextfieldCommentsWidget(),
+            child: TextfieldCommentsWidget(),
           ),
         ],
       ),

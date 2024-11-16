@@ -12,16 +12,17 @@ import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/blocs/comment/comment_event.dart';
 
 class TextfieldCommentsWidget extends StatelessWidget {
-  const TextfieldCommentsWidget({super.key});
-
+   TextfieldCommentsWidget({super.key});
+ final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       BlocBuilder<CommentBloc, CommentState>(
           buildWhen: (previous, current) =>
-              previous.urlImages != current.urlImages,
+              previous.urlImages != current.urlImages ,
           builder: (context, state) {
             if (state.urlImages.isEmpty) {
+              controller.clear();
               return const SizedBox();
             }
             return Row(
@@ -97,6 +98,7 @@ class TextfieldCommentsWidget extends StatelessWidget {
           ),
           Expanded(
             child: TextField(
+              controller: controller ,
               onChanged: (value) => {
                 context
                     .read<CommentBloc>()

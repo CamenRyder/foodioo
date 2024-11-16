@@ -62,7 +62,7 @@ class CommentWidget extends StatelessWidget {
                 imageComment.isEmpty
                     ? const SizedBox()
                     : CustomImageForLangscope(
-                        url: avatarUrl,
+                        url: imageComment,
                         height: widthScreen / 1.8,
                       ),
               ],
