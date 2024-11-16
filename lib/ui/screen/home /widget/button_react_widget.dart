@@ -3,17 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_event.dart';
-import 'package:foodioo/repositories/blocs/home/home_state.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
-import '../../authorizator/widget/ring_of_avatar_widget.dart';
-import 'account_like_widget.dart';
 import 'list_account_react_widget.dart';
 
 class ButtonReactWidget extends StatefulWidget {
@@ -34,16 +30,16 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
   void initState() {
     super.initState();
     count = widget.totalLike;
-    int accountCurrent =
-        (context.read<AuthBloc>().state).currentAccount?.id ?? 0;
-    if (widget.postModel.accountLikes != null) {
-      int index = widget.postModel.accountLikes!.indexOf(accountCurrent);
-      if (index == -1) {
-        reactPost = false;
-      } else {
-        reactPost = true;
-      }
-    }
+
+    reactPost = widget.postModel.reactState?.state != 0 ? true : false;
+    // if (widget.postModel.reactState?.accountId != null) {
+    //   bool index = widget.postModel.reactState!.accountId == accountCurrent;
+    //   if (!index) {
+    //     reactPost = false;
+    //   } else {
+    //     reactPost = true;
+    //   }
+    // }
   }
 
   @override

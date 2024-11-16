@@ -9,12 +9,14 @@ import '../models/react_model.dart';
 
 class PostService extends FetchClient {
   Future<ResponseModel> getNewFeed(
-      {required int page, required int pageSize}) async {
+      {required int page,
+      required int pageSize,
+      required int accountId}) async {
     try {
       List<PostModel> postModels = [];
 
-      final Response<dynamic> result =
-          await super.getData(path: '/posts?page=$page&page_size=$pageSize');
+      final Response<dynamic> result = await super.getData(
+          path: '/posts?account_id=$accountId&page=$page&page_size=$pageSize');
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final posts = result.data['data'];
         if (posts == null) {

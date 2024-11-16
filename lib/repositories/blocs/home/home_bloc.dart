@@ -99,8 +99,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event.page == 1) {
         emit(state.copyWith(isLoadingNewFeed: true));
 
-        final ResponseModel response =
-            await postService.getNewFeed(page: event.page, pageSize: pageSize);
+        final ResponseModel response = await postService.getNewFeed(
+            page: event.page,
+            pageSize: pageSize,
+            accountId: state.currentAccountId);
         if (response.getSuccess) {
           List<PostModel> posts = response.data;
           emit(state.copyWith(postModels: posts, isLoadingNewFeed: false));
@@ -108,8 +110,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           throw Exception(response.message);
         }
       } else if (!state.hasReachedPost) {
-        final ResponseModel response =
-            await postService.getNewFeed(page: event.page, pageSize: pageSize);
+        final ResponseModel response = await postService.getNewFeed(
+            page: event.page,
+            pageSize: pageSize,
+            accountId: state.currentAccountId);
         if (response.getSuccess) {
           List<PostModel> posts = response.data;
           emit(state.copyWith(
@@ -133,7 +137,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       emit(state.copyWith(isLoadingNewFeed: true));
       ResponseModel res =
-          await postService.getNewFeed(page: 1, pageSize: pageSize);
+          await postService.getNewFeed(page: 1, pageSize: pageSize , accountId: event.currentAccountId);
       if (res.getSuccess) {
         List<PostModel> posts = res.data;
         emit(state.copyWith(
