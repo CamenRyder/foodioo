@@ -8,6 +8,7 @@ class CommentState {
   int postId;
   int currentAccountId;
   bool isPosting;
+  bool isHasReachedCommnent;
   bool isEnableCommentPost;
   String description;
 
@@ -16,6 +17,7 @@ class CommentState {
     this.isShowMessage = false,
     this.message = '',
     this.description = '',
+    this.isHasReachedCommnent = false,
     this.commentModels = const [],
     this.isEnableCommentPost = false,
     this.postId = 0,
@@ -27,6 +29,7 @@ class CommentState {
     bool? isLoading,
     bool? isShowMessage,
     bool? isEnableCommentPost,
+    bool? isHasReachedCommnent,
     String? description,
     String? message,
     List<CommentModel>? commentModels,
@@ -36,8 +39,9 @@ class CommentState {
   }) {
     return CommentState(
       isLoading: isLoading ?? this.isLoading,
-      isShowMessage: isShowMessage ?? false ,
+      isShowMessage: isShowMessage ?? false,
       message: message ?? '',
+      isHasReachedCommnent: isHasReachedCommnent ?? this.isHasReachedCommnent,
       isEnableCommentPost: isEnableCommentPost ?? this.isEnableCommentPost,
       commentModels: commentModels ?? this.commentModels,
       description: description ?? this.description,

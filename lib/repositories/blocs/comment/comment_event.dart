@@ -2,9 +2,9 @@ class CommentEvent {}
 
 class InitialLoaingComments extends CommentEvent {
   int postId;
-  int currentPostId;
+  int currentAccounId;
 
-  InitialLoaingComments({required this.currentPostId, required this.postId});
+  InitialLoaingComments({required this.currentAccounId, required this.postId});
 }
 
 class FetchedComments extends CommentEvent {

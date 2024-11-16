@@ -12,6 +12,7 @@ import '../../Core/routes/routes.dart';
 import '../../main.dart';
 import '../../repositories/authentication/auth_bloc.dart';
 import '../../repositories/authentication/auth_state.dart';
+import '../../repositories/blocs/comment/comment_bloc.dart';
 import '../../repositories/blocs/create_post/create_post_bloc.dart';
 import '../../repositories/blocs/systems/system_bloc.dart';
 import '../General/loader_over_lay_widget.dart';
@@ -108,6 +109,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           }),
           BlocProvider(create: (context) => CreatePostBloc()),
           BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
+       
         ],
         child: LoaderOverLayWidget(
             child: Listener(

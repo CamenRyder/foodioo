@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/repositories/models/comments_model.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart';
 
 class CommentWidget extends StatelessWidget {
-  final String sender;
-  final String message;
-  final String time;
-  final String avatarUrl;
-
-  const CommentWidget({
-    super.key,
-    required this.sender,
-    required this.message,
-    required this.time,
-    required this.avatarUrl,
-  });
+  final CommentModel? model;
+  const CommentWidget({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
     final widthScreen = MediaQuery.sizeOf(context).width;
+    final String sender = model?.account?.fullname ?? "Unknown";
+    final String message = model?.description ??
+        "Bánh mì bò là đồ được làm từ đồ bỏ đi sơ bộ hay chưa kĩ thì suy nghĩ phần mềm người. Có cái là ăn ngon nếu có trứng mẹ nha cả nhà ơi";
+    String time = "2 giờ trước";
+    String baseUrl = AppConstant.baseURL;
+    String subDomain = model?.account?.urlAvatar ?? "";
+    final String avatarUrl = baseUrl + subDomain;
     return Padding(
       padding: const EdgeInsets.all(AppConstant.paddingComponent),
       child: Row(

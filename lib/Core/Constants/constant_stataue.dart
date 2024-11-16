@@ -6,7 +6,7 @@ class AppConstant {
   static String apiBaseURL = "${dotenv.env['API_BASE_URL']}/api";
   static String baseURL = "${dotenv.env['API_BASE_URL']}/";
   static String messageGetSuccesData = "Lấy dữ liệu từ Foodioo thành công";
-  static int pageSize = 20;
+  static int pageSize = 4;
 
   static const double sizeIconLarge = 32.0;
   static const double sizeIconMedium = 24.0;

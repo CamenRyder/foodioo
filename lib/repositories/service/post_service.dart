@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/repositories/models/comments_model.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/repositories/view/login_vm.dart';
 
@@ -244,8 +245,12 @@ class PostService extends FetchClient {
         path: '/comments?post_id=$postId&page=$page&page_size=$pageSize',
       );
       if (results.data['code'] >= 200 && results.data['code'] < 300) {
+        List<CommentModel> comments =  [];
+        for(var e in results.data['data']){
+          comments.add(CommentModel.fromJson(e));
+        }
         return ResponseModel(
-            data: results.data['data'],
+            data: comments ,
             getSuccess: true,
             message: AppConstant.messageGetSuccesData);
       }
