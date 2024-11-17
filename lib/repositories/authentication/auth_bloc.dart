@@ -58,9 +58,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       ResponseModel data = await UserService().loginUser(event.user);
 
       if (data.getSuccess) {
-        String token = data.data ?? '';
+        String token = data.data['token'] ?? '';
         String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
-        await GetStorage().write(keyToken, token);
+        String refeshToken = data.data['refesh_token'] ?? '';
+        String keyRefeshToken = dotenv.env['KEY_REFESH_TOKEN'] ?? '';
+
+        await Future.wait([
+          GetStorage().write(keyToken, token),
+          GetStorage().write(keyRefeshToken, refeshToken)
+        ]);
         FetchClient.token = token;
         ResponseModel response = await UserService().getUser();
         if (response.getSuccess) {
