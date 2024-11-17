@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/models/comments_model.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart';
 
 import '../../../../Core/Helper/helper_function.dart';
+import '../../../../repositories/blocs/comment/comment_bloc.dart';
+import '../../../../repositories/blocs/comment/comment_event.dart';
 import '../../../General/image_customize_widget.dart';
 import 'button_more_hori_widget.dart';
 
@@ -51,7 +54,12 @@ class CommentWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(sender, style: Theme.of(context).textTheme.bodyLarge),
-                    ButtonMoreHoriWidget(commentModel: model,),
+                    ButtonMoreHoriWidget(
+                      commentModel: model,
+                      deleteFunction: () => context
+                          .read<CommentBloc>()
+                          .add(DeteleComment(commentId: model!.id!)),
+                    ),
                   ],
                 ),
                 Text(time, style: styleCustomLocal),

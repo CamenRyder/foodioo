@@ -242,8 +242,14 @@ class PostService extends FetchClient {
       {required int postId, required int page, required int pageSize}) async {
     try {
       final Response<dynamic> results = await super.getData(
-        path: '/comments?post_id=$postId&page=$page&page_size=$pageSize',
-      );
+          path: '/comments?post_id=$postId&page=$page&page_size=$pageSize'
+          //     , queryParameters: {
+          //   // / ?post_id=$postId&page=$page&page_size=$pageSize' ,
+          //   'post_id': postId,
+          //   'page': page,
+          //   'page_size': pageSize
+          // }
+          );
       if (results.data['code'] >= 200 && results.data['code'] < 300) {
         List<CommentModel> comments = [];
         if (results.data['data'] != null) {

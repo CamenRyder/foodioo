@@ -30,6 +30,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       if (response.getSuccess) {
         emit(state.copyWith(
           isDeteling: false,
+          isDeteled: true,
           isShowMessage: true,
           message: response.message,
         ));
@@ -110,6 +111,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
             commentModels: models,
             isHasReachedCommnent: false,
             isShowMessage: true,
+            isDeteled: false,
             message: response.message,
           ));
         } else {

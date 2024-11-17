@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Theme/assets.gen.dart';
 import 'package:foodioo/repositories/blocs/comment/comment_bloc.dart';
-import 'package:foodioo/repositories/blocs/comment/comment_state.dart';
 import 'package:foodioo/repositories/models/comments_model.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../repositories/blocs/comment/comment_event.dart';
 import '../../../General/dialog_confirm_widget.dart';
 
 class ButtonMoreHoriWidget extends StatelessWidget {
-  const ButtonMoreHoriWidget({super.key, this.commentModel});
+  const ButtonMoreHoriWidget(
+      {super.key, this.commentModel, required this.deleteFunction});
   final CommentModel? commentModel;
+  final VoidCallback deleteFunction;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -50,23 +52,23 @@ class ButtonMoreHoriWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     onTap: () async {
-                      // Navigator.pop(context);
                       await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return DialogConfirm(
-                            content: "Chắc chắn xóa bình luận  này ?",
-                            textConfirm: "Xóa",
-                            textCancel: "Trở lại",
-                            func: () {
-                              Navigator.pop(context);
-                            },
-                            fucCancel: () {
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
-                      );
+                          context: context,
+                          builder: (context) {
+                            return DialogConfirm(
+                              content: "Chắc chắn xóa bình luận này ?",
+                              textConfirm: "Xóa",
+                              textCancel: "Trở lại",
+                              func: () {
+                                deleteFunction();
+                                Navigator.pop(context);
+                              },
+                              fucCancel: () {
+                                Navigator.pop(context);
+                              },
+                            );
+                          });
+                      Navigator.pop(context);
 
                       // _takePicture(context);
                     },

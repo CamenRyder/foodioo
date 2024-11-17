@@ -5,7 +5,6 @@ import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
-import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/blocs/comment/comment_bloc.dart';
 import '../../../../repositories/blocs/comment/comment_state.dart';
 import '../../../General/spacing_vertical_widget.dart';

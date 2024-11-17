@@ -51,7 +51,8 @@ class ButtonCommentWidgetState extends State<ButtonCommentWidget> {
                   },
                   child: BlocBuilder<CommentBloc, CommentState>(
                       buildWhen: (previous, current) {
-                    return previous.isPosting != current.isPosting;
+                    return previous.isPosting != current.isPosting ||
+                        previous.isShowMessage == true;
                   }, builder: (context, state) {
                     if (state.isPosting) {
                       context.loaderOverlay.show();

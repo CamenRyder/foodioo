@@ -10,6 +10,7 @@ class CommentState {
   int currentAccountId;
   bool isPosting;
   bool isDeteling;
+  bool isDeteled;
   bool isHasReachedCommnent;
   bool isEnableCommentPost;
   String description;
@@ -20,6 +21,7 @@ class CommentState {
     this.message = '',
     this.description = '',
     this.isDeteling = false,
+    this.isDeteled = false,
     this.urlImages = '',
     this.isHasReachedCommnent = false,
     this.commentModels = const [],
@@ -35,6 +37,7 @@ class CommentState {
     bool? isEnableCommentPost,
     bool? isHasReachedCommnent,
     bool? isDeteling,
+    bool? isDeteled,
     String? description,
     String? message,
     String? urlImages,
@@ -47,6 +50,7 @@ class CommentState {
       isLoading: isLoading ?? this.isLoading,
       isShowMessage: isShowMessage ?? false,
       message: message ?? '',
+      isDeteled: isDeteled ?? this.isDeteled,
       isDeteling: isDeteling ?? this.isDeteling,
       urlImages: urlImages ?? this.urlImages,
       isHasReachedCommnent: isHasReachedCommnent ?? this.isHasReachedCommnent,
