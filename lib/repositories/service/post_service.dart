@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/repositories/models/comments_model.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/repositories/view/login_vm.dart';
 
@@ -9,12 +10,14 @@ import '../models/react_model.dart';
 
 class PostService extends FetchClient {
   Future<ResponseModel> getNewFeed(
-      {required int page, required int pageSize}) async {
+      {required int page,
+      required int pageSize,
+      required int accountId}) async {
     try {
       List<PostModel> postModels = [];
 
-      final Response<dynamic> result =
-          await super.getData(path: '/posts?page=$page&page_size=$pageSize');
+      final Response<dynamic> result = await super.getData(
+          path: '/posts?account_id=$accountId&page=$page&page_size=$pageSize');
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final posts = result.data['data'];
         if (posts == null) {
@@ -218,6 +221,98 @@ class PostService extends FetchClient {
     try {
       final Response<dynamic> result =
           await super.postData(path: '/posts/soft-delete/$postId');
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: result.data['data'],
+            getSuccess: true,
+            message: "Xóa bài viết thành công");
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> getCommentsPost(
+      {required int postId, required int page, required int pageSize}) async {
+    try {
+      final Response<dynamic> results = await super.getData(
+          path: '/comments?post_id=$postId&page=$page&page_size=$pageSize'
+          //     , queryParameters: {
+          //   // / ?post_id=$postId&page=$page&page_size=$pageSize' ,
+          //   'post_id': postId,
+          //   'page': page,
+          //   'page_size': pageSize
+          // }
+          );
+      if (results.data['code'] >= 200 && results.data['code'] < 300) {
+        List<CommentModel> comments = [];
+        if (results.data['data'] != null) {
+          for (var e in results.data['data']) {
+            comments.add(CommentModel.fromJson(e));
+          }
+        }
+
+        return ResponseModel(
+            data: comments,
+            getSuccess: true,
+            message: AppConstant.messageGetSuccesData);
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(results.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: "Đã có lỗi: $e",
+      );
+    }
+  }
+
+  Future<ResponseModel> createCommentPost(
+      {required int postId,
+      required int accountId,
+      required String description,
+      String? imageUrl}) async {
+    try {
+      final Response<dynamic> result = await super.createComment(
+          url: 'http://foodioo.camenryder.xyz/api/comments',
+          mapDataForm: {
+            'account_id': accountId,
+            'post_id': postId,
+            'description': description,
+            if (imageUrl != null)
+              'image': [await MultipartFile.fromFile(imageUrl)]
+          });
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: result.data['data'],
+            getSuccess: true,
+            message: "Bình luận thành công");
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> deleteComment({required int commentId}) async {
+    try {
+      final Response<dynamic> result =
+          await super.deleteData(path: '/comments/$commentId');
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         return ResponseModel(
             data: result.data['data'],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 
+import '../../../../Core/Helper/helper_function.dart';
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
@@ -19,6 +20,9 @@ class UserInforPostWidget extends StatelessWidget {
     String avatar = postModel?.account?.urlAvatar ?? "";
     String name = postModel?.account?.fullname ?? "Foodioo";
     String urlAvatar = urlBase + avatar;
+    String dateFormat =
+        convertTimeCreatePost(dateCreate: postModel?.createdAt ?? "-");
+    // to calculate from DateTime
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -51,7 +55,7 @@ class UserInforPostWidget extends StatelessWidget {
                 ],
               ),
               Text(
-                "37 phút trước",
+                dateFormat,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ],

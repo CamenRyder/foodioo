@@ -54,7 +54,6 @@ class ButtonEditPostWidget extends StatelessWidget {
                     ),
                     onTap: () async {
                       Navigator.pop(context);
-
                       await showDialog(
                           context: context,
                           builder: (context) {

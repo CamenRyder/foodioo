@@ -1,52 +1,32 @@
-class PostModel {
+class CommentModel {
   Account? account;
   int? accountId;
-  String? createdAt;
   String? description;
+  String? createAt;
   int? id;
-  List<Images>? images;
-  double? lat;
-  double? lng;
-  num? postTypeId;
-  ReactState? reactState;
-  int? totalComment;
-  int? totalLike;
+  Image? image;
+  int? postTopId;
+  int? postTypeId;
 
-  PostModel(
+  CommentModel(
       {this.account,
       this.accountId,
-      this.createdAt,
       this.description,
       this.id,
-      this.images,
-      this.lat,
-      this.lng,
-      this.postTypeId,
-      this.reactState,
-      this.totalComment,
-      this.totalLike});
+      this.image,
+      this.postTopId,
+      this.postTypeId});
 
-  PostModel.fromJson(Map<String, dynamic> json) {
+  CommentModel.fromJson(Map<String, dynamic> json) {
     account =
         json['account'] != null ? Account.fromJson(json['account']) : null;
     accountId = json['account_id'];
-    createdAt = json['created_at'];
     description = json['description'];
     id = json['id'];
-    if (json['images'] != null) {
-      images = <Images>[];
-      json['images'].forEach((v) {
-        images!.add(Images.fromJson(v));
-      });
-    }
-    lat = json['lat'];
-    lng = json['lng'];
+    createAt = json['created_at'];
+    image = json['image'] != null ? Image.fromJson(json['image']) : null;
+    postTopId = json['post_top_id'];
     postTypeId = json['post_type_id'];
-    reactState = json['react_state'] != null
-        ? ReactState.fromJson(json['react_state'])
-        : null;
-    totalComment = json['total_comment'];
-    totalLike = json['total_like'];
   }
 
   Map<String, dynamic> toJson() {
@@ -55,20 +35,14 @@ class PostModel {
       data['account'] = account!.toJson();
     }
     data['account_id'] = accountId;
-    data['created_at'] = createdAt;
-    data['description'].description;
+    data['description'] = description;
+    data['create_at'] = createAt;
     data['id'] = id;
-    if (images != null) {
-      data['images'] = images!.map((v) => v.toJson()).toList();
+    if (image != null) {
+      data['image'] = image!.toJson();
     }
-    data['lat'] = lat;
-    data['lng'] = lng;
+    data['post_top_id'] = postTopId;
     data['post_type_id'] = postTypeId;
-    if (reactState != null) {
-      data['react_state'] = reactState!.toJson();
-    }
-    data['total_comment'] = totalComment;
-    data['total_like'] = totalLike;
     return data;
   }
 }
@@ -110,14 +84,14 @@ class Account {
   }
 }
 
-class Images {
+class Image {
   int? id;
   int? postId;
   String? urlImage;
 
-  Images({this.id, this.postId, this.urlImage});
+  Image({this.id, this.postId, this.urlImage});
 
-  Images.fromJson(Map<String, dynamic> json) {
+  Image.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     postId = json['post_id'];
     urlImage = json['url_image'];
@@ -128,28 +102,6 @@ class Images {
     data['id'] = id;
     data['post_id'] = postId;
     data['url_image'] = urlImage;
-    return data;
-  }
-}
-
-class ReactState {
-  int? accountId;
-  int? postId;
-  int? state;
-
-  ReactState({this.accountId, this.postId, this.state});
-
-  ReactState.fromJson(Map<String, dynamic> json) {
-    accountId = json['account_id'];
-    postId = json['post_id'];
-    state = json['state'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['account_id'] = accountId;
-    data['post_id'] = postId;
-    data['state'] = state;
     return data;
   }
 }
