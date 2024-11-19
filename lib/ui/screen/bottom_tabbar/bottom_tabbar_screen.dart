@@ -41,11 +41,8 @@ class _BottomTabbarScreenState extends State<BottomTabbarScreen> {
         buildWhen: (previous, current) {
           return current.scrollController != previous.scrollController;
         },
-        builder: (context, state) => Hidable(
-            controller: state.scrollController,
-            deltaFactor: 0.06,
-            preferredWidgetSize: const Size.fromHeight(100),
-            child: BottomNavBarWidget(pageController: pageController)),
+        builder: (context, state) =>
+            BottomNavBarWidget(pageController: pageController),
       ),
     );
   }

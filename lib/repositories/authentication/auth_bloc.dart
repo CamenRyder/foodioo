@@ -158,7 +158,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } catch (err) {
       emit(state.copyWith(
-        message: "Lỗi hệ thống ${err.toString()}",
+      message: "Lỗi hệ thống ${err.toString()}",
         isShowMessage: true,
         isLoadingOverLay: false,
       ));
@@ -168,7 +168,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _onLogout(Logout event, Emitter emit) async {
     try {
       String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
+      String refeshToken = dotenv.env['KEY_REFESH_TOKEN'] ?? '';
       await GetStorage().write(keyToken, '');
+      await GetStorage().write(refeshToken, '');
       FetchClient.token = '';
       emit(state.copyWith(
           isLogout: true,

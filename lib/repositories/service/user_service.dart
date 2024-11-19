@@ -91,9 +91,9 @@ class UserService extends FetchClient {
           params: {'username': data.username, 'password': data.password});
       if (result.data['code'] == 200) {
         token = result.data['data']['access_token'];
-        refeshToken = result.data['data']['refesh_token'];
+        refeshToken = result.data['data']['refresh_token'];
         return ResponseModel(
-            data: {"token": token, "refesh_token": refeshToken},
+            data: {"token": token, "refresh_token": refeshToken},
             getSuccess: true,
             message: "Lấy token thành công");
       } else {

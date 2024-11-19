@@ -11,7 +11,7 @@ removeFocus(BuildContext context) {
 }
 //
 
-bool compareTimeWithCurrent({required String token}) {
+bool checkTokenTimeWithCurrent({required String token}) {
   try {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token); // parse token
     int timer = decodedToken['exp']; //  detect token
