@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import '../../../General/image_customize_widget.dart';
 import '../../../General/spacing_horizontal_widget.dart';
@@ -13,18 +15,23 @@ class HeaderProfileWidget extends StatelessWidget {
     double radiusAvatar = 80;
     final heightScreen = MediaQuery.sizeOf(context).height;
     final profileHeight = heightScreen * 0.4;
-    
-    String urlMrsDamVinhHung = 
-        'https://static-images.vnncdn.net/files/publish/2023/3/27/batch-dam-vinh-hung-top-9095-1610333661-1012-567.jpeg';
-    String urlAvatarDamVinhHung =
-        'https://iv1cdn.vnecdn.net/giaitri/images/web/2023/03/21/dam-vinh-hung-toi-se-phoi-bay-khuyet-diem-cua-ban-than-tren--1679409753.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=LfqX8a0Syqy9CtEDu8RUAw';
+    final fullName = userModel?.fullname ?? "Đàm Vĩnh Hưng";
+    String urlAva = userModel?.urlAvatar ?? "";
+    String urlBg = userModel?.urlBackgroundProfile ?? "";
+    String avatarUrl = AppConstant.baseURL + urlAva;
+    String bgUrl = AppConstant.baseURL + urlBg;
+
     return Stack(
       children: [
-        CustomImageForLangscope(
-            height: profileHeight * 0.6,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            url: urlMrsDamVinhHung),
+        BlocBuilder(
+          builder: (context, state) {
+            return CustomImageForLangscope(
+                height: profileHeight * 0.6,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                url: bgUrl);
+          },
+        ),
         const SettingButtonWidget(),
         Container(
           margin:
@@ -35,7 +42,7 @@ class HeaderProfileWidget extends StatelessWidget {
                 width: profileHeight / 15,
               ),
               CustomImage(
-                url: urlAvatarDamVinhHung,
+                url: avatarUrl,
                 size: profileHeight / 3,
                 radius: radiusAvatar,
               ),
@@ -50,7 +57,7 @@ class HeaderProfileWidget extends StatelessWidget {
                     height: 12,
                   ),
                   Text(
-                    "Đoàn Minh Hiếu",
+                    fullName,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SpacingVerticalWidget(
