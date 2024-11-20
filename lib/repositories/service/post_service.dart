@@ -277,6 +277,48 @@ class PostService extends FetchClient {
     }
   }
 
+  Future<ResponseModel> getPostsById(
+      {required int currentAccountId,
+      required int aimAccountId,
+      required int pageSize,
+      required int page}) async {
+    try {
+      List<PostModel> postModels = [];
+
+      final Response<dynamic> result =
+          await super.getData(path: '/posts/person', queryParameters: {
+        'form_id': currentAccountId,
+        'to_id': aimAccountId,
+        'page': page,
+        'page_size': pageSize
+      });
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        final posts = result.data['data'];
+        if (posts == null) {
+          return ResponseModel(
+              data: postModels,
+              getSuccess: true,
+              message: AppConstant.messageGetSuccesData);
+        }
+        for (var e in posts) {
+          postModels.add(PostModel.fromJson(e));
+        }
+        return ResponseModel(
+            data: postModels,
+            getSuccess: true,
+            message: AppConstant.messageGetSuccesData);
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
   Future<ResponseModel> createCommentPost(
       {required int postId,
       required int accountId,

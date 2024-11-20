@@ -52,7 +52,7 @@ class UserService extends FetchClient {
         return ResponseModel(
             getSuccess: false,
             message: "Cập nhật hình đại diện thất bại",
-            data: null);  
+            data: null);
       }
     } catch (e) {
       return ResponseModel(
@@ -74,11 +74,11 @@ class UserService extends FetchClient {
             data: result.data['data'],
             getSuccess: true,
             message: "Cập nhập hình nền thành công");
-      }else{
-         return ResponseModel(
+      } else {
+        return ResponseModel(
             getSuccess: false,
             message: "Cập nhật hình nền thất bại",
-            data: null);  
+            data: null);
       }
     } catch (e) {
       return ResponseModel(
@@ -202,7 +202,7 @@ class UserService extends FetchClient {
             message: "Lấy token thành công");
       } else {
         return ResponseModel(
-          data: null,
+          data: null, 
           getSuccess: false,
           message: ValidateCodeResponse.showErorrResponse(result.data['code']),
         );
