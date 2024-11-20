@@ -277,7 +277,7 @@ class PostService extends FetchClient {
     }
   }
 
-  Future<ResponseModel> getPostsById(
+  Future<ResponseModel> getPostsByAccountId(
       {required int currentAccountId,
       required int aimAccountId,
       required int pageSize,
@@ -287,7 +287,7 @@ class PostService extends FetchClient {
 
       final Response<dynamic> result =
           await super.getData(path: '/posts/person', queryParameters: {
-        'form_id': currentAccountId,
+        'from_id': currentAccountId,
         'to_id': aimAccountId,
         'page': page,
         'page_size': pageSize

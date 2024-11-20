@@ -6,7 +6,6 @@ import 'package:foodioo/ui/screen/home%20/home_screen.dart';
 import 'package:foodioo/ui/screen/notification/not%C3%ACication_screen.dart';
 import 'package:foodioo/ui/screen/profile/profile_screen.dart';
 import 'package:foodioo/ui/screen/search/search_screen.dart';
-import 'package:hidable/hidable.dart';
 
 import '../../../repositories/blocs/systems/system_state.dart';
 import '../food_store/store_screen.dart';

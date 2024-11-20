@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:foodioo/repositories/models/user_model.dart';
 import '../../../General/image_customize_widget.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import 'setting_button_widget.dart';
 
 class HeaderProfileWidget extends StatelessWidget {
-  const HeaderProfileWidget({super.key});
-
+  const HeaderProfileWidget({super.key, this.userModel});
+  final UserModel? userModel;
   @override
   Widget build(BuildContext context) {
     double radiusAvatar = 80;
     final heightScreen = MediaQuery.sizeOf(context).height;
     final profileHeight = heightScreen * 0.4;
-    String urlMrsDamVinhHung =
+    
+    String urlMrsDamVinhHung = 
         'https://static-images.vnncdn.net/files/publish/2023/3/27/batch-dam-vinh-hung-top-9095-1610333661-1012-567.jpeg';
     String urlAvatarDamVinhHung =
         'https://iv1cdn.vnecdn.net/giaitri/images/web/2023/03/21/dam-vinh-hung-toi-se-phoi-bay-khuyet-diem-cua-ban-than-tren--1679409753.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=LfqX8a0Syqy9CtEDu8RUAw';
