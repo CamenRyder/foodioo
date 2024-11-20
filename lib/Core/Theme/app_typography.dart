@@ -66,6 +66,12 @@ class AppTypographyLight {
     fontWeight: FontWeight.w800,
   );
 
+    static const textHintBoldWhite = TextStyle(
+    color: AppColorsLight.background,
+    fontSize: AppConstant.textSizeHint,
+    fontWeight: FontWeight.w800,
+  );
+
   static TextTheme get textTheme => const TextTheme(
       headlineMedium: textHeader,
       headlineLarge: textHeaderPrimay,

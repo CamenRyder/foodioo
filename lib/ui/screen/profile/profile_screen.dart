@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/repositories/models/post_model.dart';
+import 'package:foodioo/ui/General/spacing_horizontal_widget.dart';
+import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
+import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
+import 'package:foodioo/ui/screen/home%20/widget/post_widget.dart';
 
 import '../../../Core/Theme/app_typography.dart';
 import '../../../Core/Theme/assets.gen.dart';
 import '../../../repositories/authentication/auth_bloc.dart';
 import '../../../repositories/authentication/auth_event.dart';
 import '../../General/image_customize_widget.dart';
+import 'widget/button_edit_widget.dart';
+import 'widget/header_profile_widget.dart';
+import 'widget/post_profile_widget.dart';
+import 'widget/quick_upload_post_widget.dart';
+import 'widget/setting_button_widget.dart';
 import 'widget/switch_dark_mode.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -14,37 +24,26 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final heightScreen = MediaQuery.sizeOf(context).height;
-    final profileHeight = heightScreen * 0.4;
-    String urlMrsDamVinhHung =
-        'https://static-images.vnncdn.net/files/publish/2023/3/27/batch-dam-vinh-hung-top-9095-1610333661-1012-567.jpeg';
-    String urlAvatarDamVinhHung =
-        'https://iv1cdn.vnecdn.net/giaitri/images/web/2023/03/21/dam-vinh-hung-toi-se-phoi-bay-khuyet-diem-cua-ban-than-tren--1679409753.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=LfqX8a0Syqy9CtEDu8RUAw';
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           padding: const EdgeInsets.all(0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  CustomImageForLangscope(
-                      height: profileHeight * 0.6,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      url: urlMrsDamVinhHung),
-                 
-                ],
-              )
-              // SizedBox(
-              //   height: profileHeight,
-              //   width: double.infinity,
-              //   child: Stack(
-              //     children: [
-
-              //     ],
-              //   ),
-              // )
+              const HeaderProfileWidget(),
+              const SpacingVerticalWidget(height: 12),
+              const ButtonEditWidget(),
+              const QuickUploadPost(),
+              const PostProfileWidget(),
+              // PostWidget(
+              //     postModel: PostModel(
+              //   totalComment: 10,
+              //   totalLike: 10,
+              //   description: "Test",
+              // ))
             ],
           )),
     ));
