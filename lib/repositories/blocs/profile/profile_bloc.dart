@@ -14,6 +14,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<InitalLoadingProfile>(_onInitalLoadingProfile);
     on<InputDescriptionToUploadPost>(_onInputDescriptionToUploadPost);
     on<FetchAccountPosts>(_onFetchAccountPosts);
+    on<RefreshAccountPosts>(_onRefreshAccountPosts);
     on<FastUploadPost>(_onFastUploadPost);
   }
 
@@ -21,41 +22,53 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
 
-  _onFetchAccountPosts(
-      FetchAccountPosts event, Emitter<ProfileState> emit) async {
+  _onRefreshAccountPosts(
+      RefreshAccountPosts event, Emitter<ProfileState> emit) async {
     try {
-      if (event.page == 1) {
-        emit(state.copyWith(isLoadingPosts: true));
-        ResponseModel data = await postService.getPostsByAccountId(
-            currentAccountId: state.currentAccountId,
-            aimAccountId: state.currentAccountId,
-            pageSize: pageSize,
-            page: 1);
-        if (data.getSuccess) {
-          emit(state.copyWith(
+      emit(state.copyWith(isLoadingPosts: true));
+
+      ResponseModel data = await postService.getPostsByAccountId(
+          currentAccountId: state.currentAccountId,
+          aimAccountId: state.currentAccountId,
+          pageSize: pageSize,
+          page: 1);
+      if (data.getSuccess) {
+        emit(state.copyWith(
             postModels: data.data,
             isLoadingPosts: false,
             isHasReachedPost: false,
-          ));
-        } else {
-          emit(state.copyWith(
-              isLoadingPosts: false,
-              isHasReachedPost: false,
-              isShowMessages: true,
-              message: data.message));
-        }
-      } else if (state.isHasReachedPost == false) {
+            page: 1));
+      } else {
+        emit(state.copyWith(
+            isLoadingPosts: false,
+            isHasReachedPost: false,
+            isShowMessages: true,
+            page: 1,
+            message: data.message));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          isShowMessages: true, message: e.toString(), isLoadingPosts: false));
+    }
+  }
+
+  _onFetchAccountPosts(
+      FetchAccountPosts event, Emitter<ProfileState> emit) async {
+    try {
+      int page = ++state.page;
+      if (!state.isHasReachedPost) {
         ResponseModel data = await postService.getPostsByAccountId(
             currentAccountId: state.currentAccountId,
             aimAccountId: state.currentAccountId,
             pageSize: pageSize,
-            page: event.page);
+            page: page);
         List<PostModel> currentPosts = state.postModels;
         if (data.getSuccess) {
           currentPosts.addAll(data.data);
           emit(state.copyWith(
             postModels: currentPosts,
             isLoadingPosts: false,
+            page: page,
             isHasReachedPost: data.data.isEmpty,
           ));
         } else {
@@ -63,6 +76,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               isLoadingPosts: false,
               isHasReachedPost: false,
               isShowMessages: true,
+              page: 1,
               message: data.message));
         }
       }
@@ -80,10 +94,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(state.copyWith(
             isLoadingOverLay: false,
             isShowMessages: true,
-            
             message: "Đăng bài thành công"));
         add(InputDescriptionToUploadPost(description: ""));
-        add(FetchAccountPosts(page: 1));
+        add(RefreshAccountPosts());
       } else {
         emit(state.copyWith(
             isLoadingOverLay: false,
@@ -122,11 +135,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             userModel: rsData[0].data,
             postModels: rsData[1].data,
             currentAccountId: event.accountId,
+            page: 1,
             isLoadingScreen: false));
       } else {
         emit(state.copyWith(
             isShowMessages: true,
             message: rsData[0].message,
+            page: 1,
             isLoadingScreen: false));
       }
     } catch (e) {

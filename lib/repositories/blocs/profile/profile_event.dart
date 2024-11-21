@@ -5,11 +5,12 @@ class InitalLoadingProfile extends ProfileEvent {
   InitalLoadingProfile({required this.accountId});
 }
 
-class FetchAccountPosts extends ProfileEvent {
-  int page;  
-  FetchAccountPosts({required this.page});
+class FetchAccountPosts extends ProfileEvent { 
+  FetchAccountPosts();
 }
-
+class RefreshAccountPosts extends ProfileEvent {
+  RefreshAccountPosts();
+}
 class FetchAccountUser extends ProfileEvent {}
 
 class FastUploadPost extends ProfileEvent {}

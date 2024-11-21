@@ -7,6 +7,7 @@ class ProfileState {
   UserModel userModel;
   List<PostModel> postModels;
   String message;
+  int page;
   bool isLoadingScreen;
   bool isHasReachedPost;
   bool isLoadingPosts;
@@ -15,6 +16,7 @@ class ProfileState {
   ProfileState({
     this.currentAccountId = 0,
     this.postModels = const [],
+    this.page = 1,
     required this.userModel,
     this.isLoadingPosts = false,
     this.isLoadingOverLay = false,
@@ -32,6 +34,7 @@ class ProfileState {
       bool? isShowMessages,
       bool? isLoadingPosts,
       bool? isLoadingScreen,
+      int? page,
       bool? isHasReachedPost,
       bool? isLoadingOverLay,
       String? description,
@@ -39,7 +42,8 @@ class ProfileState {
     return ProfileState(
         userModel: userModel ?? this.userModel,
         currentAccountId: currentAccountId ?? this.currentAccountId,
-        isShowMessages: isShowMessages ?? false ,
+        isShowMessages: isShowMessages ?? false,
+        page: page ?? this.page,
         isHasReachedPost: isHasReachedPost ?? this.isHasReachedPost,
         isLoadingPosts: isLoadingPosts ?? this.isLoadingPosts,
         description: description ?? this.description,
