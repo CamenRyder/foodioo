@@ -39,6 +39,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Heart.svg
   SvgGenImage get heart => const SvgGenImage('assets/icons/Heart.svg');
 
+  /// File path: assets/icons/Volume Off.svg
+  SvgGenImage get volumeOff => const SvgGenImage('assets/icons/Volume Off.svg');
+
+  /// File path: assets/icons/Volume Up.svg
+  SvgGenImage get volumeUp => const SvgGenImage('assets/icons/Volume Up.svg');
+
   /// File path: assets/icons/account.svg
   SvgGenImage get account => const SvgGenImage('assets/icons/account.svg');
 
@@ -83,6 +89,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/moon.svg
   SvgGenImage get moon => const SvgGenImage('assets/icons/moon.svg');
 
+  /// File path: assets/icons/music-note.svg
+  SvgGenImage get musicNote => const SvgGenImage('assets/icons/music-note.svg');
+
   /// File path: assets/icons/notification.svg
   SvgGenImage get notification =>
       const SvgGenImage('assets/icons/notification.svg');
@@ -108,6 +117,8 @@ class $AssetsIconsGen {
         chat,
         edit,
         heart,
+        volumeOff,
+        volumeUp,
         account,
         arrowLeft,
         bag,
@@ -121,6 +132,7 @@ class $AssetsIconsGen {
         locationMarker,
         mail,
         moon,
+        musicNote,
         notification,
         profile,
         search,

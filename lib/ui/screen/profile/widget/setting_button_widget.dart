@@ -30,7 +30,7 @@ class SettingButtonWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ListTile(
-                      leading: Assets.icons.edit
+                      leading: Assets.icons.creditCard
                           .svg(color: Theme.of(context).primaryColor),
                       title: Text(
                         'Nâng cấp tài khoản',
@@ -44,26 +44,36 @@ class SettingButtonWidget extends StatelessWidget {
                       height: 1,
                       color: AppColors.grey,
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.delete_rounded,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      title: Text(
-                        'Tắt tiếng',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      onTap: () async {},
+                    BlocBuilder<AuthBloc, AuthState>(
+                      buildWhen: (previous, current) =>
+                          previous.isEnableSound != current.isEnableSound,
+                      builder: (context, state) {
+                        return ListTile(
+                          leading: state.isEnableSound
+                              ? Assets.icons.volumeOff
+                                  .svg(color: Theme.of(context).primaryColor)
+                              : Assets.icons.volumeUp
+                                  .svg(color: Theme.of(context).primaryColor),
+                          title: Text(
+                            state.isEnableSound ? 'Tắt tiếng' : 'Mở tiếng',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          onTap: () async {
+                            context
+                                .read<AuthBloc>()
+                                .add(ChangeVisibleModeSound());
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
                     ),
                     const Divider(
                       height: 1,
                       color: AppColors.grey,
                     ),
                     ListTile(
-                      leading: Icon(
-                        Icons.delete_rounded,
-                        color: Theme.of(context).primaryColor,
-                      ),
+                      leading: Assets.icons.musicNote
+                          .svg(color: Theme.of(context).primaryColor),
                       title: Text(
                         'Tắt rung',
                         style: Theme.of(context).textTheme.bodyLarge,
@@ -75,6 +85,8 @@ class SettingButtonWidget extends StatelessWidget {
                       color: AppColors.grey,
                     ),
                     BlocBuilder<AuthBloc, AuthState>(
+                      buildWhen: (previous, current) =>
+                          previous.isDarkMode != current.isDarkMode,
                       builder: (context, state) {
                         return ListTile(
                           leading: state.isDarkMode

@@ -1,4 +1,6 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
@@ -24,13 +26,14 @@ class ButtonReactWidget extends StatefulWidget {
 
 class _ButtonReactWidgetState extends State<ButtonReactWidget> {
   bool reactPost = false;
+  bool isEnableSound = false;
   int count = 0;
   final radius = const Radius.circular(AppConstant.radiusExtra);
   @override
   void initState() {
     super.initState();
     count = widget.totalLike;
-
+    isEnableSound = context.read<AuthBloc>().state.isEnableSound;
     reactPost = widget.postModel.reactState?.state != 0 ? true : false;
     // if (widget.postModel.reactState?.accountId != null) {
     //   bool index = widget.postModel.reactState!.accountId == accountCurrent;
@@ -84,6 +87,10 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
               });
         },
         onTap: () {
+          // SystemSound.play(SystemSoundType.click);
+          isEnableSound
+              ? AudioPlayer().play(AssetSource('audio/sound_click.mp3'))
+              : null;
           setState(() {
             reactPost = !reactPost;
             if (reactPost) {

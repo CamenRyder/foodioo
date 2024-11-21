@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/authentication/auth_event.dart';
 import 'package:foodioo/repositories/authentication/auth_state.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,6 +17,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Logout>((event, emit) => _onLogout(event, emit));
     on<RegisterUser>((event, emit) => _onRegisterUser(event, emit));
     on<ChangeVisibleMode>((event, emit) => _onChangeVisibleMode(event, emit));
+    on<ChangeVisibleModeSound>(
+        (event, emit) => _onChangeVisibleModeSound(event, emit));
+  }
+
+  _onChangeVisibleModeSound(ChangeVisibleModeSound event, Emitter emit) async {
+    bool isEnableSound = !state.isEnableSound;
+
+    String keySound = AppConstant.keySoundOnClick;
+    await GetStorage().write(keySound, isEnableSound);
+    emit(state.copyWith(isEnableSound: isEnableSound));
   }
 
   _onChangeVisibleMode(ChangeVisibleMode event, Emitter emit) async {
@@ -122,13 +133,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
       String keyVisibleMode = dotenv.env['KEY_STORAGE'] ?? '';
+      String keySound = AppConstant.keySoundOnClick;
 
       String token = GetStorage().read(keyToken) ?? '';
       bool isDarkModeOn = GetStorage().read(keyVisibleMode) ?? false;
       FetchClient.token = token;
       bool isShowIntro = GetStorage().read(introkey) ?? false;
+      bool isEnableSound = GetStorage().read(keySound) ?? false;
       if (isShowIntro) {
-        emit(state.copyWith(isShowIntroApp: true, isDarkMode: false));
+        emit(state.copyWith(
+            isShowIntroApp: true, isDarkMode: false, isEnableSound: false));
         GetStorage().write(introkey, false);
       }
 
@@ -143,6 +157,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state.copyWith(
               accounts: accounts,
               currentAccount: accounts[0],
+              isEnableSound: isEnableSound,
               isDarkMode: isDarkModeOn));
         } else {
           emit(state.copyWith(isLogout: true, isDarkMode: isDarkModeOn));
@@ -158,7 +173,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } catch (err) {
       emit(state.copyWith(
-      message: "Lỗi hệ thống ${err.toString()}",
+        message: "Lỗi hệ thống ${err.toString()}",
         isShowMessage: true,
         isLoadingOverLay: false,
       ));
