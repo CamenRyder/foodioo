@@ -157,6 +157,13 @@ class PostService extends FetchClient {
             };
             break;
         }
+      } else {
+        mapForm = {
+          'account_id': accountId,
+          'description': description,
+          'lng': lng,
+          'lat': lat,
+        };
       }
       final Response<dynamic> result = await super
           .createPost('http://foodioo.camenryder.xyz/api/posts', mapForm);
@@ -274,6 +281,48 @@ class PostService extends FetchClient {
         getSuccess: false,
         message: "Đã có lỗi: $e",
       );
+    }
+  }
+
+  Future<ResponseModel> getPostsByAccountId(
+      {required int currentAccountId,
+      required int aimAccountId,
+      required int pageSize,
+      required int page}) async {
+    try {
+      List<PostModel> postModels = [];
+
+      final Response<dynamic> result =
+          await super.getData(path: '/posts/person', queryParameters: {
+        'from_id': currentAccountId,
+        'to_id': aimAccountId,
+        'page': page,
+        'page_size': pageSize
+      });
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        final posts = result.data['data'];
+        if (posts == null) {
+          return ResponseModel(
+              data: postModels,
+              getSuccess: true,
+              message: AppConstant.messageGetSuccesData);
+        }
+        for (var e in posts) {
+          postModels.add(PostModel.fromJson(e));
+        }
+        return ResponseModel(
+            data: postModels,
+            getSuccess: true,
+            message: AppConstant.messageGetSuccesData);
+      }
+      return ResponseModel(
+        data: null,
+        getSuccess: false,
+        message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+      );
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
     }
   }
 

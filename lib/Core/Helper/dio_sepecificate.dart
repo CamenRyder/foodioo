@@ -1,17 +1,23 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'dart:io';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foodioo/core/constants/constant_stataue.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../main.dart';
 import '../../repositories/authentication/auth_bloc.dart';
 import '../../repositories/authentication/auth_event.dart';
+import 'helper_function.dart';
+// ignore: unused_import
+import 'package:http/http.dart' as http;
 
 class FetchClient {
   String get domain {
@@ -44,26 +50,77 @@ class FetchClient {
     //   compact: false,
     // ));
     dio.interceptors.add(InterceptorsWrapper(
-      onResponse: (response, handler) {
-        if (response.statusCode == 401) {
-          _handleUnauthorized(response, handler);
-          return handler.next(response);
-        } else if (response.statusCode == 200 && response.data != null) {
-          var responseData = response.data;
-          if (responseData['code'] == 40101) {
-            _handleUnauthorized(response, handler);
-            return handler.next(response);
-            // var errors = responseData['code'];
-            // if (errors is List) {
-            //   if (errors[0]['message'] != null) {
-            //     if (errors[0]['message'] == 'Unauthorized') {
-            //       _handleUnauthorized(response, handler);
-            //       return handler.next(response);
-            //     }
-            //   }
-            // }
+      onRequest: (options, handler) async {
+        String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
+        String accessToken = GetStorage().read(keyToken) ?? '';
+        // String refeshToken = data.data['refesh_token'] ?? '';
+        String keyRefeshToken = dotenv.env['KEY_REFESH_TOKEN'] ?? '';
+        String refeshToken = GetStorage().read(keyRefeshToken) ?? '';
+        // if(checkTokenTimeWithCurrent(token: token)) {
+        if (accessToken == '' || refeshToken == '' || token == '') {
+          return handler.next(options);
+        } else {
+          bool isExpired = checkTokenTimeWithCurrent(token: token);
+          if (isExpired) {
+            try {
+              // var url = Uri.http( domain ,'/users/refesh');
+              final url = '$domain/users/refesh';
+              final response = await http.Client()
+                  .post(Uri.parse(url), body: {'refresh_token': refeshToken});
+              // final response = await  .post(
+              //   '$domain/users/refesh',
+              //   data: {'refesh_token': refeshToken},
+              // );
+              var decodedResponse =
+                  jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+              if (response.statusCode == 200) {
+                //! EXPIRED SESSION
+                if (decodedResponse['code'] == 201) {
+                  final newAccessToken =
+                      decodedResponse["data"]['access_token'];
+                  options.headers['Authorization'] = "Bearer $newAccessToken";
+                  GetStorage().write(keyToken, newAccessToken);
+                  token = newAccessToken;
+                  return handler.next(options);
+                } else {
+                  logout();
+                }
+              } else {
+                logout();
+              }
+              return handler.next(options);
+            } catch (e) {
+              logout();
+              // return handler.reject(e, true);
+            }
+            // return handler.next(options);
+          } else {
+            options.headers['Authorization'] = "Bearer $accessToken";
+            return handler.next(options);
           }
         }
+        // }
+      },
+      onResponse: (response, handler) {
+        // if (response.statusCode == 401) {
+        //   _handleUnauthorized(response, handler);
+        //   return handler.next(response);
+        // } else if (response.statusCode == 200 && response.data != null) {
+        //   var responseData = response.data;
+        //   if (responseData['code'] == 40101) {
+        //     _handleUnauthorized(response, handler);
+        //     return handler.next(response);
+        //     // var errors = responseData['code'];
+        //     // if (errors is List) {
+        //     //   if (errors[0]['message'] != null) {
+        //     //     if (errors[0]['message'] == 'Unauthorized') {
+        //     //       _handleUnauthorized(response, handler);
+        //     //       return handler.next(response);
+        //     //     }
+        //     //   }
+        //     // }
+        //   }
+        // }
         handler.next(response);
       },
       onError: (DioException error, handler) {
@@ -78,8 +135,7 @@ class FetchClient {
     ));
   }
 
-  void _handleUnauthorized(
-      Response response, ResponseInterceptorHandler handler) async {
+  void logout() async {
     final authBloc = navigatorKey.currentContext != null
         ? BlocProvider.of<AuthBloc>(navigatorKey.currentContext!)
         : AuthBloc();
@@ -272,6 +328,19 @@ class FetchClient {
     try {
       logRequest();
       final response = await dio.post(url,
+          data: FormData.fromMap(mapDataForm), options: options());
+      return response;
+    } on DioException catch (e) {
+      return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+    }
+  }
+
+  Future<Response> updateImage(
+      {required String url, required Map<String, dynamic> mapDataForm}) async {
+    try {
+      logRequest();
+      final response = await dio.put(url,
           data: FormData.fromMap(mapDataForm), options: options());
       return response;
     } on DioException catch (e) {
