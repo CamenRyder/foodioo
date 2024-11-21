@@ -2,14 +2,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_event.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
+import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:foodioo/repositories/service/post_service.dart';
 import 'package:foodioo/repositories/service/user_service.dart';
+
+import '../../view/login_vm.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileState(userModel: UserModel())) {
     on<InitalLoadingProfile>(_onInitalLoadingProfile);
     on<InputDescriptionToUploadPost>(_onInputDescriptionToUploadPost);
+    on<FetchAccountPosts>(_onFetchAccountPosts);
     on<FastUploadPost>(_onFastUploadPost);
   }
 
@@ -17,12 +21,78 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
 
-
-  _onFastUploadPost(FastUploadPost event , Emitter<ProfileState> emit) async {
+  _onFetchAccountPosts(
+      FetchAccountPosts event, Emitter<ProfileState> emit) async {
     try {
-      
-    }catch(e) {
-        emit(state.copyWith(isShowMessages: true, message: e.toString()));
+      if (event.page == 1) {
+        emit(state.copyWith(isLoadingPosts: true));
+        ResponseModel data = await postService.getPostsByAccountId(
+            currentAccountId: state.currentAccountId,
+            aimAccountId: state.currentAccountId,
+            pageSize: pageSize,
+            page: 1);
+        if (data.getSuccess) {
+          emit(state.copyWith(
+            postModels: data.data,
+            isLoadingPosts: false,
+            isHasReachedPost: false,
+          ));
+        } else {
+          emit(state.copyWith(
+              isLoadingPosts: false,
+              isHasReachedPost: false,
+              isShowMessages: true,
+              message: data.message));
+        }
+      } else if (state.isHasReachedPost == false) {
+        ResponseModel data = await postService.getPostsByAccountId(
+            currentAccountId: state.currentAccountId,
+            aimAccountId: state.currentAccountId,
+            pageSize: pageSize,
+            page: event.page);
+        List<PostModel> currentPosts = state.postModels;
+        if (data.getSuccess) {
+          currentPosts.addAll(data.data);
+          emit(state.copyWith(
+            postModels: currentPosts,
+            isLoadingPosts: false,
+            isHasReachedPost: data.data.isEmpty,
+          ));
+        } else {
+          emit(state.copyWith(
+              isLoadingPosts: false,
+              isHasReachedPost: false,
+              isShowMessages: true,
+              message: data.message));
+        }
+      }
+    } catch (e) {
+      emit(state.copyWith(isShowMessages: true, message: e.toString()));
+    }
+  }
+
+  _onFastUploadPost(FastUploadPost event, Emitter<ProfileState> emit) async {
+    try {
+      emit(state.copyWith(isLoadingOverLay: true));
+      ResponseModel data = await postService.createPostData(
+          accountId: state.currentAccountId, description: state.description);
+      if (data.getSuccess) {
+        emit(state.copyWith(
+            isLoadingOverLay: false,
+            isShowMessages: true,
+            
+            message: "Đăng bài thành công"));
+        add(InputDescriptionToUploadPost(description: ""));
+        add(FetchAccountPosts(page: 1));
+      } else {
+        emit(state.copyWith(
+            isLoadingOverLay: false,
+            isShowMessages: true,
+            description: "",
+            message: data.message));
+      }
+    } catch (e) {
+      emit(state.copyWith(isShowMessages: true, message: e.toString()));
     }
   }
 

@@ -8,6 +8,7 @@ class ProfileState {
   List<PostModel> postModels;
   String message;
   bool isLoadingScreen;
+  bool isHasReachedPost;
   bool isLoadingPosts;
   bool isLoadingOverLay;
   bool isShowMessages;
@@ -18,6 +19,7 @@ class ProfileState {
     this.isLoadingPosts = false,
     this.isLoadingOverLay = false,
     this.isShowMessages = false,
+    this.isHasReachedPost = false,
     this.description = "",
     this.message = "",
     this.isLoadingScreen = false,
@@ -30,17 +32,19 @@ class ProfileState {
       bool? isShowMessages,
       bool? isLoadingPosts,
       bool? isLoadingScreen,
+      bool? isHasReachedPost,
       bool? isLoadingOverLay,
       String? description,
       String? message}) {
     return ProfileState(
         userModel: userModel ?? this.userModel,
         currentAccountId: currentAccountId ?? this.currentAccountId,
-        isShowMessages: isShowMessages ?? this.isShowMessages,
+        isShowMessages: isShowMessages ?? false ,
+        isHasReachedPost: isHasReachedPost ?? this.isHasReachedPost,
         isLoadingPosts: isLoadingPosts ?? this.isLoadingPosts,
         description: description ?? this.description,
         isLoadingOverLay: isLoadingOverLay ?? this.isLoadingOverLay,
-        message: message ?? this.message,
+        message: message ?? '',
         isLoadingScreen: isLoadingScreen ?? this.isLoadingScreen,
         postModels: postModels ?? this.postModels);
   }

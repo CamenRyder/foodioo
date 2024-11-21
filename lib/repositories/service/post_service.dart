@@ -157,6 +157,13 @@ class PostService extends FetchClient {
             };
             break;
         }
+      } else {
+        mapForm = {
+          'account_id': accountId,
+          'description': description,
+          'lng': lng,
+          'lat': lat,
+        };
       }
       final Response<dynamic> result = await super
           .createPost('http://foodioo.camenryder.xyz/api/posts', mapForm);

@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/Core/Theme/app_colors.dart';
 import 'package:foodioo/Core/Theme/app_typography.dart';
-import 'package:foodioo/repositories/blocs/comment/comment_event.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
 
 import '../../../../repositories/blocs/profile/profile_event.dart';
 
 class QuickUploadPost extends StatelessWidget {
-  const QuickUploadPost({super.key});
+  QuickUploadPost({super.key});
+  final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,8 @@ class QuickUploadPost extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       if (isEnable) {
-                        // context.read<ProfileBloc>().add(UploadPost());
+                        context.read<ProfileBloc>().add(FastUploadPost());
+                        controller.clear();
                       }
                     },
                     child: Container(
@@ -63,6 +64,7 @@ class QuickUploadPost extends StatelessWidget {
           ),
           TextField(
             maxLines: 2,
+            controller: controller,
             onChanged: (value) {
               context
                   .read<ProfileBloc>()

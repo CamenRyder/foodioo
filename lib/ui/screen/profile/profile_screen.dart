@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
+import 'package:foodioo/ui/General/loader_over_lay_widget.dart';
+import 'package:foodioo/ui/General/message_over_screen.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../repositories/authentication/auth_bloc.dart';
 import '../../../repositories/blocs/profile/profile_bloc.dart';
@@ -32,30 +35,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: BlocProvider(
             create: (context) => ProfileBloc()
               ..add(InitalLoadingProfile(accountId: currentAccountId)),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BlocBuilder<ProfileBloc, ProfileState>(
-                          builder: (context, state) {
-                        if (state.isLoadingScreen) {
-                          return const Skeletonizer(
-                              child: HeaderProfileWidget());
-                        }
-                        return HeaderProfileWidget(
-                          userModel: state.userModel,
-                        );
-                      }),
-                      const SpacingVerticalWidget(height: 12),
-                      const ButtonEditWidget(),
-                      const QuickUploadPost(),
-                      const PostProfileWidget(),
-                    ],
-                  )),
-            )));
+            child: BlocBuilder<ProfileBloc, ProfileState>(
+                buildWhen: (previous, current) =>
+                    previous.isLoadingOverLay != current.isLoadingOverLay ||
+                    previous.isShowMessages != current.isShowMessages,
+                builder: (context, state) {
+                  if (state.isLoadingOverLay) {
+                    context.loaderOverlay.show();
+                  } else {
+                    context.loaderOverlay.hide();
+                  }
+                  if (state.isShowMessages) {
+                    MessageToast.showToast(context, message: state.message);
+                  }
+                  return SafeArea(
+                    child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        padding: const EdgeInsets.all(0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BlocBuilder<ProfileBloc, ProfileState>(
+                                builder: (context, state) {
+                              if (state.isLoadingScreen) {
+                                return const Skeletonizer(
+                                    child: HeaderProfileWidget());
+                              }
+                              return HeaderProfileWidget(
+                                userModel: state.userModel,
+                              );
+                            }),
+                            const SpacingVerticalWidget(height: 12),
+                            const ButtonEditWidget(),
+                             QuickUploadPost(),
+                            const PostProfileWidget(),
+                          ],
+                        )),
+                  );
+                })));
   }
 }
