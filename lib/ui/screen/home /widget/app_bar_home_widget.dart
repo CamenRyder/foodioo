@@ -20,10 +20,7 @@ class AppBarHome extends StatelessWidget {
     return BlocBuilder<SystemBloc, SystemState>(
       buildWhen: (previous, current) =>
           current.scrollController != previous.scrollController,
-      builder: (context, state) => Hidable(
-        controller: context.read<SystemBloc>().state.scrollController,
-        child: appBarWidget(context),
-      ),
+      builder: (context, state) => appBarWidget(context),
     );
   }
 

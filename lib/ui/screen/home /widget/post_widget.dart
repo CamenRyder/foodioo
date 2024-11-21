@@ -8,9 +8,14 @@ import 'intereactive_post_widget.dart';
 import 'user_infor_post_widget.dart';
 
 class PostWidget extends StatefulWidget {
-  const PostWidget({super.key, required this.postModel});
+  PostWidget({
+    super.key,
+    required this.postModel,
+  });
 
   final PostModel postModel;
+  bool? isEnableSoundOnClick;
+  bool? isEnableVibration;
 
   @override
   State<PostWidget> createState() => _PostWidgetState();

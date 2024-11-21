@@ -19,6 +19,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ChangeVisibleMode>((event, emit) => _onChangeVisibleMode(event, emit));
     on<ChangeVisibleModeSound>(
         (event, emit) => _onChangeVisibleModeSound(event, emit));
+    on<ChangeEnableVibration>(
+      (event, emit) => _onChangeEnableVibration(event, emit),
+    );
+  }
+
+  _onChangeEnableVibration(ChangeEnableVibration event, Emitter emit) async {
+    bool isEnableVibration = !state.isEnableVibration;
+
+    String keyEnableVibration = AppConstant.keyEnableVibration;
+    await GetStorage().write(keyEnableVibration, isEnableVibration);
+    emit(state.copyWith(isEnableVibration: isEnableVibration));
   }
 
   _onChangeVisibleModeSound(ChangeVisibleModeSound event, Emitter emit) async {
@@ -134,15 +145,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       String keyToken = dotenv.env['KEY_TOKEN'] ?? '';
       String keyVisibleMode = dotenv.env['KEY_STORAGE'] ?? '';
       String keySound = AppConstant.keySoundOnClick;
+      String keyVibration = AppConstant.keyEnableVibration;
 
       String token = GetStorage().read(keyToken) ?? '';
       bool isDarkModeOn = GetStorage().read(keyVisibleMode) ?? false;
+      bool isShowVibration = GetStorage().read(keyVibration) ?? false;
       FetchClient.token = token;
       bool isShowIntro = GetStorage().read(introkey) ?? false;
       bool isEnableSound = GetStorage().read(keySound) ?? false;
       if (isShowIntro) {
         emit(state.copyWith(
-            isShowIntroApp: true, isDarkMode: false, isEnableSound: false));
+            isShowIntroApp: true,
+            isDarkMode: false,
+            isEnableSound: false,
+            isEnableVibration: false));
         GetStorage().write(introkey, false);
       }
 
@@ -158,6 +174,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               accounts: accounts,
               currentAccount: accounts[0],
               isEnableSound: isEnableSound,
+              isEnableVibration: isShowVibration,
               isDarkMode: isDarkModeOn));
         } else {
           emit(state.copyWith(isLogout: true, isDarkMode: isDarkModeOn));

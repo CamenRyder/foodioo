@@ -11,6 +11,7 @@ class AuthState {
   bool isEnableSound;
   bool isShowSplash;
   bool isShowIntroApp;
+  bool isEnableVibration;
   UserModel? currentAccount;
   List<UserModel> accounts;
 
@@ -20,6 +21,7 @@ class AuthState {
       this.isShowSplash = false,
       this.isEnableSound = false,
       this.isShowMessage = false,
+      this.isEnableVibration = false,
       this.isShowIntroApp = false,
       this.isDarkMode = false,
       this.isRegisterSuccess = false,
@@ -32,6 +34,7 @@ class AuthState {
     bool? isLogout,
     bool? isLoadingOverLay,
     bool? isShowSplash,
+    bool? isEnableVibration,
     bool? isShowMessage,
     bool? isRegisterSuccess,
     bool? isDarkMode,
@@ -49,6 +52,7 @@ class AuthState {
       isLoadingOverLay: isLoadingOverLay ?? false,
       isRegisterSuccess: isRegisterSuccess ?? false,
       isShowMessage: isShowMessage ?? false,
+      isEnableVibration: isEnableVibration ?? this.isEnableVibration,
       isDarkMode: isDarkMode ?? this.isDarkMode,
       message: message ?? this.message,
       isShowSplash: isShowSplash ?? this.isShowSplash,

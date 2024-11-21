@@ -7,6 +7,7 @@ import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_event.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/ui/general/spacing_vertical_widget.dart';
+import 'package:vibration/vibration.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/authentication/auth_bloc.dart';
@@ -27,6 +28,7 @@ class ButtonReactWidget extends StatefulWidget {
 class _ButtonReactWidgetState extends State<ButtonReactWidget> {
   bool reactPost = false;
   bool isEnableSound = false;
+  bool isEnableVibration = false;
   int count = 0;
   final radius = const Radius.circular(AppConstant.radiusExtra);
   @override
@@ -35,6 +37,7 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
     count = widget.totalLike;
     isEnableSound = context.read<AuthBloc>().state.isEnableSound;
     reactPost = widget.postModel.reactState?.state != 0 ? true : false;
+    isEnableVibration = context.read<AuthBloc>().state.isEnableVibration;
     // if (widget.postModel.reactState?.accountId != null) {
     //   bool index = widget.postModel.reactState!.accountId == accountCurrent;
     //   if (!index) {
@@ -90,6 +93,10 @@ class _ButtonReactWidgetState extends State<ButtonReactWidget> {
           // SystemSound.play(SystemSoundType.click);
           isEnableSound
               ? AudioPlayer().play(AssetSource('audio/sound_click.mp3'))
+              : null;
+
+          isEnableVibration
+              ? Vibration.vibrate(amplitude: 250, duration: 1)
               : null;
           setState(() {
             reactPost = !reactPost;

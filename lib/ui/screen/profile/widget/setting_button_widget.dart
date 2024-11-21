@@ -71,14 +71,23 @@ class SettingButtonWidget extends StatelessWidget {
                       height: 1,
                       color: AppColors.grey,
                     ),
-                    ListTile(
-                      leading: Assets.icons.musicNote
-                          .svg(color: Theme.of(context).primaryColor),
-                      title: Text(
-                        'Tắt rung',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      onTap: () async {},
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        return ListTile(
+                          leading: Assets.icons.musicNote
+                              .svg(color: Theme.of(context).primaryColor),
+                          title: Text(
+                            state.isEnableVibration ? 'Tắt rung' : 'Mở rung',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          onTap: () async {
+                            context
+                                .read<AuthBloc>()
+                                .add(ChangeEnableVibration());
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
                     ),
                     const Divider(
                       height: 1,
