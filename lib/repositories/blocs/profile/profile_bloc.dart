@@ -9,12 +9,31 @@ import 'package:foodioo/repositories/service/user_service.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileState(userModel: UserModel())) {
     on<InitalLoadingProfile>(_onInitalLoadingProfile);
-
+    on<InputDescriptionToUploadPost>(_onInputDescriptionToUploadPost);
+    on<FastUploadPost>(_onFastUploadPost);
   }
 
   UserService userService = UserService();
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+
+
+  _onFastUploadPost(FastUploadPost event , Emitter<ProfileState> emit) async {
+    try {
+      
+    }catch(e) {
+        emit(state.copyWith(isShowMessages: true, message: e.toString()));
+    }
+  }
+
+  _onInputDescriptionToUploadPost(
+      InputDescriptionToUploadPost event, Emitter<ProfileState> emit) {
+    try {
+      emit(state.copyWith(description: event.description));
+    } catch (e) {
+      emit(state.copyWith(isShowMessages: true, message: e.toString()));
+    }
+  }
 
   _onInitalLoadingProfile(
       InitalLoadingProfile event, Emitter<ProfileState> emit) async {

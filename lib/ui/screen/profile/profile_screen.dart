@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../repositories/authentication/auth_bloc.dart';
 import '../../../repositories/blocs/profile/profile_bloc.dart';
 import '../../../repositories/blocs/profile/profile_event.dart';
@@ -30,19 +32,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: BlocProvider(
             create: (context) => ProfileBloc()
               ..add(InitalLoadingProfile(accountId: currentAccountId)),
-            child: const SafeArea(
+            child: SafeArea(
               child: SingleChildScrollView(
-                  physics: ClampingScrollPhysics(),
-                  padding: EdgeInsets.all(0),
+                  physics: const ClampingScrollPhysics(),
+                  padding: const EdgeInsets.all(0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HeaderProfileWidget(),
-                      SpacingVerticalWidget(height: 12),
-                      ButtonEditWidget(),
-                      QuickUploadPost(),
-                      PostProfileWidget(),
+                      BlocBuilder<ProfileBloc, ProfileState>(
+                          builder: (context, state) {
+                        if (state.isLoadingScreen) {
+                          return const Skeletonizer(
+                              child: HeaderProfileWidget());
+                        }
+                        return HeaderProfileWidget(
+                          userModel: state.userModel,
+                        );
+                      }),
+                      const SpacingVerticalWidget(height: 12),
+                      const ButtonEditWidget(),
+                      const QuickUploadPost(),
+                      const PostProfileWidget(),
                     ],
                   )),
             )));

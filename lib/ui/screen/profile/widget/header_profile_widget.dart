@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import '../../../General/image_customize_widget.dart';
 import '../../../General/spacing_horizontal_widget.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import 'setting_button_widget.dart';
 
@@ -23,15 +23,16 @@ class HeaderProfileWidget extends StatelessWidget {
 
     return Stack(
       children: [
-        BlocBuilder(
-          builder: (context, state) {
-            return CustomImageForLangscope(
-                height: profileHeight * 0.6,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                url: bgUrl);
-          },
-        ),
+        // BlocBuilder(
+        //   builder: (context, state) {
+        //     return ;
+        //   },
+        // ),
+        CustomImageForLangscope(
+            height: profileHeight * 0.6,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            url: bgUrl),
         const SettingButtonWidget(),
         Container(
           margin:

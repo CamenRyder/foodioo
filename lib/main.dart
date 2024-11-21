@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'Core/Helper/helper_function.dart';
 import 'repositories/authentication/auth_bloc.dart';
 import 'repositories/authentication/auth_event.dart';
 import 'ui/screen/app_config.dart';

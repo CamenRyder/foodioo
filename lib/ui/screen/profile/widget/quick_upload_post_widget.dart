@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/Core/Theme/app_colors.dart';
 import 'package:foodioo/Core/Theme/app_typography.dart';
+import 'package:foodioo/repositories/blocs/comment/comment_event.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
+
+import '../../../../repositories/blocs/profile/profile_event.dart';
 
 class QuickUploadPost extends StatelessWidget {
   const QuickUploadPost({super.key});
@@ -23,29 +30,43 @@ class QuickUploadPost extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  margin: const EdgeInsets.only(right: 3, bottom: 3),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: AppConstant.paddingContent,
-                      horizontal: AppConstant.paddingComponent),
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius:
-                          BorderRadius.circular(AppConstant.radiusMedium)),
-                  child: const Text("Đăng",
-                      style: AppTypographyLight.textHintBoldWhite),
-                ),
+              BlocBuilder<ProfileBloc, ProfileState>(
+                buildWhen: (previous, current) {
+                  return previous.description != current.description;
+                },
+                builder: (context, state) {
+                  bool isEnable = state.description.isNotEmpty;
+                  return GestureDetector(
+                    onTap: () {
+                      if (isEnable) {
+                        // context.read<ProfileBloc>().add(UploadPost());
+                      }
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 3, bottom: 3),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: AppConstant.paddingContent,
+                          horizontal: AppConstant.paddingComponent),
+                      decoration: BoxDecoration(
+                          color: isEnable
+                              ? Theme.of(context).primaryColor
+                              : AppColors.grey50,
+                          borderRadius:
+                              BorderRadius.circular(AppConstant.radiusMedium)),
+                      child: const Text("Đăng",
+                          style: AppTypographyLight.textHintBoldWhite),
+                    ),
+                  );
+                },
               )
             ],
           ),
           TextField(
             maxLines: 2,
             onChanged: (value) {
-              // context
-              //     .read<CreatePostBloc>()
-              //     .add(InputContentPost(description: value));
+              context
+                  .read<ProfileBloc>()
+                  .add(InputDescriptionToUploadPost(description: value));
             },
             style: Theme.of(context).textTheme.bodyLarge, // displaySmall
             decoration: const InputDecoration(
