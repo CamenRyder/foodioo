@@ -80,6 +80,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/mail.svg
   SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
 
+  /// File path: assets/icons/moon.svg
+  SvgGenImage get moon => const SvgGenImage('assets/icons/moon.svg');
+
   /// File path: assets/icons/notification.svg
   SvgGenImage get notification =>
       const SvgGenImage('assets/icons/notification.svg');
@@ -92,6 +95,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/setting.svg
   SvgGenImage get setting => const SvgGenImage('assets/icons/setting.svg');
+
+  /// File path: assets/icons/sun.svg
+  SvgGenImage get sun => const SvgGenImage('assets/icons/sun.svg');
 
   /// File path: assets/icons/template.svg
   SvgGenImage get template => const SvgGenImage('assets/icons/template.svg');
@@ -114,10 +120,12 @@ class $AssetsIconsGen {
         key,
         locationMarker,
         mail,
+        moon,
         notification,
         profile,
         search,
         setting,
+        sun,
         template
       ];
 }
