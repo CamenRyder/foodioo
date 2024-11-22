@@ -40,6 +40,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Add User.svg
   SvgGenImage get addUser => const SvgGenImage('assets/icons/Add User.svg');
 
+  /// File path: assets/icons/Camera.svg
+  SvgGenImage get camera => const SvgGenImage('assets/icons/Camera.svg');
+
   /// File path: assets/icons/Chat.svg
   SvgGenImage get chat => const SvgGenImage('assets/icons/Chat.svg');
 
@@ -132,6 +135,7 @@ class $AssetsIconsGen {
   /// List of all assets
   List<dynamic> get values => [
         addUser,
+        camera,
         chat,
         edit,
         heart,

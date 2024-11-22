@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
+import 'package:foodioo/ui/screen/profile/widget/button_update_avatar_widget.dart';
+import 'package:foodioo/ui/screen/profile/widget/button_update_background_widget.dart';
+import 'package:foodioo/ui/screen/profile/widget/button_update_fullname_widget.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
@@ -21,47 +24,17 @@ class ButtonEditWidget extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
-                    leading: SvgGenSizeWidget(
-                      icon: Assets.icons.identification
-                          .svg(color: Theme.of(context).primaryColor),
-                    ),
-                    title: Text('Cập nhập tên hiển thị',
-                        style: Theme.of(context).textTheme.bodyLarge),
-                    // onTap: () async => changeFullName(context),
-                  ),
+                  const ButtonUpdateFullnameWidget(),
                   const Divider(
                     height: 0.1,
                     color: AppColors.grey,
                   ),
-                  ListTile(
-                    leading: SvgGenSizeWidget(
-                      icon: Assets.icons.userCircle
-                          .svg(color: Theme.of(context).primaryColor),
-                    ),
-                    title: Text(
-                      'Cập nhật ảnh đại diện',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    onTap: () async {
-                      Navigator.pop(context);
-                    },
-                  ),
+                  const ButtonUpdateAvatarWidget(),
                   const Divider(
                     height: 0.1,
                     color: AppColors.grey,
                   ),
-                  ListTile(
-                    leading: SvgGenSizeWidget(
-                      icon: Assets.icons.imagePicker
-                          .svg(color: Theme.of(context).primaryColor),
-                    ),
-                    title: Text(
-                      'Cập nhập ảnh bìa',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    // onTap: () async => _pickImage(context),
-                  ),
+                  const ButtonUpdateBackgroundWidget()
                 ],
               ),
             );
