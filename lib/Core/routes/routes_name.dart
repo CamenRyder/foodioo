@@ -6,5 +6,6 @@ class NavigatorNames {
   static const String APP_MAIN = '/app_main';
   static const String FOOD_MAP = '/food_map';
   static const String CREATE_POST = '/create_post';
+  static  const String UPDATE_ACCOUNT = '/update_account';
   
 }

@@ -13,6 +13,16 @@ import 'package:flutter_svg/flutter_svg.dart' as _svg;
 import 'package:lottie/lottie.dart' as _lottie;
 import 'package:vector_graphics/vector_graphics.dart' as _vg;
 
+class $AssetsAudioGen {
+  const $AssetsAudioGen();
+
+  /// File path: assets/audio/sound_click.mp3
+  String get soundClick => 'assets/audio/sound_click.mp3';
+
+  /// List of all assets
+  List<String> get values => [soundClick];
+}
+
 class $AssetsAvatarGen {
   const $AssetsAvatarGen();
 
@@ -72,6 +82,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
+  /// File path: assets/icons/identification.svg
+  SvgGenImage get identification =>
+      const SvgGenImage('assets/icons/identification.svg');
+
   /// File path: assets/icons/image_picker.svg
   SvgGenImage get imagePicker =>
       const SvgGenImage('assets/icons/image_picker.svg');
@@ -111,6 +125,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/template.svg
   SvgGenImage get template => const SvgGenImage('assets/icons/template.svg');
 
+  /// File path: assets/icons/user-circle.svg
+  SvgGenImage get userCircle =>
+      const SvgGenImage('assets/icons/user-circle.svg');
+
   /// List of all assets
   List<dynamic> get values => [
         addUser,
@@ -127,6 +145,7 @@ class $AssetsIconsGen {
         deviceMobile,
         emptyBox,
         home,
+        identification,
         imagePicker,
         key,
         locationMarker,
@@ -138,7 +157,8 @@ class $AssetsIconsGen {
         search,
         setting,
         sun,
-        template
+        template,
+        userCircle
       ];
 }
 
@@ -168,6 +188,7 @@ class Assets {
   Assets._();
 
   static const String aEnv = '.env';
+  static const $AssetsAudioGen audio = $AssetsAudioGen();
   static const $AssetsAvatarGen avatar = $AssetsAvatarGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
