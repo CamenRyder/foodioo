@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_event.dart';
 import 'package:foodioo/ui/screen/profile/widget/button_update_avatar_widget.dart';
 import 'package:foodioo/ui/screen/profile/widget/button_update_background_widget.dart';
 import 'package:foodioo/ui/screen/profile/widget/button_update_fullname_widget.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
-import '../../../../Core/Theme/assets.gen.dart';
 
 class ButtonEditWidget extends StatelessWidget {
-  const ButtonEditWidget({super.key});
-
+  const ButtonEditWidget({super.key, required this.currentAccountId});
+  final int currentAccountId;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,7 +25,10 @@ class ButtonEditWidget extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const ButtonUpdateFullnameWidget(),
+                  ButtonUpdateFullnameWidget(
+                    currentAccountId: currentAccountId,
+                    onCallBackRefreshAccout: () => context.read<ProfileBloc>().add(FetchAccountUser()),
+                  ),
                   const Divider(
                     height: 0.1,
                     color: AppColors.grey,
@@ -44,15 +48,7 @@ class ButtonEditWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).primaryColor,
-          // boxShadow: [
-          //   // BoxShadow(
-          //   //   color: Colors.grey.withOpacity(0.5),
-          //   //   spreadRadius: 2,
-          //   //   blurRadius: 5,
-          //   //   offset: const Offset(0, 3),
-          //   // ),
-          // ],
+          color: Theme.of(context).primaryColor
         ),
         margin: const EdgeInsets.symmetric(
             vertical: AppConstant.paddingContent,

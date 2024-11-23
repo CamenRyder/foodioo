@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:foodioo/repositories/authentication/auth_bloc.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_typography.dart';
 import '../../../../Core/Theme/assets.gen.dart';
+import '../../../../repositories/blocs/profile/profile_bloc.dart';
+import '../../../../repositories/blocs/profile/profile_event.dart';
 import '../../../General/customize_button_widget.dart';
-import '../../../General/message_over_screen.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 
 class ButtonUpdateFullnameWidget extends StatelessWidget {
-  const ButtonUpdateFullnameWidget({super.key});
+  const ButtonUpdateFullnameWidget(
+      {super.key,
+      required this.currentAccountId,
+      required this.onCallBackRefreshAccout});
+
+  final int currentAccountId;
+  final VoidCallback onCallBackRefreshAccout;
 
   @override
   Widget build(BuildContext context) {
-    final heightScreen =  MediaQuery.sizeOf(context).height;  
+    final heightScreen = MediaQuery.sizeOf(context).height;
     return ListTile(
       leading: SvgGenSizeWidget(
         icon: Assets.icons.identification
@@ -42,9 +53,9 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                   maxLines: 1,
                   // controller: controller,
                   onChanged: (value) {
-                    // context.read<ProfileBloc>().add(
-                    //     InputDescriptionToUploadPost(
-                    //         description: value));
+                    context
+                        .read<ProfileBloc>()
+                        .add(InputFullName(updateName: value));
                   },
                   style: Theme.of(context).textTheme.bodyLarge, // displaySmall
                   decoration: const InputDecoration(
@@ -64,15 +75,37 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                   ),
                 ),
                 const Expanded(child: SizedBox()),
-                CustomizeButtonWidget(
-                  onPressed: () {
-                    MessageToast.showToast(context);
+                BlocBuilder<ProfileBloc, ProfileState>(
+                  buildWhen: (previous, current) =>
+                      previous.isLoadingUpdate != current.isLoadingUpdate ||
+                      current.isUpdateSuccess == true,
+                  builder: (context, state) {
+                    if (state.isUpdateSuccess == true) {
+                      // onCallBackRefreshAccout();
+                      Navigator.pop(context);
+                    }
+                    if (state.isLoadingUpdate) {
+                      return Center(
+                          child: SpinKitThreeBounce(
+                        color: Theme.of(context).primaryColor,
+                        size: AppConstant.sizeIconMedium,
+                      ));
+                    }
+                    return CustomizeButtonWidget(
+                      onPressed: () {
+                        // MessageToast.showToast(context);
+                        context.read<ProfileBloc>().add(
+                            ChangeFullName(curentAccountId: currentAccountId));
+                        // Navigator.pop(context);
+                      },
+                      title: "Cập nhật",
+                      isEnable: true,
+                    );
                   },
-                  title: "Cập nhật",
-                  isEnable: true,
-                ),
+                )
               ])),
         );
+
         // Navigator.pushNamed(
         //     context, NavigatorNames.UPDATE_ACCOUNT);
       },

@@ -14,13 +14,54 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<InitalLoadingProfile>(_onInitalLoadingProfile);
     on<InputDescriptionToUploadPost>(_onInputDescriptionToUploadPost);
     on<FetchAccountPosts>(_onFetchAccountPosts);
+    on<FetchAccountUser>(_onFetchAccountUser);
     on<RefreshAccountPosts>(_onRefreshAccountPosts);
     on<FastUploadPost>(_onFastUploadPost);
+    on<InputFullName>(_onInputFullName);
+    on<ChangeFullName>(_onChangeFullName);
+    // on<ChangeAvatarImage>(_onChangeAvatarImage);
+    // on<ChangeBackgroundImage>(_onChangeBackgroundImage);
   }
 
   UserService userService = UserService();
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+
+  _onFetchAccountUser(FetchAccountUser event, Emitter emit) async {
+    try {
+      final rs = userService.getUserById(accountId: state.currentAccountId );  
+
+    } catch (e) {
+      emit(state.copyWith(
+          isShowMessages: true,
+          message: e.toString(),
+          isLoadingPosts: false,
+          isLoadingUpdate: false));
+    }
+  }
+
+  _onInputFullName(InputFullName event, Emitter emit) async {
+    emit(state.copyWith(dynamicUpdateField: event.updateName));
+  }
+
+  _onChangeFullName(ChangeFullName event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoadingUpdate: true));
+      final rs = await userService.updateFullNameAccount(
+          accountId: event.curentAccountId, fullName: state.dynamicUpdateField);
+      if (rs.getSuccess) {
+        emit(state.copyWith(isLoadingUpdate: false, isUpdateSuccess: true));
+      } else {
+        emit(state.copyWith(isLoadingUpdate: false));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          isShowMessages: true,
+          message: e.toString(),
+          isLoadingPosts: false,
+          isLoadingUpdate: false));
+    }
+  }
 
   _onRefreshAccountPosts(
       RefreshAccountPosts event, Emitter<ProfileState> emit) async {

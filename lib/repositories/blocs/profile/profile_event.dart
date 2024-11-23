@@ -5,12 +5,36 @@ class InitalLoadingProfile extends ProfileEvent {
   InitalLoadingProfile({required this.accountId});
 }
 
-class FetchAccountPosts extends ProfileEvent { 
+class InputFullName extends ProfileEvent {
+  String updateName;
+  InputFullName({required this.updateName});
+}
+
+class ChangeFullName extends ProfileEvent {
+  int curentAccountId;  
+  ChangeFullName(
+    {required this.curentAccountId}
+  );
+}
+
+class ChangeAvatarImage extends ProfileEvent {
+  String avatarUrl;
+  ChangeAvatarImage({required this.avatarUrl});
+}
+
+class ChangeBackgroundImage extends ProfileEvent {
+  String backgroundImageUrl;
+  ChangeBackgroundImage({required this.backgroundImageUrl});
+}
+
+class FetchAccountPosts extends ProfileEvent {
   FetchAccountPosts();
 }
+
 class RefreshAccountPosts extends ProfileEvent {
   RefreshAccountPosts();
 }
+
 class FetchAccountUser extends ProfileEvent {}
 
 class FastUploadPost extends ProfileEvent {}
