@@ -18,7 +18,8 @@ class ButtonUpdateAvatarWidget extends StatelessWidget {
   final ProfileBloc bloc;
   @override
   Widget build(BuildContext context) {
-    final heightScreen = MediaQuery.sizeOf(context).height; //Wrap(
+    final heightScreen = MediaQuery.sizeOf(context).height;
+    final widthScreen = MediaQuery.sizeOf(context).width - 45;
     return ListTile(
         leading: SvgGenSizeWidget(
           icon: Assets.icons.imagePicker
@@ -52,36 +53,39 @@ class ButtonUpdateAvatarWidget extends StatelessWidget {
                       BlocBuilder<ProfileBloc, ProfileState>(
                         bloc: bloc,
                         builder: (context, state) {
-                          if(state.isUpdateSuccess) {
+                          if (state.isUpdateSuccess) {
                             Navigator.pop(context);
                           }
                           if (state.dynamicUpdateField.isNotEmpty) {
-                            return Center(
-                              child: Stack(
-                                children: [
-                                  Image.file(File(state.dynamicUpdateField)),
-                                  Align(
-                                      alignment: Alignment.topRight,
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            bloc.add(RemoveAvatarImage());
-                                          },
-                                          child: Container(
-                                            margin: const EdgeInsets.all(12),
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color.fromARGB(
-                                                  64, 84, 80, 80),
-                                            ),
-                                            padding: const EdgeInsets.all(
-                                                AppConstant.paddingIcon),
-                                            child: const Icon(
-                                              Icons.close,
-                                              color: Colors.white,
-                                            ),
-                                          ))),
-                                ],
-                              ),
+                            return Stack(
+                              children: [
+                                SizedBox(
+                                  height: widthScreen,
+                                  width: widthScreen,
+                                  child: Image.file(
+                                      File(state.dynamicUpdateField)),
+                                ),
+                                Align(
+                                    alignment: Alignment.topRight,
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          bloc.add(RemoveAvatarImage());
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.all(12),
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                                Color.fromARGB(64, 84, 80, 80),
+                                          ),
+                                          padding: const EdgeInsets.all(
+                                              AppConstant.paddingIcon),
+                                          child: const Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                          ),
+                                        ))),
+                              ],
                             );
                           }
                           return Column(
