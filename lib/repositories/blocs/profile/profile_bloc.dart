@@ -111,7 +111,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   _onFetchAccountUser(FetchAccountUser event, Emitter emit) async {
     try {
       ResponseModel rs =
-          await userService.getUserById(accountId: state.currentAccountId);
+          await userService.getUserById(accountId: state.viaAccountId);
       if (rs.getSuccess) {
         emit(state.copyWith(
             isUpdateSuccess: false,
@@ -161,7 +161,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       ResponseModel data = await postService.getPostsByAccountId(
           currentAccountId: state.currentAccountId,
-          aimAccountId: state.currentAccountId,
+          aimAccountId: state.viaAccountId,
           pageSize: pageSize,
           page: 1);
       if (data.getSuccess) {
@@ -191,7 +191,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (!state.isHasReachedPost) {
         ResponseModel data = await postService.getPostsByAccountId(
             currentAccountId: state.currentAccountId,
-            aimAccountId: state.currentAccountId,
+            aimAccountId: state.viaAccountId,
             pageSize: pageSize,
             page: page);
         List<PostModel> currentPosts = state.postModels;
@@ -255,10 +255,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       emit(state.copyWith(isLoadingScreen: true));
       final rsData = await Future.wait([
-        userService.getUserById(accountId: event.accountId),
+        userService.getUserById(accountId: event.viaAccountId),
         postService.getPostsByAccountId(
-            currentAccountId: event.accountId,
-            aimAccountId: event.accountId,
+            currentAccountId: event.currentAccountId,
+            aimAccountId: event.viaAccountId,
             pageSize: pageSize,
             page: 1)
       ]);
@@ -266,7 +266,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(state.copyWith(
             userModel: rsData[0].data,
             postModels: rsData[1].data,
-            currentAccountId: event.accountId,
+            currentAccountId: event.currentAccountId,
+            viaAccountId: event.viaAccountId,
             page: 1,
             isLoadingScreen: false));
       } else {

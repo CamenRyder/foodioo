@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:foodioo/ui/screen/profile/profile_screen.dart';
 import 'package:foodioo/ui/screen/splash/splash_screen.dart';
 import '../../ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
 import '../../ui/screen/create_post/create_post_screen.dart';
 import '../../ui/screen/food_map/food_map_screen.dart';
-import '../../ui/screen/udpate_profile/update_profile_screen.dart';
 import 'routes_name.dart';
 
 class RouteGenerator {
@@ -25,8 +24,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const FoodMapScreen());
       case NavigatorNames.CREATE_POST:
         return MaterialPageRoute(builder: (_) => const CreatePostScreen());
-      case NavigatorNames.UPDATE_ACCOUNT:
-        return MaterialPageRoute(builder: (_) => const UpdateProfileScreen());
+      case NavigatorNames.VIA_PROFILE:
+        return MaterialPageRoute(
+            builder: (_) => ProfileScreen(
+                  viaAccountId: args?['viaAccountId'] ?? 0,
+                ));
 
       // case NavigatorNames.LOGIN_WEB:
       //   return MaterialPageRoute(

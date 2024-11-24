@@ -1,8 +1,10 @@
 class ProfileEvent {}
 
 class InitalLoadingProfile extends ProfileEvent {
-  int accountId;
-  InitalLoadingProfile({required this.accountId});
+  int currentAccountId;
+  int viaAccountId;
+  InitalLoadingProfile(
+      {required this.currentAccountId, required this.viaAccountId});
 }
 
 class InputFullName extends ProfileEvent {

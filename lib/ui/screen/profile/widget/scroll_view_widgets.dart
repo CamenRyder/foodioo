@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
-import '../../../../Core/Constants/constant_stataue.dart';
-import '../../../../Core/Theme/app_colors.dart';
+import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../../repositories/blocs/profile/profile_bloc.dart';
 import '../../../../repositories/blocs/profile/profile_event.dart';
 import '../../../../repositories/blocs/profile/profile_state.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import 'button_edit_widget.dart';
-import 'button_update_avatar_widget.dart';
-import 'button_update_background_widget.dart';
 import 'header_profile_widget.dart';
 import 'post_profile_widget.dart';
 import 'quick_upload_post_widget.dart';
@@ -50,6 +46,8 @@ class _ScrollViewWidgetsState extends State<ScrollViewWidgets> {
 
   @override
   Widget build(BuildContext context) {
+    int currentAccountId =
+        context.read<AuthBloc>().state.currentAccount?.id ?? 0;
     return SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         controller: _scrollController,
@@ -58,11 +56,7 @@ class _ScrollViewWidgetsState extends State<ScrollViewWidgets> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BlocBuilder<ProfileBloc, ProfileState>(
-                // buildWhen: (previous, current) =>
-                //     previous.isLoadingScreen != current.isLoadingScreen ||
-                //     previous.postModels != current.postModels,
-                builder: (context, state) {
+            BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
               if (state.isLoadingScreen) {
                 return const Skeletonizer(child: HeaderProfileWidget());
               }
@@ -72,8 +66,18 @@ class _ScrollViewWidgetsState extends State<ScrollViewWidgets> {
               );
             }),
             const SpacingVerticalWidget(height: 12),
-          const  ButtonEditWidget(),
-            QuickUploadPost(),
+            BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+                return currentAccountId == state.viaAccountId
+                    ? Column(
+                        children: [
+                          const ButtonEditWidget(),
+                          QuickUploadPost(),
+                        ],
+                      )
+                    : const SizedBox();
+              },
+            ),
             const PostProfileWidget(),
           ],
         ));

@@ -9,8 +9,8 @@ import '../../../repositories/blocs/profile/profile_event.dart';
 import 'widget/scroll_view_widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
+  const ProfileScreen({super.key, required this.viaAccountId});
+  final int viaAccountId;
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -29,7 +29,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
         body: BlocProvider(
             create: (context) => ProfileBloc()
-              ..add(InitalLoadingProfile(accountId: currentAccountId)),
+              ..add(InitalLoadingProfile(
+                  viaAccountId: widget.viaAccountId,
+                  currentAccountId: currentAccountId)),
             child: BlocBuilder<ProfileBloc, ProfileState>(
                 buildWhen: (previous, current) =>
                     previous.isLoadingOverLay != current.isLoadingOverLay ||
