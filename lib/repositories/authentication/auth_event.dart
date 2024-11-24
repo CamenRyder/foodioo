@@ -14,6 +14,15 @@ class ChangeVisibleMode extends AuthEvent {
   ChangeVisibleMode();
 }
 
+class ChangeEnableVibration extends AuthEvent {
+  ChangeEnableVibration();
+}
+
+
+class ChangeVisibleModeSound extends AuthEvent {
+  ChangeVisibleModeSound();
+}
+
 class LoginUser extends AuthEvent {
   final LoginViewModel user;
   LoginUser({required this.user});

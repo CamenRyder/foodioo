@@ -1,12 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../Core/Constants/constant_stataue.dart';
+import '../../../../Core/Theme/app_colors.dart';
 import '../../../../repositories/blocs/profile/profile_bloc.dart';
 import '../../../../repositories/blocs/profile/profile_event.dart';
 import '../../../../repositories/blocs/profile/profile_state.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import 'button_edit_widget.dart';
+import 'button_update_avatar_widget.dart';
+import 'button_update_background_widget.dart';
 import 'header_profile_widget.dart';
 import 'post_profile_widget.dart';
 import 'quick_upload_post_widget.dart';
@@ -21,6 +25,7 @@ class ScrollViewWidgets extends StatefulWidget {
 class _ScrollViewWidgetsState extends State<ScrollViewWidgets> {
   bool isLoading = false;
   late ScrollController _scrollController;
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +36,7 @@ class _ScrollViewWidgetsState extends State<ScrollViewWidgets> {
   @override
   void dispose() {
     _scrollController.dispose();
-    super.dispose();  
+    super.dispose();
   }
 
   void _onScroll() {
@@ -58,16 +63,16 @@ class _ScrollViewWidgetsState extends State<ScrollViewWidgets> {
                 //     previous.isLoadingScreen != current.isLoadingScreen ||
                 //     previous.postModels != current.postModels,
                 builder: (context, state) {
-                  if (state.isLoadingScreen) {
-                    return const Skeletonizer(child: HeaderProfileWidget());
-                  }
-                  isLoading = false;
-                  return HeaderProfileWidget(
-                    userModel: state.userModel,
-                  );
-                }),
+              if (state.isLoadingScreen) {
+                return const Skeletonizer(child: HeaderProfileWidget());
+              }
+              isLoading = false;
+              return HeaderProfileWidget(
+                userModel: state.userModel,
+              );
+            }),
             const SpacingVerticalWidget(height: 12),
-            const ButtonEditWidget(),
+          const  ButtonEditWidget(),
             QuickUploadPost(),
             const PostProfileWidget(),
           ],

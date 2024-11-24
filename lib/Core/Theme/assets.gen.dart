@@ -13,6 +13,16 @@ import 'package:flutter_svg/flutter_svg.dart' as _svg;
 import 'package:lottie/lottie.dart' as _lottie;
 import 'package:vector_graphics/vector_graphics.dart' as _vg;
 
+class $AssetsAudioGen {
+  const $AssetsAudioGen();
+
+  /// File path: assets/audio/sound_click.mp3
+  String get soundClick => 'assets/audio/sound_click.mp3';
+
+  /// List of all assets
+  List<String> get values => [soundClick];
+}
+
 class $AssetsAvatarGen {
   const $AssetsAvatarGen();
 
@@ -30,6 +40,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Add User.svg
   SvgGenImage get addUser => const SvgGenImage('assets/icons/Add User.svg');
 
+  /// File path: assets/icons/Camera.svg
+  SvgGenImage get camera => const SvgGenImage('assets/icons/Camera.svg');
+
   /// File path: assets/icons/Chat.svg
   SvgGenImage get chat => const SvgGenImage('assets/icons/Chat.svg');
 
@@ -38,6 +51,12 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/Heart.svg
   SvgGenImage get heart => const SvgGenImage('assets/icons/Heart.svg');
+
+  /// File path: assets/icons/Volume Off.svg
+  SvgGenImage get volumeOff => const SvgGenImage('assets/icons/Volume Off.svg');
+
+  /// File path: assets/icons/Volume Up.svg
+  SvgGenImage get volumeUp => const SvgGenImage('assets/icons/Volume Up.svg');
 
   /// File path: assets/icons/account.svg
   SvgGenImage get account => const SvgGenImage('assets/icons/account.svg');
@@ -66,6 +85,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
+  /// File path: assets/icons/identification.svg
+  SvgGenImage get identification =>
+      const SvgGenImage('assets/icons/identification.svg');
+
   /// File path: assets/icons/image_picker.svg
   SvgGenImage get imagePicker =>
       const SvgGenImage('assets/icons/image_picker.svg');
@@ -80,6 +103,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/mail.svg
   SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
 
+  /// File path: assets/icons/moon.svg
+  SvgGenImage get moon => const SvgGenImage('assets/icons/moon.svg');
+
+  /// File path: assets/icons/music-note.svg
+  SvgGenImage get musicNote => const SvgGenImage('assets/icons/music-note.svg');
+
   /// File path: assets/icons/notification.svg
   SvgGenImage get notification =>
       const SvgGenImage('assets/icons/notification.svg');
@@ -93,15 +122,25 @@ class $AssetsIconsGen {
   /// File path: assets/icons/setting.svg
   SvgGenImage get setting => const SvgGenImage('assets/icons/setting.svg');
 
+  /// File path: assets/icons/sun.svg
+  SvgGenImage get sun => const SvgGenImage('assets/icons/sun.svg');
+
   /// File path: assets/icons/template.svg
   SvgGenImage get template => const SvgGenImage('assets/icons/template.svg');
+
+  /// File path: assets/icons/user-circle.svg
+  SvgGenImage get userCircle =>
+      const SvgGenImage('assets/icons/user-circle.svg');
 
   /// List of all assets
   List<dynamic> get values => [
         addUser,
+        camera,
         chat,
         edit,
         heart,
+        volumeOff,
+        volumeUp,
         account,
         arrowLeft,
         bag,
@@ -110,15 +149,20 @@ class $AssetsIconsGen {
         deviceMobile,
         emptyBox,
         home,
+        identification,
         imagePicker,
         key,
         locationMarker,
         mail,
+        moon,
+        musicNote,
         notification,
         profile,
         search,
         setting,
-        template
+        sun,
+        template,
+        userCircle
       ];
 }
 
@@ -148,6 +192,7 @@ class Assets {
   Assets._();
 
   static const String aEnv = '.env';
+  static const $AssetsAudioGen audio = $AssetsAudioGen();
   static const $AssetsAvatarGen avatar = $AssetsAvatarGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();

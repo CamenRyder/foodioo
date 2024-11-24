@@ -5,8 +5,6 @@ import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
-import '../../../../repositories/blocs/profile/profile_event.dart';
 import '../../home /widget/create_post_widget.dart';
 import '../../home /widget/post_widget.dart';
 
@@ -22,15 +20,11 @@ class _PostProfileWidgetState extends State<PostProfileWidget> {
 
   bool isLoading = false;
 
- 
   @override
   void initState() {
     super.initState();
     userModel = context.read<AuthBloc>().state.currentAccount ?? UserModel();
-   
   }
-
-  
 
   @override
   Widget build(BuildContext context) {

@@ -4,13 +4,19 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../repositories/models/post_model.dart';
 import '../../../General/image_customize_widget.dart';
+import 'button_show_map_widget.dart';
 import 'intereactive_post_widget.dart';
 import 'user_infor_post_widget.dart';
 
 class PostWidget extends StatefulWidget {
-  const PostWidget({super.key, required this.postModel});
+  PostWidget({
+    super.key,
+    required this.postModel,
+  });
 
   final PostModel postModel;
+  bool? isEnableSoundOnClick;
+  bool? isEnableVibration;
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -107,10 +113,10 @@ class _PostWidgetState extends State<PostWidget> {
                           );
                         },
                       ),
-                      // const Align(
-                      //   alignment: Alignment.topRight,
-                      //   child: ButtonShowMapWidget(),
-                      // ),
+                      const Align(
+                        alignment: Alignment.topRight,
+                        child: ButtonShowMapWidget(),
+                      ),
                       widget.postModel.images!.isEmpty ||
                               widget.postModel.images!.length == 1
                           ? const SizedBox()

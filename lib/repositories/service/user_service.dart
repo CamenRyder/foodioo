@@ -202,7 +202,31 @@ class UserService extends FetchClient {
             message: "Lấy token thành công");
       } else {
         return ResponseModel(
-          data: null, 
+          data: null,
+          getSuccess: false,
+          message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+        );
+      }
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> updateFullNameAccount(
+      {required String fullName, required int accountId}) async {
+    try {
+      Response<dynamic> result = await super.putData(
+          path: '/accounts/fullname/$accountId',
+          params: {"fullname": fullName});
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: fullName,
+            getSuccess: true,
+            message: "Thay đổi tên thành công");
+      } else {
+        return ResponseModel(
+          data: null,
           getSuccess: false,
           message: ValidateCodeResponse.showErorrResponse(result.data['code']),
         );

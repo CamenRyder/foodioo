@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Theme/app_colors.dart';
 import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_event.dart';
+import 'package:foodioo/ui/General/message_over_screen.dart';
 
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../../repositories/blocs/home/home_state.dart';
@@ -37,7 +38,10 @@ class ButtonEditPostWidget extends StatelessWidget {
                       // style: TextStyle(
                       //     color: AppColors.secondary, fontSize: 14),
                     ),
-                    // onTap: () async => _pickImage(context),
+                    onTap: () {
+                      Navigator.pop(context);
+                      MessageToast.showToast(context);
+                    },
                   ),
                   const Divider(
                     height: 1,
