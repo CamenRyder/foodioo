@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import '../../../General/image_customize_widget.dart';
 import '../../../General/spacing_horizontal_widget.dart';
@@ -70,7 +69,7 @@ class HeaderProfileWidget extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyLarge,
                           children: [
                         TextSpan(
-                          text: " Người theo dõi",
+                          text: "Bạn bè",
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ])),

@@ -6,6 +6,12 @@ class ProfileState {
   int viaAccountId;
   String description;
   UserModel userModel;
+  int totalFollower;
+  List<UserModel> followerList;
+  int totalFriend;
+  List<UserModel> friendList;
+  int totalRequested;
+  List<UserModel> requestedList;
   List<PostModel> postModels;
   String dynamicUpdateField; // use update fullname , bg , avatar
   String message;
@@ -21,6 +27,12 @@ class ProfileState {
     this.currentAccountId = 0,
     this.postModels = const [],
     this.page = 1,
+    this.totalFollower = 0,
+    this.totalFriend = 0,
+    this.followerList = const [],
+    this.friendList = const [],
+    this.requestedList = const [],
+    this.totalRequested = 0,
     this.viaAccountId = 0,
     this.isUpdateSuccess = false,
     this.isLoadingUpdate = false,
@@ -40,6 +52,12 @@ class ProfileState {
       int? viaAccountId,
       UserModel? userModel,
       List<PostModel>? postModels,
+      int? totalFollower,
+      List<UserModel>? followerList,
+      int? totalFriend,
+      List<UserModel>? friendList,
+      int? totalRequested,
+      List<UserModel>? requestedList,
       bool? isShowMessages,
       bool? isLoadingPosts,
       bool? isLoadingScreen,
@@ -66,6 +84,12 @@ class ProfileState {
         message: message ?? '',
         isUpdateSuccess: isUpdateSuccess ?? this.isUpdateSuccess,
         isLoadingScreen: isLoadingScreen ?? this.isLoadingScreen,
+        totalFollower: totalFollower ?? this.totalFollower,
+        followerList: followerList ?? this.followerList,
+        totalFriend: totalFriend ?? this.totalFriend,
+        friendList: friendList ?? this.friendList,
+        totalRequested: totalRequested ?? this.totalRequested,
+        requestedList: requestedList ?? this.requestedList,
         postModels: postModels ?? this.postModels);
   }
 }
