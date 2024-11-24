@@ -11,10 +11,7 @@ class InputFullName extends ProfileEvent {
 }
 
 class ChangeFullName extends ProfileEvent {
-  int curentAccountId;  
-  ChangeFullName(
-    {required this.curentAccountId}
-  );
+  ChangeFullName();
 }
 
 class ChangeAvatarImage extends ProfileEvent {

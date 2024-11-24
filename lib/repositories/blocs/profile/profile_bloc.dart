@@ -29,8 +29,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   _onFetchAccountUser(FetchAccountUser event, Emitter emit) async {
     try {
-      final rs = userService.getUserById(accountId: state.currentAccountId );  
-
+      ResponseModel rs =
+          await userService.getUserById(accountId: state.currentAccountId);
+      if (rs.getSuccess) {
+        emit(state.copyWith(
+            isUpdateSuccess: false,
+            userModel: rs.data,
+            message: "Cập nhập thành công",
+            isShowMessages: true));
+      }
     } catch (e) {
       emit(state.copyWith(
           isShowMessages: true,
@@ -48,9 +55,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       emit(state.copyWith(isLoadingUpdate: true));
       final rs = await userService.updateFullNameAccount(
-          accountId: event.curentAccountId, fullName: state.dynamicUpdateField);
+          accountId: state.currentAccountId,
+          fullName: state.dynamicUpdateField);
       if (rs.getSuccess) {
         emit(state.copyWith(isLoadingUpdate: false, isUpdateSuccess: true));
+        add(FetchAccountUser());
       } else {
         emit(state.copyWith(isLoadingUpdate: false));
       }

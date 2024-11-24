@@ -14,13 +14,11 @@ import '../../../General/spacing_vertical_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
 
 class ButtonUpdateFullnameWidget extends StatelessWidget {
-  const ButtonUpdateFullnameWidget(
-      {super.key,
-      required this.currentAccountId,
-      required this.onCallBackRefreshAccout});
-
-  final int currentAccountId;
-  final VoidCallback onCallBackRefreshAccout;
+  const ButtonUpdateFullnameWidget({
+    super.key,
+    required this.bloc,
+  });
+  final ProfileBloc bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,7 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
         Navigator.pop(context);
         await showModalBottomSheet(
           context: context,
-          builder: (context) => Container(
+          builder: (contexta) => Container(
               height: heightScreen * 0.8,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -53,9 +51,7 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                   maxLines: 1,
                   // controller: controller,
                   onChanged: (value) {
-                    context
-                        .read<ProfileBloc>()
-                        .add(InputFullName(updateName: value));
+                    bloc.add(InputFullName(updateName: value));
                   },
                   style: Theme.of(context).textTheme.bodyLarge, // displaySmall
                   decoration: const InputDecoration(
@@ -76,9 +72,10 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                 ),
                 const Expanded(child: SizedBox()),
                 BlocBuilder<ProfileBloc, ProfileState>(
-                  buildWhen: (previous, current) =>
-                      previous.isLoadingUpdate != current.isLoadingUpdate ||
-                      current.isUpdateSuccess == true,
+                  bloc: bloc,
+                  // buildWhen: (previous, current) =>
+                  //     previous.isLoadingUpdate != current.isLoadingUpdate ||
+                  //     current.isUpdateSuccess == true,
                   builder: (context, state) {
                     if (state.isUpdateSuccess == true) {
                       // onCallBackRefreshAccout();
@@ -94,8 +91,7 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                     return CustomizeButtonWidget(
                       onPressed: () {
                         // MessageToast.showToast(context);
-                        context.read<ProfileBloc>().add(
-                            ChangeFullName(curentAccountId: currentAccountId));
+                        bloc.add(ChangeFullName());
                         // Navigator.pop(context);
                       },
                       title: "Cập nhật",
