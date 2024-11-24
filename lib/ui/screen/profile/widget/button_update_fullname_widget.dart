@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:foodioo/repositories/authentication/auth_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
@@ -49,7 +48,6 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                 ),
                 TextField(
                   maxLines: 1,
-                  // controller: controller,
                   onChanged: (value) {
                     bloc.add(InputFullName(updateName: value));
                   },
@@ -73,12 +71,11 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                 const Expanded(child: SizedBox()),
                 BlocBuilder<ProfileBloc, ProfileState>(
                   bloc: bloc,
-                  // buildWhen: (previous, current) =>
-                  //     previous.isLoadingUpdate != current.isLoadingUpdate ||
-                  //     current.isUpdateSuccess == true,
+                  buildWhen: (previous, current) =>
+                      previous.isLoadingUpdate != current.isLoadingUpdate ||
+                      current.isUpdateSuccess == true,
                   builder: (context, state) {
                     if (state.isUpdateSuccess == true) {
-                      // onCallBackRefreshAccout();
                       Navigator.pop(context);
                     }
                     if (state.isLoadingUpdate) {
@@ -90,9 +87,7 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                     }
                     return CustomizeButtonWidget(
                       onPressed: () {
-                        // MessageToast.showToast(context);
                         bloc.add(ChangeFullName());
-                        // Navigator.pop(context);
                       },
                       title: "Cập nhật",
                       isEnable: true,
@@ -101,9 +96,6 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
                 )
               ])),
         );
-
-        // Navigator.pushNamed(
-        //     context, NavigatorNames.UPDATE_ACCOUNT);
       },
     );
   }

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_event.dart';
@@ -19,13 +20,93 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<FastUploadPost>(_onFastUploadPost);
     on<InputFullName>(_onInputFullName);
     on<ChangeFullName>(_onChangeFullName);
-    // on<ChangeAvatarImage>(_onChangeAvatarImage);
-    // on<ChangeBackgroundImage>(_onChangeBackgroundImage);
+    on<ChangeAvatarImage>(_onChangeAvatarImage);
+    on<RemoveAvatarImage>(_onRemoveAvatarImage);
+    on<PostChangeAvatarImage>(_onPostChangeAvatarImage);
+    on<ChangeBackgroundImage>(_onChangeBackgroundImage);
+    on<RemoveChangeBackgroundImage>(_onRemoveChangeBackgroundImage);
+    on<PostChangeBackgroundImage>(_onPostChangeBackgroundImage);
   }
 
   UserService userService = UserService();
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+
+  _onChangeBackgroundImage(ChangeBackgroundImage event, Emitter emit) {
+    emit(state.copyWith(dynamicUpdateField: event.backgroundImageUrl));
+  }
+
+  _onRemoveChangeBackgroundImage(
+      RemoveChangeBackgroundImage event, Emitter emit) {
+    emit(state.copyWith(dynamicUpdateField: ""));
+  }
+
+  _onPostChangeBackgroundImage(
+      PostChangeBackgroundImage event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoadingUpdate: true));
+      final formdata = FormData.fromMap({
+        'account_id': state.currentAccountId,
+        'image': await MultipartFile.fromFile(state.dynamicUpdateField),
+      });
+      final data = await userService.putData(
+          path: '/accounts/background', params: formdata);
+
+      if (data.data['code'] >= 200 && data.data['code'] < 300) {
+        emit(state.copyWith(isLoadingUpdate: false, isUpdateSuccess: true));
+        add(FetchAccountUser());
+      } else {
+        emit(state.copyWith(
+            isLoadingUpdate: false,
+            isUpdateSuccess: false,
+            isShowMessages: true,
+            message: "Lỗi hệ thống"));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          isShowMessages: true,
+          message: e.toString(),
+          isLoadingPosts: false,
+          isLoadingUpdate: false));
+    }
+  }
+
+  _onChangeAvatarImage(ChangeAvatarImage event, Emitter emit) async {
+    emit(state.copyWith(dynamicUpdateField: event.avatarUrl));
+  }
+
+  _onRemoveAvatarImage(RemoveAvatarImage event, Emitter emit) {
+    emit(state.copyWith(dynamicUpdateField: ""));
+  }
+
+  _onPostChangeAvatarImage(PostChangeAvatarImage event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoadingUpdate: true));
+      final formdata = FormData.fromMap({
+        'account_id': state.currentAccountId,
+        'image': await MultipartFile.fromFile(state.dynamicUpdateField),
+      });
+      final data =
+          await userService.putData(path: '/accounts/avatar', params: formdata);
+
+      if (data.data['code'] >= 200 && data.data['code'] < 300) {
+        emit(state.copyWith(isLoadingUpdate: false, isUpdateSuccess: true));
+        add(FetchAccountUser());
+      } else {
+        emit(state.copyWith(
+            isLoadingUpdate: false,
+            isUpdateSuccess: false,
+            isShowMessages: true,
+            message: "Lỗi hệ thống"));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          isShowMessages: true,
+          message: e.toString(),
+          isLoadingPosts: false,
+          isLoadingUpdate: false));
+    }
+  }
 
   _onFetchAccountUser(FetchAccountUser event, Emitter emit) async {
     try {
@@ -35,6 +116,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(state.copyWith(
             isUpdateSuccess: false,
             userModel: rs.data,
+            dynamicUpdateField: "",
             message: "Cập nhập thành công",
             isShowMessages: true));
       }

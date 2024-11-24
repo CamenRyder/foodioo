@@ -19,9 +19,21 @@ class ChangeAvatarImage extends ProfileEvent {
   ChangeAvatarImage({required this.avatarUrl});
 }
 
+class PostChangeAvatarImage extends ProfileEvent {
+  PostChangeAvatarImage();
+}
+
+class RemoveAvatarImage extends ProfileEvent {}
+
 class ChangeBackgroundImage extends ProfileEvent {
   String backgroundImageUrl;
   ChangeBackgroundImage({required this.backgroundImageUrl});
+}
+
+class RemoveChangeBackgroundImage extends ProfileEvent {}
+
+class PostChangeBackgroundImage extends ProfileEvent {
+  PostChangeBackgroundImage();
 }
 
 class FetchAccountPosts extends ProfileEvent {

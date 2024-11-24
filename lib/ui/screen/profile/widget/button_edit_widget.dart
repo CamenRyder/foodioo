@@ -15,6 +15,7 @@ class ButtonEditWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        final profileBloc = context.read<ProfileBloc>();
         await showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -24,17 +25,19 @@ class ButtonEditWidget extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ButtonUpdateFullnameWidget(bloc: context.read<ProfileBloc>()),
+                  ButtonUpdateFullnameWidget(bloc: profileBloc),
                   const Divider(
                     height: 0.1,
                     color: AppColors.grey,
                   ),
-                  const ButtonUpdateAvatarWidget(),
+                  ButtonUpdateAvatarWidget(
+                    bloc: profileBloc,
+                  ),
                   const Divider(
                     height: 0.1,
                     color: AppColors.grey,
                   ),
-                  const ButtonUpdateBackgroundWidget()
+                   ButtonUpdateBackgroundWidget(bloc: profileBloc,)
                 ],
               ),
             );
