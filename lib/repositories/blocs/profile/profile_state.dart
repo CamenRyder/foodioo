@@ -3,6 +3,7 @@ import 'package:foodioo/repositories/models/user_model.dart';
 
 class ProfileState {
   int currentAccountId;
+  int viaAccountId;
   String description;
   UserModel userModel;
   List<PostModel> postModels;
@@ -20,6 +21,7 @@ class ProfileState {
     this.currentAccountId = 0,
     this.postModels = const [],
     this.page = 1,
+    this.viaAccountId = 0,
     this.isUpdateSuccess = false,
     this.isLoadingUpdate = false,
     required this.userModel,
@@ -35,6 +37,7 @@ class ProfileState {
 
   ProfileState copyWith(
       {int? currentAccountId,
+      int? viaAccountId,
       UserModel? userModel,
       List<PostModel>? postModels,
       bool? isShowMessages,
@@ -52,6 +55,7 @@ class ProfileState {
         userModel: userModel ?? this.userModel,
         currentAccountId: currentAccountId ?? this.currentAccountId,
         isShowMessages: isShowMessages ?? false,
+        viaAccountId: viaAccountId ?? this.viaAccountId,
         dynamicUpdateField: dynamicUpdateField ?? this.dynamicUpdateField,
         page: page ?? this.page,
         isLoadingUpdate: isLoadingUpdate ?? this.isLoadingUpdate,
