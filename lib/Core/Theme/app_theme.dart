@@ -12,6 +12,7 @@ class AppTheme {
         hintColor: AppColorsLight.textContent,
         splashColor: AppColorsLight.background,
         cardColor: AppColors.spaceGrey,
+        highlightColor: AppColors.spaceGrey,
         scaffoldBackgroundColor:
             AppColorsLight.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(
@@ -101,6 +102,7 @@ class AppTheme {
         splashColor: AppColorsDark.background,
         hintColor: AppColorsDark.textContent,
         cardColor: AppColorsDark.primary,
+        highlightColor: AppColors.grey50,
         scaffoldBackgroundColor:
             AppColorsDark.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(

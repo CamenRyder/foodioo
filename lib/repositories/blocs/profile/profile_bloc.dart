@@ -32,12 +32,36 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<AcceptFollower>(_onAcceptFollower);
     on<DenyFollower>(_onDenyFollower);
     on<RemoveFriend>(_onRemoveFriend);
-    on<FollowAccount>(_onFollowAccount);  
+    on<FollowAccount>(_onFollowAccount);
   }
 
   UserService userService = UserService();
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+
+  _onAcceptFollower(AcceptFollower event, Emitter emit) {
+    userService.acceptFriend(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: event.followerAccountId);
+  }
+
+  _onDenyFollower(DenyFollower event, Emitter emit) {
+    userService.removeFriend(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: event.followerAccountId);
+  }
+
+  _onRemoveFriend(RemoveFriend event, Emitter emit) {
+    userService.removeFriend(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: event.friendAccountId);
+  }
+
+  _onFollowAccount(FollowAccount event, Emitter emit) {
+    userService.createFollower(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: event.accountId);
+  }
 
   _onRefreshListFriend(RefreshListFriend event, Emitter emit) {
     if (event.type == TypeFollwer.request) {

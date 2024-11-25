@@ -4,6 +4,7 @@ import '../../../General/image_customize_widget.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import '../../../General/spacing_vertical_widget.dart';
+import 'bottom_modal_sheet_people_around_widget.dart';
 import 'setting_button_widget.dart';
 
 class HeaderProfileWidget extends StatelessWidget {
@@ -63,16 +64,25 @@ class HeaderProfileWidget extends StatelessWidget {
                   const SpacingVerticalWidget(
                     height: 3,
                   ),
-                  RichText(
-                      text: TextSpan(
-                          text: "13",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                          children: [
-                        TextSpan(
-                          text: "Bạn bè",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ])),
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => const BottomModalSheetPeopleAroundWidget()
+                      );
+                    },
+                    child: RichText(
+                        text: TextSpan(
+                            text: "13",
+                            style: Theme.of(context).textTheme.bodyLarge,
+                            children: [
+                          TextSpan(
+                            text: " Bạn bè",
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ])),
+                  ),
                 ],
               )
             ],
