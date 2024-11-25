@@ -253,7 +253,7 @@ class UserService extends FetchClient {
             'from_id': fromId,
             'status': typeFollwer,
             'page': page,
-            'pageSize': pageSize
+            'page_size': pageSize
           });
 
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
@@ -362,7 +362,7 @@ class UserService extends FetchClient {
           });
 
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
-        String status = result.data['code']['status'];
+        String status = result.data['data']['status'];
         FriendStatusModel statusFriend = FriendStatusModel.equalString(status);
         return ResponseModel(
             data: statusFriend,

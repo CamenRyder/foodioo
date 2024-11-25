@@ -1,3 +1,4 @@
+import 'package:foodioo/repositories/models/friend_status_model.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 
@@ -7,6 +8,16 @@ class ProfileState {
   String description;
   UserModel userModel;
   int totalFollower;
+  int pageFriend;
+  int pageRequested;
+  int pageFollwer;
+  bool hasReachedListRequested;
+  bool hasReachedListAccept;
+  bool hasReachedListFriend;
+  bool isLoadingListRequested;
+  bool isLoadingListAccept;
+  bool isLoadingListFriend;
+  TypeFollwer typeFollwerCurrentAccountWithViaAccount;
   List<UserModel> followerList;
   int totalFriend;
   List<UserModel> friendList;
@@ -27,6 +38,16 @@ class ProfileState {
     this.currentAccountId = 0,
     this.postModels = const [],
     this.page = 1,
+    this.pageFollwer = 1,
+    this.hasReachedListRequested = false,
+    this.hasReachedListAccept = false,
+    this.hasReachedListFriend = false,
+    this.isLoadingListRequested = false,
+    this.isLoadingListAccept = false,
+    this.isLoadingListFriend = false,
+    this.pageFriend = 1,
+    this.pageRequested = 1,
+    this.typeFollwerCurrentAccountWithViaAccount = TypeFollwer.stranger,
     this.totalFollower = 0,
     this.totalFriend = 0,
     this.followerList = const [],
@@ -54,7 +75,14 @@ class ProfileState {
       List<PostModel>? postModels,
       int? totalFollower,
       List<UserModel>? followerList,
+      bool? isLoadingListRequested,
+      bool? isLoadingListAccept,
+      bool? isLoadingListFriend,
       int? totalFriend,
+      int? pageFriend,
+      int? pageRequested,
+      int? pageFollwer,
+      TypeFollwer? typeFollwerCurrentAccountWithViaAccount,
       List<UserModel>? friendList,
       int? totalRequested,
       List<UserModel>? requestedList,
@@ -63,6 +91,9 @@ class ProfileState {
       bool? isLoadingScreen,
       bool? isLoadingUpdate,
       bool? isUpdateSuccess,
+      bool? hasReachedListRequested,
+      bool? hasReachedListAccept,
+      bool? hasReachedListFriend,
       String? dynamicUpdateField,
       int? page,
       bool? isHasReachedPost,
@@ -76,6 +107,19 @@ class ProfileState {
         viaAccountId: viaAccountId ?? this.viaAccountId,
         dynamicUpdateField: dynamicUpdateField ?? this.dynamicUpdateField,
         page: page ?? this.page,
+        pageFollwer: pageFollwer ?? this.pageFollwer,
+        pageFriend: pageFriend ?? this.pageFriend,
+        pageRequested: pageRequested ?? this.pageRequested,
+        isLoadingListAccept: isLoadingListAccept ?? this.isLoadingListAccept,
+        isLoadingListFriend: isLoadingListFriend ?? this.isLoadingListFriend,
+        isLoadingListRequested: isLoadingListRequested ?? this.isLoadingListRequested,
+        typeFollwerCurrentAccountWithViaAccount:
+            typeFollwerCurrentAccountWithViaAccount ??
+                this.typeFollwerCurrentAccountWithViaAccount,
+        hasReachedListRequested:
+            hasReachedListRequested ?? this.hasReachedListRequested,
+        hasReachedListAccept: hasReachedListAccept ?? this.hasReachedListAccept,
+        hasReachedListFriend: hasReachedListFriend ?? this.hasReachedListFriend,
         isLoadingUpdate: isLoadingUpdate ?? this.isLoadingUpdate,
         isHasReachedPost: isHasReachedPost ?? this.isHasReachedPost,
         isLoadingPosts: isLoadingPosts ?? this.isLoadingPosts,
