@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:foodioo/Core/constants/constant_stataue.dart';
 import 'package:foodioo/ui/General/spacing_horizontal_widget.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../Core/Theme/app_colors.dart';
 import '../../../General/image_customize_widget.dart';
+import 'waiting_user_accpet_widget.dart';
 
 class BottomModalSheetPeopleAroundWidget extends StatefulWidget {
   const BottomModalSheetPeopleAroundWidget({super.key});
@@ -45,6 +47,14 @@ class _BottomModalSheetPeopleAroundWidgetState
       width: double.infinity,
       child: Column(
         children: [
+          Center(
+              child: Container(
+            height: 6,
+            width: 62,
+            decoration: BoxDecoration(
+                color: Theme.of(context).hintColor,
+                borderRadius: BorderRadius.circular(3)),
+          )),
           const SpacingVerticalWidget(
             height: 20,
           ),
@@ -86,110 +96,28 @@ class _BottomModalSheetPeopleAroundWidgetState
                     ));
               }).toList()),
           Expanded(
-              child: ListView(
-            children: [
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(
-                    horizontal: AppConstant.paddingContent,
-                    vertical: AppConstant.paddingComponent),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).highlightColor,
-                    borderRadius:
-                        BorderRadius.circular(AppConstant.radiusLarge)),
-                padding: const EdgeInsets.symmetric(
-                    vertical: AppConstant.paddingContent + 2,
-                    horizontal: AppConstant.paddingHorizontalApp),
-                child: Row(children: [
-                  CustomImage(
-                    radius: 120,
-                    url: urlImageTemp,
-                    size: sizeAvatar,
-                  ),
-                  const SpacingHorizontalWidget(
-                    width: AppConstant.paddingButton,
-                  ),
-                  Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Nagato",
-                        style: TextStyle(
-                          color: AppColorsLight.textContent,
-                          fontSize: AppConstant.textSizeButton,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      Text(
-                        "Hủy bỏ",
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ))
-                ]),
+              child: TabBarView(controller: tabController, children: [
+            ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return const WaitingUserAccpetWidget();
+              },
+            ),
+            Skeletonizer(
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return const WaitingUserAccpetWidget();
+                },
               ),
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(
-                    horizontal: AppConstant.paddingContent,
-                    vertical: AppConstant.paddingComponent),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).highlightColor,
-                    borderRadius:
-                        BorderRadius.circular(AppConstant.radiusLarge)),
-                padding: const EdgeInsets.symmetric(
-                    vertical: AppConstant.paddingContent + 2,
-                    horizontal: AppConstant.paddingHorizontalApp),
-                child: Row(children: [
-                  CustomImage(
-                    radius: 120,
-                    url: urlImageTemp,
-                    size: sizeAvatar,
-                  ),
-                  const SpacingHorizontalWidget(
-                    width: AppConstant.paddingButton,
-                  ),
-                  Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Nagato",
-                        style: TextStyle(
-                          color: AppColorsLight.textContent,
-                          fontSize: AppConstant.textSizeButton,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Chấp thuận",
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Từ chối",
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      )
-                    ],
-                  ))
-                ]),
-              )
-            ],
-          ))
+            ),
+            ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return const WaitingUserAccpetWidget();
+              },
+            ),
+          ]))
         ],
       ),
     );
