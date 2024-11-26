@@ -13,55 +13,63 @@ class ButtonEditWidget extends StatelessWidget {
   const ButtonEditWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        final profileBloc = context.read<ProfileBloc>();
-        await showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (contexat) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ButtonUpdateFullnameWidget(bloc: profileBloc),
-                  const Divider(
-                    height: 0.1,
-                    color: AppColors.grey,
+    return Row(
+      children: [
+        const Expanded(child: SizedBox()),
+        GestureDetector(
+          onTap: () async {
+            final profileBloc = context.read<ProfileBloc>();
+            await showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (contexat) {
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ButtonUpdateFullnameWidget(bloc: profileBloc),
+                      const Divider(
+                        height: 0.1,
+                        color: AppColors.grey,
+                      ),
+                      ButtonUpdateAvatarWidget(
+                        bloc: profileBloc,
+                      ),
+                      const Divider(
+                        height: 0.1,
+                        color: AppColors.grey,
+                      ),
+                      ButtonUpdateBackgroundWidget(
+                        bloc: profileBloc,
+                      )
+                    ],
                   ),
-                  ButtonUpdateAvatarWidget(
-                    bloc: profileBloc,
-                  ),
-                  const Divider(
-                    height: 0.1,
-                    color: AppColors.grey,
-                  ),
-                   ButtonUpdateBackgroundWidget(bloc: profileBloc,)
-                ],
-              ),
+                );
+              },
             );
           },
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).primaryColor),
-        margin: const EdgeInsets.symmetric(
-            vertical: AppConstant.paddingContent,
-            horizontal: AppConstant.paddingHorizontalApp),
-        padding: const EdgeInsets.symmetric(
-            vertical: AppConstant.paddingContent + 5,
-            horizontal: AppConstant.paddingHorizontalApp + 5),
-        child: Text(
-          "Chỉnh sửa cá nhân",
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(color: Colors.white),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).primaryColor),
+            margin: const EdgeInsets.symmetric(
+                vertical: AppConstant.paddingContent,
+                horizontal: AppConstant.paddingHorizontalApp),
+            padding: const EdgeInsets.symmetric(
+                vertical: AppConstant.paddingContent + 5,
+                horizontal: AppConstant.paddingHorizontalApp + 5),
+            child: Text(
+              "Chỉnh sửa cá nhân",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: Colors.white),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

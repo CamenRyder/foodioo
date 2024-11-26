@@ -262,7 +262,9 @@ class UserService extends FetchClient {
           users.add(UserModel.fromJson(e));
         }
         return ResponseModel(
-            data: users, getSuccess: true, message: "Lấy dữ liệu thành công");
+            data: {'accounts': users, 'total': result.data['data']['total']},
+            getSuccess: true,
+            message: "Lấy dữ liệu thành công");
       } else {
         return ResponseModel(
           data: null,
@@ -380,5 +382,4 @@ class UserService extends FetchClient {
           getSuccess: false, message: "Đã có lỗi: $e", data: null);
     }
   }
-
 }

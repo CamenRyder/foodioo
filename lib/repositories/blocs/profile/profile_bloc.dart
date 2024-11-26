@@ -27,7 +27,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ChangeBackgroundImage>(_onChangeBackgroundImage);
     on<RemoveChangeBackgroundImage>(_onRemoveChangeBackgroundImage);
     on<PostChangeBackgroundImage>(_onPostChangeBackgroundImage);
-    on<GetListFriends>(_onFetchNewFeed);
+    on<GetListFriends>(_onGetListFriends);
     on<RefreshListFriend>(_onRefreshListFriend);
     on<AcceptFollower>(_onAcceptFollower);
     on<DenyFollower>(_onDenyFollower);
@@ -38,6 +38,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   UserService userService = UserService();
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+  int pageSizeFollow = 20;
 
   _onAcceptFollower(AcceptFollower event, Emitter emit) {
     userService.acceptFriend(
@@ -51,7 +52,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         viaAccountId: event.followerAccountId);
   }
 
-  _onRemoveFriend(RemoveFriend event, Emitter emit) {
+  _onRemoveFriend(RemoveFriend event, Emitter emit) async {
     userService.removeFriend(
         currentAccountId: state.currentAccountId,
         viaAccountId: event.friendAccountId);
@@ -79,7 +80,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  _onFetchNewFeed(GetListFriends event, Emitter emit) async {
+  _onGetListFriends(GetListFriends event, Emitter emit) async {
     try {
       if (event.type == TypeFollwer.request && !state.hasReachedListRequested) {
         int page = state.pageRequested;
@@ -90,11 +91,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             type: event.type,
             fromId: state.currentAccountId,
             page: page,
-            pageSize: pageSize);
+            pageSize: pageSizeFollow);
         emit(state.copyWith(
-            hasReachedListRequested: data.data.isEmpty,
+            hasReachedListRequested: data.data['accounts'].isEmpty,
             isLoadingListRequested: false,
-            requestedList: [...state.requestedList, ...data.data],
+            totalRequested: data.data['total'],
+            requestedList: [...state.requestedList, ...data.data['accounts']],
             pageRequested: ++page));
       } else if (event.type == TypeFollwer.accept &&
           !state.hasReachedListAccept) {
@@ -106,11 +108,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             type: event.type,
             fromId: state.currentAccountId,
             page: page,
-            pageSize: pageSize);
+            pageSize: pageSizeFollow);
         emit(state.copyWith(
-            hasReachedListAccept: data.data.isEmpty,
+            hasReachedListAccept: data.data['accounts'].isEmpty,
             isLoadingListAccept: false,
-            followerList: [...state.followerList, ...data.data],
+            totalFollower: data.data['total'],
+            followerList: [...state.followerList, ...data.data['accounts']],
             pageFollwer: ++page));
       } else if (event.type == TypeFollwer.friend &&
           !state.hasReachedListFriend) {
@@ -122,11 +125,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             type: event.type,
             fromId: state.currentAccountId,
             page: page,
-            pageSize: pageSize);
+            pageSize: pageSizeFollow);
         emit(state.copyWith(
-            hasReachedListFriend: data.data.isEmpty,
+            hasReachedListFriend: data.data['accounts'].isEmpty,
             isLoadingListFriend: false,
-            friendList: [...state.followerList, ...data.data],
+            totalFriend: data.data['total'],
+            friendList: [...state.friendList, ...data.data['accounts']],
             pageFriend: ++page));
       }
     } catch (e) {
@@ -371,17 +375,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             type: TypeFollwer.friend,
             fromId: event.currentAccountId,
             page: 1,
-            pageSize: pageSize),
+            pageSize: pageSizeFollow),
         userService.getListFollower(
             type: TypeFollwer.accept,
             fromId: event.currentAccountId,
             page: 1,
-            pageSize: pageSize),
+            pageSize: pageSizeFollow),
         userService.getListFollower(
             type: TypeFollwer.request,
             fromId: event.currentAccountId,
             page: 1,
-            pageSize: pageSize),
+            pageSize: pageSizeFollow),
         userService.checkStatusFriend(
             currentAccountId: event.currentAccountId,
             viaAccountId: event.currentAccountId),
@@ -390,9 +394,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(state.copyWith(
             userModel: rsData[0].data,
             postModels: rsData[1].data,
-            friendList: rsData[2].data,
-            followerList: rsData[3].data,
-            requestedList: rsData[4].data,
+            friendList: rsData[2].data['accounts'],
+            totalFriend: rsData[2].data['total'],
+            followerList: rsData[3].data['accounts'],
+            totalFollower: rsData[3].data['total'],
+            requestedList: rsData[4].data['accounts'],
+            totalRequested: rsData[4].data['total'],
             typeFollwerCurrentAccountWithViaAccount:
                 rsData[5].data.typeFollower,
             currentAccountId: event.currentAccountId,

@@ -60,6 +60,7 @@ class _ListWaitingAcceptWidgetState extends State<ListWaitingAcceptWidget> {
                   itemCount: state.followerList.length,
                   itemBuilder: (context, index) => WaitingUserAccpetWidget(
                     model: state.followerList[index],
+                    bloc: widget.bloc,
                   ),
                 )
               : Center(
@@ -75,7 +76,7 @@ class _ListWaitingAcceptWidgetState extends State<ListWaitingAcceptWidget> {
                         width: 200,
                       ),
                       Text(
-                        "Hỏng có bạn bè",
+                        "Hỏng có phê duyệt",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],

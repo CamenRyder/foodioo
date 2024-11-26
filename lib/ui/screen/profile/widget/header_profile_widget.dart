@@ -69,15 +69,15 @@ class _HeaderProfileWidgetState extends State<HeaderProfileWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpacingVerticalWidget(
-                    height: 12,
+                  SpacingVerticalWidget(
+                    height: profileHeight / 10,
                   ),
                   Text(
                     fullName,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SpacingVerticalWidget(
-                    height: 3,
+                    height: 6,
                   ),
                   GestureDetector(
                     onTap: () {

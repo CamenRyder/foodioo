@@ -11,8 +11,8 @@ import '../../../../repositories/blocs/profile/profile_event.dart';
 import '../../../General/spacing_vertical_widget.dart';
 
 class ListFriendWidget extends StatefulWidget {
-  const ListFriendWidget({super.key , required this.bloc });
-  final ProfileBloc bloc; 
+  const ListFriendWidget({super.key, required this.bloc});
+  final ProfileBloc bloc;
 
   @override
   State<ListFriendWidget> createState() => _ListFriendWidgetState();
@@ -42,7 +42,7 @@ class _ListFriendWidgetState extends State<ListFriendWidget> {
   Widget build(BuildContext context) {
     widthBottomSheet = MediaQuery.sizeOf(context).width;
     return BlocBuilder<ProfileBloc, ProfileState>(
-      bloc:  widget.bloc,
+      bloc: widget.bloc,
       builder: (context, state) {
         if (state.isLoadingListFriend) {
           return Skeletonizer(
@@ -52,15 +52,15 @@ class _ListFriendWidgetState extends State<ListFriendWidget> {
           ));
         }
         return RefreshIndicator(
-          onRefresh: () async => context
-              .read<ProfileBloc>()
-              .add(RefreshListFriend(type: TypeFollwer.friend)),
+          onRefresh: () async =>
+              widget.bloc.add(RefreshListFriend(type: TypeFollwer.friend)),
           child: state.friendList.isNotEmpty
               ? ListView.builder(
                   controller: _scrollController,
                   itemCount: state.friendList.length,
                   itemBuilder: (context, index) => FriendWidget(
                     userModel: state.friendList[index],
+                    bloc: widget.bloc,
                   ),
                 )
               : Center(

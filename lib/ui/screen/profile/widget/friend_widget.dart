@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/Core/Theme/assets.gen.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
+import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
 
 import '../../../../Core/Theme/app_colors.dart';
 import '../../../../Core/constants/constant_stataue.dart';
+import '../../../../repositories/blocs/profile/profile_event.dart';
+import '../../../../repositories/models/friend_status_model.dart';
+import '../../../General/dialog_confirm_widget.dart';
 import '../../../General/image_customize_widget.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 
 class FriendWidget extends StatelessWidget {
-  const FriendWidget({super.key, this.userModel});
+  const FriendWidget({super.key, this.userModel, this.bloc});
   final UserModel? userModel;
+  final ProfileBloc? bloc;
   @override
   Widget build(BuildContext context) {
     double widthTabbar = MediaQuery.sizeOf(context).width / 3 - 60;
@@ -50,12 +58,45 @@ class FriendWidget extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            Text(
-              "Hủy bỏ",
-              style: TextStyle(
-                  fontSize: 13,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () async {
+                final rs = await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return DialogConfirm(
+                        content: "Bạn muốn hủy kết bạn?",
+                        textConfirm: "Hủy",
+                        textCancel: "Trở lại",
+                        func: () {
+                          bloc!.add(RemoveFriend(
+                              friendAccountId: userModel?.id ?? 0));
+                          Navigator.pop(context, true);
+                        },
+                        fucCancel: () {
+                          Navigator.pop(context, false);
+                        },
+                      );
+                    });
+                if (rs) {
+                  bloc!.add(RefreshListFriend(type: TypeFollwer.friend));
+                }
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Hủy ",
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SvgGenSizeWidget(
+                      isLargeSize: true,
+                      icon: Assets.icons.cancel
+                          .svg(color: Theme.of(context).primaryColor))
+                ],
+              ),
             )
           ],
         ))

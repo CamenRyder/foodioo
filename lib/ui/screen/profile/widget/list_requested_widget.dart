@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/ui/screen/profile/widget/requested_user_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -52,15 +53,15 @@ class _ListRequestedWidgetState extends State<ListRequestedWidget> {
           ));
         }
         return RefreshIndicator(
-          onRefresh: () async => context
-              .read<ProfileBloc>()
-              .add(RefreshListFriend(type: TypeFollwer.request)),
+          onRefresh: () async =>
+              widget.bloc.add(RefreshListFriend(type: TypeFollwer.request)),
           child: state.requestedList.isNotEmpty
               ? ListView.builder(
                   controller: _scrollController,
                   itemCount: state.requestedList.length,
-                  itemBuilder: (context, index) => FriendWidget(
-                    userModel: state.requestedList[index],
+                  itemBuilder: (context, index) => RequestedUserWidget(
+                    model: state.requestedList[index],
+                    bloc: widget.bloc,
                   ),
                 )
               : Center(

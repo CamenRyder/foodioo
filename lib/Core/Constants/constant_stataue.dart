@@ -5,10 +5,10 @@ class AppConstant {
   static const String APP_VERSION = "1.0.0";
   static String apiBaseURL = "${dotenv.env['API_BASE_URL']}/api";
   static String baseURL = "${dotenv.env['API_BASE_URL']}/";
-  static String keySoundOnClick = "sound_key_when_click"; 
-  static String keyEnableVibration = "enable_vibration"; 
+  static String keySoundOnClick = "sound_key_when_click";
+  static String keyEnableVibration = "enable_vibration";
   static String messageGetSuccesData = "Lấy dữ liệu từ Foodioo thành công";
-  static int pageSize = 20;
+  static int pageSize = 4;
 
   static const double sizeIconLarge = 32.0;
   static const double sizeIconMedium = 24.0;
