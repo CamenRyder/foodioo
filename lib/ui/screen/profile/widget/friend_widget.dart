@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodioo/repositories/models/user_model.dart';
 
 import '../../../../Core/Theme/app_colors.dart';
 import '../../../../Core/constants/constant_stataue.dart';
@@ -6,15 +7,17 @@ import '../../../General/image_customize_widget.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 
 class FriendWidget extends StatelessWidget {
-  const FriendWidget({super.key});
-
+  const FriendWidget({super.key, this.userModel});
+  final UserModel? userModel;
   @override
   Widget build(BuildContext context) {
     double widthTabbar = MediaQuery.sizeOf(context).width / 3 - 60;
-    final heighScreen = MediaQuery.sizeOf(context).height;
+    String avatar = userModel?.urlAvatar ?? "";
+    String urlSubString = AppConstant.baseURL + avatar;
+    String fullName = userModel?.fullname ?? "Nagato";
     final sizeAvatar = widthTabbar / 1.5 + 12;
-    String urlImageTemp =
-        'https://i.pinimg.com/550x/38/d0/e7/38d0e70f02cbef89d1968e3770977a6b.jpg';
+    // String urlImageTemp =
+    //     'https://i.pinimg.com/550x/38/d0/e7/38d0e70f02cbef89d1968e3770977a6b.jpg';
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(
@@ -29,7 +32,7 @@ class FriendWidget extends StatelessWidget {
       child: Row(children: [
         CustomImage(
           radius: 120,
-          url: urlImageTemp,
+          url: urlSubString,
           size: sizeAvatar,
         ),
         const SpacingHorizontalWidget(
@@ -39,9 +42,9 @@ class FriendWidget extends StatelessWidget {
             child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              "Nagato",
-              style: TextStyle(
+            Text(
+              fullName,
+              style: const TextStyle(
                 color: AppColorsLight.textContent,
                 fontSize: AppConstant.textSizeButton,
                 fontWeight: FontWeight.w800,

@@ -1,17 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:foodioo/Core/constants/constant_stataue.dart';
-import 'package:foodioo/ui/General/spacing_horizontal_widget.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:foodioo/ui/screen/profile/widget/list_requested_widget.dart';
+import 'package:foodioo/ui/screen/profile/widget/list_waiting_accept_widget.dart';
 
 import '../../../../Core/Theme/app_colors.dart';
-import '../../../General/image_customize_widget.dart';
-import 'waiting_user_accpet_widget.dart';
+import 'list_friend_widget.dart';
 
 class BottomModalSheetPeopleAroundWidget extends StatefulWidget {
-  const BottomModalSheetPeopleAroundWidget({super.key});
-
+  const BottomModalSheetPeopleAroundWidget({super.key, required this.bloc});
+  final ProfileBloc bloc;
   @override
   State<BottomModalSheetPeopleAroundWidget> createState() =>
       _BottomModalSheetPeopleAroundWidgetState();
@@ -36,9 +36,9 @@ class _BottomModalSheetPeopleAroundWidgetState
   Widget build(BuildContext context) {
     double widthTabbar = MediaQuery.sizeOf(context).width / 3 - 60;
     final heighScreen = MediaQuery.sizeOf(context).height;
-    final sizeAvatar = widthTabbar / 1.5 + 12;
-    String urlImageTemp =
-        'https://i.pinimg.com/550x/38/d0/e7/38d0e70f02cbef89d1968e3770977a6b.jpg';
+    // final sizeAvatar = widthTabbar / 1.5 + 12;
+    // String urlImageTemp =
+    //     'https://i.pinimg.com/550x/38/d0/e7/38d0e70f02cbef89d1968e3770977a6b.jpg';
     return Container(
       padding: const EdgeInsets.symmetric(
           vertical: AppConstant.paddingVerticalApp,
@@ -97,26 +97,11 @@ class _BottomModalSheetPeopleAroundWidgetState
               }).toList()),
           Expanded(
               child: TabBarView(controller: tabController, children: [
-            ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return const WaitingUserAccpetWidget();
-              },
+            ListFriendWidget(
+              bloc: widget.bloc,
             ),
-            Skeletonizer(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return const WaitingUserAccpetWidget();
-                },
-              ),
-            ),
-            ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return const WaitingUserAccpetWidget();
-              },
-            ),
+            ListWaitingAcceptWidget(bloc: widget.bloc),
+            ListRequestedWidget(bloc: widget.bloc,),
           ]))
         ],
       ),
