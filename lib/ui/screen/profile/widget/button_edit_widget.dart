@@ -6,6 +6,7 @@ import 'package:foodioo/ui/screen/profile/widget/button_update_background_widget
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
+import '../../../General/spacing_vertical_widget.dart';
 import 'button_update_fullname_widget.dart';
 
 class ButtonEditWidget extends StatelessWidget {
@@ -29,20 +30,29 @@ class ButtonEditWidget extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      ButtonUpdateFullnameWidget(bloc: profileBloc),
-                      const Divider(
-                        height: 0.1,
-                        color: AppColors.grey,
+                      Center(
+                        child: Container(
+                          height: 6,
+                          width: 65,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).hintColor,
+                            borderRadius: BorderRadius.circular(
+                                AppConstant.paddingContent),
+                          ),
+                        ),
                       ),
+                      const SpacingVerticalWidget(
+                        height: AppConstant.paddingComponent,
+                      ),
+                      ButtonUpdateFullnameWidget(bloc: profileBloc),
                       ButtonUpdateAvatarWidget(
                         bloc: profileBloc,
                       ),
-                      const Divider(
-                        height: 0.1,
-                        color: AppColors.grey,
-                      ),
                       ButtonUpdateBackgroundWidget(
                         bloc: profileBloc,
+                      ),
+                      const SpacingVerticalWidget(
+                        height: AppConstant.paddingComponent,
                       )
                     ],
                   ),

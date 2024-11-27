@@ -11,6 +11,7 @@ import '../../../../repositories/blocs/profile/profile_event.dart';
 import '../../../General/customize_button_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
+import '../../home /widget/list_title_customize_widget.dart';
 
 class ButtonUpdateFullnameWidget extends StatelessWidget {
   const ButtonUpdateFullnameWidget({
@@ -18,18 +19,14 @@ class ButtonUpdateFullnameWidget extends StatelessWidget {
     required this.bloc,
   });
   final ProfileBloc bloc;
-
   @override
   Widget build(BuildContext context) {
     final heightScreen = MediaQuery.sizeOf(context).height;
-    return ListTile(
-      leading: SvgGenSizeWidget(
-        icon: Assets.icons.identification
-            .svg(color: Theme.of(context).primaryColor),
-      ),
-      title: Text('Cập nhập tên hiển thị',
-          style: Theme.of(context).textTheme.bodyLarge),
-      onTap: () async {
+    return ListTitleCustomizeWidget(
+      title: 'Cập nhật tên hiển thị',
+      icon:
+          Assets.icons.identification.svg(color: Theme.of(context).canvasColor),
+      func: () async {
         Navigator.pop(context);
         await showModalBottomSheet(
           context: context,

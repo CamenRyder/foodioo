@@ -11,7 +11,7 @@ import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../General/customize_button_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
-import '../../../General/svg_gen_size_widget.dart';
+import '../../home /widget/list_title_customize_widget.dart';
 
 class ButtonUpdateAvatarWidget extends StatelessWidget {
   const ButtonUpdateAvatarWidget({super.key, required this.bloc});
@@ -20,16 +20,11 @@ class ButtonUpdateAvatarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final heightScreen = MediaQuery.sizeOf(context).height;
     final widthScreen = MediaQuery.sizeOf(context).width - 45;
-    return ListTile(
-        leading: SvgGenSizeWidget(
-          icon: Assets.icons.imagePicker
-              .svg(color: Theme.of(context).primaryColor),
-        ),
-        title: Text(
-          'Cập nhập ảnh đại diện',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        onTap: () async {
+    return ListTitleCustomizeWidget(
+        title: 'Cập nhập ảnh đại diện',
+        icon:
+            Assets.icons.imagePicker.svg(color: Theme.of(context).canvasColor),
+        func: () async {
           Navigator.pop(context);
           await showModalBottomSheet(
               context: context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/authentication/auth_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
@@ -31,7 +32,11 @@ class _PostProfileWidgetState extends State<PostProfileWidget> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 28, bottom: 5, top: 3),
+          alignment: Alignment.topLeft,
+          margin: const EdgeInsets.only(
+              left: 28,
+              bottom: AppConstant.paddingComponent,
+              top: AppConstant.paddingComponent - 3),
           child: Text(
             "Bài viết đã chia sẻ",
             style: Theme.of(context).textTheme.bodyLarge,

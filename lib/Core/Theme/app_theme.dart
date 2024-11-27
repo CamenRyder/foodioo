@@ -12,6 +12,7 @@ class AppTheme {
         hintColor: AppColorsLight.textContent,
         splashColor: AppColorsLight.background,
         cardColor: AppColors.spaceGrey,
+        canvasColor: AppColorsLight.primary,
         highlightColor: AppColors.spaceGrey,
         scaffoldBackgroundColor:
             AppColorsLight.background, // ddoori laji khi xong
@@ -101,7 +102,8 @@ class AppTheme {
         primaryColor: AppColorsDark.primary,
         splashColor: AppColorsDark.background,
         hintColor: AppColorsDark.textContent,
-        cardColor: AppColorsDark.primary,
+        cardColor: const Color.fromARGB(255, 196, 23, 34),
+        canvasColor: AppColorsDark.textContent,
         highlightColor: AppColors.grey50,
         scaffoldBackgroundColor:
             AppColorsDark.background, // ddoori laji khi xong
