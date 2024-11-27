@@ -17,7 +17,7 @@ class PostService extends FetchClient {
       List<PostModel> postModels = [];
 
       final Response<dynamic> result = await super.getData(
-          path: '/posts?account_id=$accountId&page=$page&page_size=$pageSize');
+          path: '/posts?account_id=$accountId&page=$page&page_size=4');
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final posts = result.data['data'];
         if (posts == null) {
@@ -297,7 +297,7 @@ class PostService extends FetchClient {
         'from_id': currentAccountId,
         'to_id': aimAccountId,
         'page': page,
-        'page_size': pageSize
+        'page_size': 4
       });
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final posts = result.data['data'];

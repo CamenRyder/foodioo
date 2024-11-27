@@ -44,6 +44,17 @@ class _ListAccountReactWidgetState extends State<ListAccountReactWidget> {
   }
 
   @override
+/*************  ✨ Codeium Command ⭐  *************/
+  /// Builds a widget tree that displays a list of account reactions for a post.
+  ///
+  /// The widget uses a [BlocBuilder] to listen to the state of the [HomeBloc].
+  /// If the state indicates that account reactions are loading, a skeleton
+  /// loading animation is shown. If there are no account reactions, a
+  /// placeholder with a message is displayed. Otherwise, a [ListView] is shown
+  /// with [AccountLikeWidget]s for each account reaction. The list supports
+  /// pull-to-refresh functionality and automatically fetches more reactions
+  /// when scrolled to the bottom.
+/******  1e984e8f-7339-4c7f-8aa1-97dbf7d02b50  *******/
   Widget build(BuildContext context) {
     return Expanded(
       child: BlocBuilder<HomeBloc, HomeState>(
