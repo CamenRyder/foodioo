@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../Core/Helper/dio_sepecificate.dart';
 import '../../Core/Helper/validate_code_response.dart';
+import '../models/friend_status_model.dart';
 import '../models/user_model.dart';
 import '../view/login_vm.dart';
 import '../view/register_vm.dart';
@@ -222,6 +223,151 @@ class UserService extends FetchClient {
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         return ResponseModel(
             data: fullName,
+            getSuccess: true,
+            message: "Thay đổi tên thành công");
+      } else {
+        return ResponseModel(
+          data: null,
+          getSuccess: false,
+          message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+        );
+      }
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> getListFollower(
+      {required TypeFollwer type,
+      required int fromId,
+      required int page,
+      required int pageSize}) async {
+    try {
+      FriendStatusModel typeFriend = FriendStatusModel.equalType(type);
+      String typeFollwer = typeFriend.nameFollower;
+
+      Response<dynamic> result = await super.getData(
+          path: '/follower',
+          queryParameters: {
+            'from_id': fromId,
+            'status': typeFollwer,
+            'page': page,
+            'page_size': pageSize
+          });
+
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        List<UserModel> users = [];
+        for (var e in result.data['data']['account']) {
+          users.add(UserModel.fromJson(e));
+        }
+        return ResponseModel(
+            data: {'accounts': users, 'total': result.data['data']['total']},
+            getSuccess: true,
+            message: "Lấy dữ liệu thành công");
+      } else {
+        return ResponseModel(
+          data: null,
+          getSuccess: false,
+          message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+        );
+      }
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> acceptFriend(
+      {required int currentAccountId, required int viaAccountId}) async {
+    try {
+      Response<dynamic> result =
+          await super.putData(path: '/follower', params: {
+        'from_follow': currentAccountId,
+        'to_follow': viaAccountId,
+      });
+
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: result.data,
+            getSuccess: true,
+            message: "Thay đổi tên thành công");
+      } else {
+        return ResponseModel(
+          data: null,
+          getSuccess: false,
+          message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+        );
+      }
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> createFollower(
+      {required int currentAccountId, required int viaAccountId}) async {
+    try {
+      Response<dynamic> result = await super.postData(
+          path: '/follower',
+          params: {"from_id": currentAccountId, "to_id": viaAccountId});
+
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: "Da gui loi moi ket ban",
+            getSuccess: true,
+            message: "Đã gửi lời mời kết bạn");
+      } else {
+        return ResponseModel(
+          data: null,
+          getSuccess: false,
+          message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+        );
+      }
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> removeFriend(
+      {required int currentAccountId, required int viaAccountId}) async {
+    try {
+      Response<dynamic> result = await super.deleteData(
+          path: '/follower',
+          params: {"from_follow": currentAccountId, "to_follow": viaAccountId});
+
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: result.data, getSuccess: true, message: "Đã hủy bạn bè");
+      } else {
+        return ResponseModel(
+          data: null,
+          getSuccess: false,
+          message: ValidateCodeResponse.showErorrResponse(result.data['code']),
+        );
+      }
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> checkStatusFriend(
+      {required int currentAccountId, required int viaAccountId}) async {
+    try {
+      Response<dynamic> result = await super.getData(
+          path: '/follower/status',
+          queryParameters: {
+            "from_id": currentAccountId,
+            "to_id": viaAccountId
+          });
+
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        String status = result.data['data']['status'];
+        FriendStatusModel statusFriend = FriendStatusModel.equalString(status);
+        return ResponseModel(
+            data: statusFriend,
             getSuccess: true,
             message: "Thay đổi tên thành công");
       } else {

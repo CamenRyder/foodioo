@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
-import 'package:foodioo/ui/General/message_over_screen.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
-import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
+import 'package:foodioo/ui/screen/home%20/widget/list_title_customize_widget.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
@@ -20,16 +19,11 @@ class ButtonUpdateBackgroundWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final heightScreen = MediaQuery.sizeOf(context).height;
-    return ListTile(
-        leading: SvgGenSizeWidget(
-          icon: Assets.icons.imagePicker
-              .svg(color: Theme.of(context).primaryColor),
-        ),
-        title: Text(
-          'Cập nhập ảnh bìa',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        onTap: () async {
+    return ListTitleCustomizeWidget(
+        title: "Cập nhật ảnh bìa",
+        icon:
+            Assets.icons.imagePicker.svg(color: Theme.of(context).canvasColor),
+        func: () async {
           Navigator.pop(context);
           await showModalBottomSheet(
               context: context,

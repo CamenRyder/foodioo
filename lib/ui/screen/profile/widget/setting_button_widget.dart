@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
+import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
@@ -10,6 +11,7 @@ import '../../../../repositories/authentication/auth_event.dart';
 import '../../../../repositories/authentication/auth_state.dart';
 import '../../../General/dialog_confirm_widget.dart';
 import '../../../General/svg_gen_size_widget.dart';
+import '../../home /widget/list_title_customize_widget.dart';
 
 class SettingButtonWidget extends StatelessWidget {
   const SettingButtonWidget({super.key});
@@ -55,42 +57,48 @@ class SettingButtonWidget extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              ListTile(
-                                leading: Assets.icons.creditCard
-                                    .svg(color: Theme.of(context).primaryColor),
-                                title: Text(
-                                  'Nâng cấp tài khoản',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                  // style: TextStyle(
-                                  //     color: AppColors.secondary, fontSize: 14),
+                              Center(
+                                child: Container(
+                                  height: 6,
+                                  width: 65,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).hintColor,
+                                    borderRadius: BorderRadius.circular(
+                                        AppConstant.paddingContent),
+                                  ),
                                 ),
-                                // onTap: () async => _pickImage(context),
                               ),
-                              const Divider(
-                                height: 1,
-                                color: AppColors.grey,
+                              const SpacingVerticalWidget(
+                                height: AppConstant.paddingComponent,
+                              ),
+                              ListTitleCustomizeWidget(
+                                title: 'Nâng cấp tài khoản',
+                                icon: Assets.icons.creditCard
+                                    .svg(color: Theme.of(context).canvasColor),
+                                func: () async {
+                                  context
+                                      .read<AuthBloc>()
+                                      .add(ChangeVisibleModeSound());
+                                  Navigator.pop(context);
+                                },
                               ),
                               BlocBuilder<AuthBloc, AuthState>(
                                 buildWhen: (previous, current) =>
                                     previous.isEnableSound !=
                                     current.isEnableSound,
                                 builder: (context, state) {
-                                  return ListTile(
-                                    leading: state.isEnableSound
+                                  return ListTitleCustomizeWidget(
+                                    title: state.isEnableSound
+                                        ? 'Tắt tiếng'
+                                        : 'Mở tiếng',
+                                    icon: state.isEnableSound
                                         ? Assets.icons.volumeOff.svg(
                                             color:
-                                                Theme.of(context).primaryColor)
+                                                Theme.of(context).canvasColor)
                                         : Assets.icons.volumeUp.svg(
                                             color:
-                                                Theme.of(context).primaryColor),
-                                    title: Text(
-                                      state.isEnableSound
-                                          ? 'Tắt tiếng'
-                                          : 'Mở tiếng',
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    onTap: () async {
+                                                Theme.of(context).canvasColor),
+                                    func: () async {
                                       context
                                           .read<AuthBloc>()
                                           .add(ChangeVisibleModeSound());
@@ -99,23 +107,15 @@ class SettingButtonWidget extends StatelessWidget {
                                   );
                                 },
                               ),
-                              const Divider(
-                                height: 1,
-                                color: AppColors.grey,
-                              ),
                               BlocBuilder<AuthBloc, AuthState>(
                                 builder: (context, state) {
-                                  return ListTile(
-                                    leading: Assets.icons.musicNote.svg(
-                                        color: Theme.of(context).primaryColor),
-                                    title: Text(
-                                      state.isEnableVibration
-                                          ? 'Tắt rung'
-                                          : 'Mở rung',
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    onTap: () async {
+                                  return ListTitleCustomizeWidget(
+                                    title: state.isEnableVibration
+                                        ? 'Tắt rung'
+                                        : 'Mở rung',
+                                    icon: Assets.icons.musicNote.svg(
+                                        color: Theme.of(context).canvasColor),
+                                    func: () async {
                                       context
                                           .read<AuthBloc>()
                                           .add(ChangeEnableVibration());
@@ -124,54 +124,39 @@ class SettingButtonWidget extends StatelessWidget {
                                   );
                                 },
                               ),
-                              const Divider(
-                                height: 1,
-                                color: AppColors.grey,
-                              ),
                               BlocBuilder<AuthBloc, AuthState>(
                                 buildWhen: (previous, current) =>
                                     previous.isDarkMode != current.isDarkMode,
                                 builder: (context, state) {
-                                  return ListTile(
-                                    leading: state.isDarkMode
+                                  return ListTitleCustomizeWidget(
+                                    title: state.isDarkMode
+                                        ? 'Chế độ sáng'
+                                        : 'Chế độ tối',
+                                    icon: state.isDarkMode
                                         ? Assets.icons.sun.svg(
                                             color:
-                                                Theme.of(context).primaryColor)
+                                                Theme.of(context).canvasColor)
                                         : Assets.icons.moon.svg(
                                             color:
-                                                Theme.of(context).primaryColor),
-                                    title: Text(
-                                      state.isDarkMode
-                                          ? 'Chế độ sáng'
-                                          : 'Chế độ tối',
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    onTap: () {
+                                                Theme.of(context).canvasColor),
+                                    func: () async {
+                                      Navigator.pop(context);
                                       context
                                           .read<AuthBloc>()
                                           .add(ChangeVisibleMode());
-                                      Navigator.pop(context);
                                     },
                                   );
                                 },
                               ),
-                              const Divider(
-                                height: 1,
-                                color: AppColors.grey,
-                              ),
-                              ListTile(
-                                leading: Icon(
+                              ListTitleCustomizeWidget(
+                                title: 'Đăng xuất',
+                                icon: Icon(
                                   Icons.delete_rounded,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).canvasColor,
                                 ),
-                                title: Text(
-                                  'Đăng xuất',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                                onTap: () async {
+                                func: () async {
                                   Navigator.pop(context);
-                                  await showDialog(
+                                  showDialog(
                                       context: context,
                                       builder: (context) {
                                         return DialogConfirm(
@@ -191,6 +176,9 @@ class SettingButtonWidget extends StatelessWidget {
                                         );
                                       });
                                 },
+                              ),
+                              const SpacingVerticalWidget(
+                                height: AppConstant.paddingComponent,
                               ),
                             ],
                           ),

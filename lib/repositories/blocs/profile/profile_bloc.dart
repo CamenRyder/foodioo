@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_event.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
+import 'package:foodioo/repositories/models/friend_status_model.dart';
 import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:foodioo/repositories/service/post_service.dart';
@@ -26,11 +27,143 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ChangeBackgroundImage>(_onChangeBackgroundImage);
     on<RemoveChangeBackgroundImage>(_onRemoveChangeBackgroundImage);
     on<PostChangeBackgroundImage>(_onPostChangeBackgroundImage);
+    on<GetListFriends>(_onGetListFriends);
+    on<RefreshListFriend>(_onRefreshListFriend);
+    on<AcceptFollower>(_onAcceptFollower);
+    on<DenyFollower>(_onDenyFollower);
+    on<RemoveFriend>(_onRemoveFriend);
+    on<FollowAccount>(_onFollowAccount);
+    on<RefreshRelationshipFriend>(_onRefreshRelationshipFriend);
   }
 
   UserService userService = UserService();
   PostService postService = PostService();
   int pageSize = AppConstant.pageSize;
+  int pageSizeFollow = 20;
+
+  _onAcceptFollower(AcceptFollower event, Emitter emit) async {
+    emit(state.copyWith(isLoadingRequestFriends: true));
+    await userService.acceptFriend(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: event.followerAccountId);
+    emit(state.copyWith(isLoadingRequestFriends: false));
+    add(RefreshRelationshipFriend());
+  }
+
+  _onRefreshRelationshipFriend(
+      RefreshRelationshipFriend event, Emitter emit) async {
+    final data = await userService.checkStatusFriend(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: state.viaAccountId);
+    emit(state.copyWith(
+        typeFollwerCurrentAccountWithViaAccount: data.data.typeFollower,
+        isPopDialog: false));
+  }
+
+  _onDenyFollower(DenyFollower event, Emitter emit) async {
+    emit(state.copyWith(isLoadingRequestFriends: true));
+    await userService.removeFriend(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: event.followerAccountId);
+    add(RefreshRelationshipFriend());
+    emit(state.copyWith(isLoadingRequestFriends: false, isPopDialog: true));
+  }
+
+  _onRemoveFriend(RemoveFriend event, Emitter emit) async {
+    emit(state.copyWith(isLoadingRequestFriends: true));
+    await userService.removeFriend(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: event.friendAccountId);
+    add(RefreshRelationshipFriend());
+    emit(state.copyWith(isLoadingRequestFriends: false, isPopDialog: true));
+  }
+
+  _onFollowAccount(FollowAccount event, Emitter emit) async {
+    emit(state.copyWith(isLoadingRequestFriends: true));
+    await userService.createFollower(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: event.accountId);
+    add(RefreshRelationshipFriend());
+    emit(state.copyWith(isLoadingRequestFriends: false, isPopDialog: true));
+  }
+
+  _onRefreshListFriend(RefreshListFriend event, Emitter emit) {
+    if (event.type == TypeFollwer.request) {
+      emit(state.copyWith(
+          hasReachedListRequested: false, pageRequested: 1, requestedList: []));
+      add(GetListFriends(type: event.type));
+    } else if (event.type == TypeFollwer.accept) {
+      emit(state.copyWith(
+          hasReachedListAccept: false, pageFollwer: 1, followerList: []));
+      add(GetListFriends(type: event.type));
+    } else if (event.type == TypeFollwer.friend) {
+      emit(state.copyWith(
+          hasReachedListFriend: false, pageFriend: 1, friendList: []));
+      add(GetListFriends(type: event.type));
+    }
+  }
+
+  _onGetListFriends(GetListFriends event, Emitter emit) async {
+    try {
+      if (event.type == TypeFollwer.request && !state.hasReachedListRequested) {
+        int page = state.pageRequested;
+        if (page == 1) {
+          emit(state.copyWith(isLoadingListRequested: true));
+        }
+        ResponseModel data = await userService.getListFollower(
+            type: event.type,
+            fromId: state.viaAccountId,
+            page: page,
+            pageSize: pageSizeFollow);
+        emit(state.copyWith(
+            hasReachedListRequested: data.data['accounts'].isEmpty,
+            isLoadingListRequested: false,
+            totalRequested: data.data['total'],
+            requestedList: [...state.requestedList, ...data.data['accounts']],
+            pageRequested: ++page));
+      } else if (event.type == TypeFollwer.accept &&
+          !state.hasReachedListAccept) {
+        int page = state.pageFollwer;
+        if (page == 1) {
+          emit(state.copyWith(isLoadingListAccept: true));
+        }
+        ResponseModel data = await userService.getListFollower(
+            type: event.type,
+            fromId: state.viaAccountId,
+            page: page,
+            pageSize: pageSizeFollow);
+        emit(state.copyWith(
+            hasReachedListAccept: data.data['accounts'].isEmpty,
+            isLoadingListAccept: false,
+            totalFollower: data.data['total'],
+            followerList: [...state.followerList, ...data.data['accounts']],
+            pageFollwer: ++page));
+      } else if (event.type == TypeFollwer.friend &&
+          !state.hasReachedListFriend) {
+        int page = state.pageFriend;
+        if (page == 1) {
+          emit(state.copyWith(isLoadingListFriend: true));
+        }
+        ResponseModel data = await userService.getListFollower(
+            type: event.type,
+            fromId: state.viaAccountId,
+            page: page,
+            pageSize: pageSizeFollow);
+        emit(state.copyWith(
+            hasReachedListFriend: data.data['accounts'].isEmpty,
+            isLoadingListFriend: false,
+            totalFriend: data.data['total'],
+            friendList: [...state.friendList, ...data.data['accounts']],
+            pageFriend: ++page));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          isShowMessages: true,
+          message: e.toString(),
+          isLoadingPosts: false,
+          isLoadingUpdate: false));
+    }
+  }
 
   _onChangeBackgroundImage(ChangeBackgroundImage event, Emitter emit) {
     emit(state.copyWith(dynamicUpdateField: event.backgroundImageUrl));
@@ -260,15 +393,50 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             currentAccountId: event.currentAccountId,
             aimAccountId: event.viaAccountId,
             pageSize: pageSize,
-            page: 1)
+            page: 1),
+        userService.getListFollower(
+            type: TypeFollwer.friend,
+            fromId: event.viaAccountId,
+            page: 1,
+            pageSize: pageSizeFollow),
+        userService.getListFollower(
+            type: TypeFollwer.accept,
+            fromId: event.viaAccountId,
+            page: 1,
+            pageSize: pageSizeFollow),
+        userService.getListFollower(
+            type: TypeFollwer.request,
+            fromId: event.viaAccountId,
+            page: 1,
+            pageSize: pageSizeFollow),
+        userService.checkStatusFriend(
+            currentAccountId: event.currentAccountId,
+            viaAccountId: event.viaAccountId),
       ]);
       if (rsData[0].getSuccess && rsData[1].getSuccess) {
         emit(state.copyWith(
             userModel: rsData[0].data,
             postModels: rsData[1].data,
+            friendList: rsData[2].data['accounts'],
+            totalFriend: rsData[2].data['total'],
+            followerList: rsData[3].data['accounts'],
+            totalFollower: rsData[3].data['total'],
+            requestedList: rsData[4].data['accounts'],
+            totalRequested: rsData[4].data['total'],
+            typeFollwerCurrentAccountWithViaAccount:
+                rsData[5].data.typeFollower,
             currentAccountId: event.currentAccountId,
             viaAccountId: event.viaAccountId,
             page: 1,
+            pageFollwer: 1,
+            pageFriend: 1,
+            pageRequested: 1,
+            isLoadingListAccept: false,
+            isLoadingListFriend: false,
+            isLoadingListRequested: false,
+            hasReachedListAccept: false,
+            hasReachedListFriend: false,
+            hasReachedListRequested: false,
             isLoadingScreen: false));
       } else {
         emit(state.copyWith(

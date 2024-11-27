@@ -11,24 +11,20 @@ import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/assets.gen.dart';
 import '../../../General/customize_button_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
-import '../../../General/svg_gen_size_widget.dart';
+import '../../home /widget/list_title_customize_widget.dart';
 
 class ButtonUpdateAvatarWidget extends StatelessWidget {
   const ButtonUpdateAvatarWidget({super.key, required this.bloc});
   final ProfileBloc bloc;
   @override
   Widget build(BuildContext context) {
-    final heightScreen = MediaQuery.sizeOf(context).height; //Wrap(
-    return ListTile(
-        leading: SvgGenSizeWidget(
-          icon: Assets.icons.imagePicker
-              .svg(color: Theme.of(context).primaryColor),
-        ),
-        title: Text(
-          'Cập nhập ảnh đại diện',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        onTap: () async {
+    final heightScreen = MediaQuery.sizeOf(context).height;
+    final widthScreen = MediaQuery.sizeOf(context).width - 45;
+    return ListTitleCustomizeWidget(
+        title: 'Cập nhập ảnh đại diện',
+        icon:
+            Assets.icons.imagePicker.svg(color: Theme.of(context).canvasColor),
+        func: () async {
           Navigator.pop(context);
           await showModalBottomSheet(
               context: context,
@@ -52,36 +48,39 @@ class ButtonUpdateAvatarWidget extends StatelessWidget {
                       BlocBuilder<ProfileBloc, ProfileState>(
                         bloc: bloc,
                         builder: (context, state) {
-                          if(state.isUpdateSuccess) {
+                          if (state.isUpdateSuccess) {
                             Navigator.pop(context);
                           }
                           if (state.dynamicUpdateField.isNotEmpty) {
-                            return Center(
-                              child: Stack(
-                                children: [
-                                  Image.file(File(state.dynamicUpdateField)),
-                                  Align(
-                                      alignment: Alignment.topRight,
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            bloc.add(RemoveAvatarImage());
-                                          },
-                                          child: Container(
-                                            margin: const EdgeInsets.all(12),
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color.fromARGB(
-                                                  64, 84, 80, 80),
-                                            ),
-                                            padding: const EdgeInsets.all(
-                                                AppConstant.paddingIcon),
-                                            child: const Icon(
-                                              Icons.close,
-                                              color: Colors.white,
-                                            ),
-                                          ))),
-                                ],
-                              ),
+                            return Stack(
+                              children: [
+                                SizedBox(
+                                  height: widthScreen,
+                                  width: widthScreen,
+                                  child: Image.file(
+                                      File(state.dynamicUpdateField)),
+                                ),
+                                Align(
+                                    alignment: Alignment.topRight,
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          bloc.add(RemoveAvatarImage());
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.all(12),
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                                Color.fromARGB(64, 84, 80, 80),
+                                          ),
+                                          padding: const EdgeInsets.all(
+                                              AppConstant.paddingIcon),
+                                          child: const Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                          ),
+                                        ))),
+                              ],
                             );
                           }
                           return Column(

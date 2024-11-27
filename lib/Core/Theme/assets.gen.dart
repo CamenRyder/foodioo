@@ -58,6 +58,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Volume Up.svg
   SvgGenImage get volumeUp => const SvgGenImage('assets/icons/Volume Up.svg');
 
+  /// File path: assets/icons/accept.svg
+  SvgGenImage get accept => const SvgGenImage('assets/icons/accept.svg');
+
   /// File path: assets/icons/account.svg
   SvgGenImage get account => const SvgGenImage('assets/icons/account.svg');
 
@@ -69,6 +72,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/ban.svg
   SvgGenImage get ban => const SvgGenImage('assets/icons/ban.svg');
+
+  /// File path: assets/icons/cancel.svg
+  SvgGenImage get cancel => const SvgGenImage('assets/icons/cancel.svg');
 
   /// File path: assets/icons/credit-card.svg
   SvgGenImage get creditCard =>
@@ -141,10 +147,12 @@ class $AssetsIconsGen {
         heart,
         volumeOff,
         volumeUp,
+        accept,
         account,
         arrowLeft,
         bag,
         ban,
+        cancel,
         creditCard,
         deviceMobile,
         emptyBox,

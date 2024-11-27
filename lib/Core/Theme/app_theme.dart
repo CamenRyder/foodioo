@@ -12,6 +12,8 @@ class AppTheme {
         hintColor: AppColorsLight.textContent,
         splashColor: AppColorsLight.background,
         cardColor: AppColors.spaceGrey,
+        canvasColor: AppColorsLight.primary,
+        highlightColor: AppColors.spaceGrey,
         scaffoldBackgroundColor:
             AppColorsLight.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(
@@ -100,7 +102,9 @@ class AppTheme {
         primaryColor: AppColorsDark.primary,
         splashColor: AppColorsDark.background,
         hintColor: AppColorsDark.textContent,
-        cardColor: AppColorsDark.primary,
+        cardColor: const Color.fromARGB(255, 196, 23, 34),
+        canvasColor: AppColorsDark.textContent,
+        highlightColor: AppColors.grey50,
         scaffoldBackgroundColor:
             AppColorsDark.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(
@@ -116,20 +120,23 @@ class AppTheme {
         ),
         textSelectionTheme: const TextSelectionThemeData(
             cursorColor: AppColorsDark.textContent),
-        inputDecorationTheme: const InputDecorationTheme(
+        inputDecorationTheme: InputDecorationTheme(
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColorsDark.textHint),
+              borderRadius: BorderRadius.circular(AppConstant.radiusLarge),
+              borderSide: const BorderSide(color: AppColorsDark.textHint),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColorsDark.textHint),
+              borderRadius: BorderRadius.circular(AppConstant.radiusLarge),
+              borderSide: const BorderSide(color: AppColorsDark.textHint),
             ),
-            hintStyle: AppTypographyDark.textHintBold,
-            contentPadding:
-                EdgeInsets.symmetric(vertical: AppConstant.paddingContent),
-            labelStyle: AppTypographyDark.textHintBold,
-            floatingLabelStyle: AppTypographyDark.textHintBold,
+            hintStyle: AppTypographyLight.textHintBold,
+            contentPadding: const EdgeInsets.symmetric(
+                vertical: AppConstant.paddingContent),
+            labelStyle: AppTypographyLight.textHintBold,
+            floatingLabelStyle: AppTypographyLight.textHintBold,
             floatingLabelBehavior: FloatingLabelBehavior.auto,
-            activeIndicatorBorder: BorderSide(color: AppColorsDark.primary)),
+            activeIndicatorBorder:
+                const BorderSide(color: AppColorsLight.primary)),
         textTheme: AppTypographyDark.textTheme,
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(

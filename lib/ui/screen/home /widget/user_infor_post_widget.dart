@@ -28,7 +28,8 @@ class UserInforPostWidget extends StatelessWidget {
         convertTimeCreatePost(dateCreate: postModel?.createdAt ?? "-");
     // to calculate from DateTime
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppConstant.paddingComponent, vertical: 8),
       child: Row(
         children: [
           const SpacingHorizontalWidget(
@@ -60,12 +61,6 @@ class UserInforPostWidget extends StatelessWidget {
                     name,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  // SpacingHorizontalWidget(
-                  //   width: spacingComponent / 2,
-                  // ),
-                  // SvgGenSizeWidget(
-                  //     icon: Assets.icons.addUser
-                  //         .svg(color: Theme.of(context).hintColor)),
                 ],
               ),
               Text(
