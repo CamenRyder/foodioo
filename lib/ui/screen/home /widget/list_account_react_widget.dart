@@ -30,7 +30,7 @@ class _ListAccountReactWidgetState extends State<ListAccountReactWidget> {
         .add(GetAccountReactPost(postId: widget.postModel.id ?? 0));
     _scrollController.addListener(_onScroll);
   }
-
+  
   void _onScroll() {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent - 200 &&

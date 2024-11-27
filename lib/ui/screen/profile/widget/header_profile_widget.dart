@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
-import 'package:foodioo/ui/screen/profile/widget/button_update_avatar_widget.dart';
 import '../../../General/image_customize_widget.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
@@ -79,25 +79,29 @@ class _HeaderProfileWidgetState extends State<HeaderProfileWidget> {
                   const SpacingVerticalWidget(
                     height: 6,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (a) => BottomModalSheetPeopleAroundWidget(
-                                bloc: bloc,
-                              ));
-                    },
-                    child: RichText(
-                        text: TextSpan(
-                            text: "13",
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            children: [
-                          TextSpan(
-                            text: " Bạn bè",
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ])),
+                  BlocBuilder<ProfileBloc, ProfileState>(
+                    buildWhen: (previous, current) =>
+                        previous.totalFriend != current.totalFriend,
+                    builder: (context, state) => GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (a) => BottomModalSheetPeopleAroundWidget(
+                                  bloc: bloc,
+                                ));
+                      },
+                      child: RichText(
+                          text: TextSpan(
+                              text: state.totalFriend.toString(),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                              children: [
+                            TextSpan(
+                              text: " Bạn bè",
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ])),
+                    ),
                   ),
                 ],
               )

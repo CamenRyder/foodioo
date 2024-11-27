@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
+import 'package:foodioo/repositories/authentication/auth_bloc.dart';
 import 'package:foodioo/repositories/models/comments_model.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/screen/authorizator/widget/ring_of_avatar_widget.dart';
 
 import '../../../../Core/Helper/helper_function.dart';
+import '../../../../Core/routes/routes_name.dart';
 import '../../../../repositories/blocs/comment/comment_bloc.dart';
 import '../../../../repositories/blocs/comment/comment_event.dart';
 import '../../../General/image_customize_widget.dart';
@@ -23,6 +25,9 @@ class CommentWidget extends StatelessWidget {
     );
     final widthScreen = MediaQuery.sizeOf(context).width;
     final String sender = model?.account?.fullname ?? "Unknown";
+    final viaAccountId = model?.account?.id ?? 0;
+    final currentAccountId =
+        context.read<AuthBloc>().state.currentAccount?.id ?? 0;
     final String message = model?.description ??
         "Bánh mì bò là đồ được làm từ đồ bỏ đi sơ bộ hay chưa kĩ thì suy nghĩ phần mềm người. Có cái là ăn ngon nếu có trứng mẹ nha cả nhà ơi";
     String time = convertTimeCreatePost(dateCreate: model?.createAt ?? "-");
@@ -40,9 +45,19 @@ class CommentWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          RingOfAvatarWidget(
-            url: avatarUrl,
-            sizeAvatar: widthScreen / 9,
+          GestureDetector(
+            onTap: () {
+              if (currentAccountId != viaAccountId) {
+                Navigator.pushNamed(context, NavigatorNames.VIA_PROFILE,
+                    arguments: {
+                      'viaAccountId': viaAccountId,
+                    });
+              }
+            },
+            child: RingOfAvatarWidget(
+              url: avatarUrl,
+              sizeAvatar: widthScreen / 9,
+            ),
           ),
           SizedBox(width: widthScreen / 35),
           Expanded(

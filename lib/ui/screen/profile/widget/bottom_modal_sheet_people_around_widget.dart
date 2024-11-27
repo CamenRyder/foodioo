@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
@@ -26,10 +27,20 @@ class _BottomModalSheetPeopleAroundWidgetState
     "Phê duyệt",
     "Đang chờ",
   ];
+  bool isMine = true;
+
+  List<String> listTitleVia = [
+    'Bạn bè',
+  ];
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: listTitle.length, vsync: this);
+    final currentAccountId = widget.bloc.state.currentAccountId;
+    final currentAccountVia = widget.bloc.state.viaAccountId;
+    isMine = currentAccountId == currentAccountVia;
+    tabController = isMine
+        ? TabController(length: listTitle.length, vsync: this)
+        : TabController(length: listTitleVia.length, vsync: this);
   }
 
   @override
@@ -84,24 +95,38 @@ class _BottomModalSheetPeopleAroundWidgetState
                   color: AppColors.grey50,
                   fontSize: 14,
                   fontWeight: FontWeight.w800),
-              tabs: listTitle.map((e) {
-                return Container(
-                    width: widthTabbar,
-                    color: Colors.transparent,
-                    child: Center(
-                      child: Text(
-                        e,
-                        textAlign: TextAlign.center,
-                      ),
-                    ));
-              }).toList()),
+              tabs: isMine
+                  ? listTitle.map((e) {
+                      return Container(
+                          width: widthTabbar,
+                          color: Colors.transparent,
+                          child: Center(
+                            child: Text(
+                              e,
+                              textAlign: TextAlign.center,
+                            ),
+                          ));
+                    }).toList()
+                  : listTitleVia.map((e) {
+                      return Container(
+                          width: widthTabbar,
+                          color: Colors.transparent,
+                          child: Center(
+                            child: Text(
+                              e,
+                              textAlign: TextAlign.center,
+                            ),
+                          ));
+                    }).toList()),
           Expanded(
               child: TabBarView(controller: tabController, children: [
             ListFriendWidget(
               bloc: widget.bloc,
             ),
             ListWaitingAcceptWidget(bloc: widget.bloc),
-            ListRequestedWidget(bloc: widget.bloc,),
+            ListRequestedWidget(
+              bloc: widget.bloc,
+            ),
           ]))
         ],
       ),

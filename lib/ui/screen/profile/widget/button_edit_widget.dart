@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_event.dart';
+import 'package:foodioo/repositories/blocs/profile/profile_state.dart';
 import 'package:foodioo/ui/screen/profile/widget/button_update_avatar_widget.dart';
 import 'package:foodioo/ui/screen/profile/widget/button_update_background_widget.dart';
 
@@ -15,6 +16,7 @@ class ButtonEditWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // typeFollwerCurrentAccountWithViaAccount
         const Expanded(child: SizedBox()),
         GestureDetector(
           onTap: () async {
@@ -68,7 +70,7 @@ class ButtonEditWidget extends StatelessWidget {
                   .copyWith(color: Colors.white),
             ),
           ),
-        ),
+        )
       ],
     );
   }

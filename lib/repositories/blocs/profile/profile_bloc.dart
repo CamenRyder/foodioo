@@ -89,7 +89,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         }
         ResponseModel data = await userService.getListFollower(
             type: event.type,
-            fromId: state.currentAccountId,
+            fromId: state.viaAccountId,
             page: page,
             pageSize: pageSizeFollow);
         emit(state.copyWith(
@@ -106,7 +106,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         }
         ResponseModel data = await userService.getListFollower(
             type: event.type,
-            fromId: state.currentAccountId,
+            fromId: state.viaAccountId,
             page: page,
             pageSize: pageSizeFollow);
         emit(state.copyWith(
@@ -123,7 +123,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         }
         ResponseModel data = await userService.getListFollower(
             type: event.type,
-            fromId: state.currentAccountId,
+            fromId: state.viaAccountId,
             page: page,
             pageSize: pageSizeFollow);
         emit(state.copyWith(
@@ -373,17 +373,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             page: 1),
         userService.getListFollower(
             type: TypeFollwer.friend,
-            fromId: event.currentAccountId,
+            fromId: event.viaAccountId,
             page: 1,
             pageSize: pageSizeFollow),
         userService.getListFollower(
             type: TypeFollwer.accept,
-            fromId: event.currentAccountId,
+            fromId: event.viaAccountId,
             page: 1,
             pageSize: pageSizeFollow),
         userService.getListFollower(
             type: TypeFollwer.request,
-            fromId: event.currentAccountId,
+            fromId: event.viaAccountId,
             page: 1,
             pageSize: pageSizeFollow),
         userService.checkStatusFriend(
