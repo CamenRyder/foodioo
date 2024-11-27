@@ -11,6 +11,8 @@ class ProfileState {
   int pageFriend;
   int pageRequested;
   int pageFollwer;
+  bool isLoadingRequestFriends;
+  bool isPopDialog;
   bool hasReachedListRequested;
   bool hasReachedListAccept;
   bool hasReachedListFriend;
@@ -39,6 +41,8 @@ class ProfileState {
     this.postModels = const [],
     this.page = 1,
     this.pageFollwer = 1,
+    this.isPopDialog = false,
+    this.isLoadingRequestFriends = false,
     this.hasReachedListRequested = false,
     this.hasReachedListAccept = false,
     this.hasReachedListFriend = false,
@@ -76,8 +80,10 @@ class ProfileState {
       int? totalFollower,
       List<UserModel>? followerList,
       bool? isLoadingListRequested,
+      bool? isLoadingRequestFriends,
       bool? isLoadingListAccept,
       bool? isLoadingListFriend,
+      bool? isPopDialog,
       int? totalFriend,
       int? pageFriend,
       int? pageRequested,
@@ -101,9 +107,12 @@ class ProfileState {
       String? description,
       String? message}) {
     return ProfileState(
+        isLoadingRequestFriends:
+            isLoadingRequestFriends ?? this.isLoadingRequestFriends,
         userModel: userModel ?? this.userModel,
         currentAccountId: currentAccountId ?? this.currentAccountId,
         isShowMessages: isShowMessages ?? false,
+        isPopDialog: isPopDialog ?? false,
         viaAccountId: viaAccountId ?? this.viaAccountId,
         dynamicUpdateField: dynamicUpdateField ?? this.dynamicUpdateField,
         page: page ?? this.page,
@@ -112,7 +121,8 @@ class ProfileState {
         pageRequested: pageRequested ?? this.pageRequested,
         isLoadingListAccept: isLoadingListAccept ?? this.isLoadingListAccept,
         isLoadingListFriend: isLoadingListFriend ?? this.isLoadingListFriend,
-        isLoadingListRequested: isLoadingListRequested ?? this.isLoadingListRequested,
+        isLoadingListRequested:
+            isLoadingListRequested ?? this.isLoadingListRequested,
         typeFollwerCurrentAccountWithViaAccount:
             typeFollwerCurrentAccountWithViaAccount ??
                 this.typeFollwerCurrentAccountWithViaAccount,

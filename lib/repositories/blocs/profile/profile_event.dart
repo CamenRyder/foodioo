@@ -14,6 +14,8 @@ class InputFullName extends ProfileEvent {
   InputFullName({required this.updateName});
 }
 
+class RefreshRelationshipFriend extends ProfileEvent {}
+
 class ChangeFullName extends ProfileEvent {
   ChangeFullName();
 }

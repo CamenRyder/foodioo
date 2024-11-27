@@ -33,6 +33,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<DenyFollower>(_onDenyFollower);
     on<RemoveFriend>(_onRemoveFriend);
     on<FollowAccount>(_onFollowAccount);
+    on<RefreshRelationshipFriend>(_onRefreshRelationshipFriend);
   }
 
   UserService userService = UserService();
@@ -40,28 +41,50 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   int pageSize = AppConstant.pageSize;
   int pageSizeFollow = 20;
 
-  _onAcceptFollower(AcceptFollower event, Emitter emit) {
-    userService.acceptFriend(
+  _onAcceptFollower(AcceptFollower event, Emitter emit) async {
+    emit(state.copyWith(isLoadingRequestFriends: true));
+    await userService.acceptFriend(
         currentAccountId: state.currentAccountId,
         viaAccountId: event.followerAccountId);
+    emit(state.copyWith(isLoadingRequestFriends: false));
+    add(RefreshRelationshipFriend());
   }
 
-  _onDenyFollower(DenyFollower event, Emitter emit) {
-    userService.removeFriend(
+  _onRefreshRelationshipFriend(
+      RefreshRelationshipFriend event, Emitter emit) async {
+    final data = await userService.checkStatusFriend(
+        currentAccountId: state.currentAccountId,
+        viaAccountId: state.viaAccountId);
+    emit(state.copyWith(
+        typeFollwerCurrentAccountWithViaAccount: data.data.typeFollower,
+        isPopDialog: false));
+  }
+
+  _onDenyFollower(DenyFollower event, Emitter emit) async {
+    emit(state.copyWith(isLoadingRequestFriends: true));
+    await userService.removeFriend(
         currentAccountId: state.currentAccountId,
         viaAccountId: event.followerAccountId);
+    add(RefreshRelationshipFriend());
+    emit(state.copyWith(isLoadingRequestFriends: false, isPopDialog: true));
   }
 
   _onRemoveFriend(RemoveFriend event, Emitter emit) async {
-    userService.removeFriend(
+    emit(state.copyWith(isLoadingRequestFriends: true));
+    await userService.removeFriend(
         currentAccountId: state.currentAccountId,
         viaAccountId: event.friendAccountId);
+    add(RefreshRelationshipFriend());
+    emit(state.copyWith(isLoadingRequestFriends: false, isPopDialog: true));
   }
 
-  _onFollowAccount(FollowAccount event, Emitter emit) {
-    userService.createFollower(
+  _onFollowAccount(FollowAccount event, Emitter emit) async {
+    emit(state.copyWith(isLoadingRequestFriends: true));
+    await userService.createFollower(
         currentAccountId: state.currentAccountId,
         viaAccountId: event.accountId);
+    add(RefreshRelationshipFriend());
+    emit(state.copyWith(isLoadingRequestFriends: false, isPopDialog: true));
   }
 
   _onRefreshListFriend(RefreshListFriend event, Emitter emit) {
@@ -388,7 +411,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             pageSize: pageSizeFollow),
         userService.checkStatusFriend(
             currentAccountId: event.currentAccountId,
-            viaAccountId: event.currentAccountId),
+            viaAccountId: event.viaAccountId),
       ]);
       if (rsData[0].getSuccess && rsData[1].getSuccess) {
         emit(state.copyWith(

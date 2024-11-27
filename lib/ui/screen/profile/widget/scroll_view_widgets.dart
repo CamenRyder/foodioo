@@ -5,7 +5,9 @@ import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../../repositories/blocs/profile/profile_bloc.dart';
 import '../../../../repositories/blocs/profile/profile_event.dart';
 import '../../../../repositories/blocs/profile/profile_state.dart';
+import '../../../../repositories/models/friend_status_model.dart';
 import '../../../General/spacing_vertical_widget.dart';
+import 'add_friend_button_widget.dart';
 import 'button_edit_widget.dart';
 import 'header_profile_widget.dart';
 import 'post_profile_widget.dart';
@@ -68,14 +70,35 @@ class _ScrollViewWidgetsState extends State<ScrollViewWidgets> {
             const SpacingVerticalWidget(height: 12),
             BlocBuilder<ProfileBloc, ProfileState>(
               builder: (context, state) {
-                return currentAccountId == state.viaAccountId
-                    ? Column(
-                        children: [
-                          const ButtonEditWidget(),
-                          QuickUploadPost(),
-                        ],
-                      )
-                    : const SizedBox();
+                bool isShowEditProfile =
+                    state.viaAccountId == state.currentAccountId;
+                // bool isShowAddFriend =
+                //     state.typeFollwerCurrentAccountWithViaAccount ==
+                //             TypeFollwer.stranger &&
+                //         state.viaAccountId != state.currentAccountId;
+                // bool isShowRemoveFriend =
+                //     state.typeFollwerCurrentAccountWithViaAccount ==
+                //         TypeFollwer.friend;
+                // bool isShowRemoveRequested =
+                //     state.typeFollwerCurrentAccountWithViaAccount ==
+                //         TypeFollwer.request;
+
+                // bool isShowAccept =
+                //     state.typeFollwerCurrentAccountWithViaAccount ==
+                //         TypeFollwer.accept;
+
+                return Column(
+                  children: [
+                    isShowEditProfile
+                        ? const ButtonEditWidget()
+                        : MethodInteractButtonWidget(
+                            typeFollower:
+                                state.typeFollwerCurrentAccountWithViaAccount,
+                            bloc: context.read<ProfileBloc>()),
+                    QuickUploadPost()
+                  ],
+                );
+                // : const SizedBox();
               },
             ),
             const PostProfileWidget(),
