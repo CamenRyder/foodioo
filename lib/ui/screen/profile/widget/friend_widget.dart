@@ -7,6 +7,7 @@ import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
 
 import '../../../../Core/Theme/app_colors.dart';
 import '../../../../Core/constants/constant_stataue.dart';
+import '../../../../Core/routes/routes_name.dart';
 import '../../../../repositories/blocs/profile/profile_event.dart';
 import '../../../../repositories/models/friend_status_model.dart';
 import '../../../General/dialog_confirm_widget.dart';
@@ -38,10 +39,18 @@ class FriendWidget extends StatelessWidget {
           vertical: AppConstant.paddingContent + 2,
           horizontal: AppConstant.paddingHorizontalApp),
       child: Row(children: [
-        CustomImage(
-          radius: 120,
-          url: urlSubString,
-          size: sizeAvatar,
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, NavigatorNames.VIA_PROFILE,
+                    arguments: {
+                      'viaAccountId': userModel?.id ?? 0,
+                    });
+          },
+          child: CustomImage(
+            radius: 120,
+            url: urlSubString,
+            size: sizeAvatar,
+          ),
         ),
         const SpacingHorizontalWidget(
           width: AppConstant.paddingButton,

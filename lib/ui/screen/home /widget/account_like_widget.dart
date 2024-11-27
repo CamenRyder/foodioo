@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/repositories/models/react_model.dart';
-import 'package:foodioo/ui/General/message_over_screen.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
+import '../../../../Core/routes/routes_name.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
 
@@ -18,8 +18,11 @@ class AccountLikeWidget extends StatelessWidget {
     String avatarUrl = AppConstant.baseURL;
     avatarUrl += model?.account?.urlAvatar ?? "";
     return GestureDetector(
-      onTap: () =>
-          MessageToast.showToast(context, message: "Tính năng đang phát triển"),
+      onTap: () {
+        Navigator.pushNamed(context, NavigatorNames.VIA_PROFILE, arguments: {
+          'viaAccountId': model?.account?.id ?? 0,
+        });
+      },
       child: Container(
         padding: const EdgeInsets.all(AppConstant.paddingComponent),
         child: Row(
