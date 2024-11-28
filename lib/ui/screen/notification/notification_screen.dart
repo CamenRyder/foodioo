@@ -13,13 +13,6 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double heightScreen = MediaQuery.of(context).size.height;
-    double widthScreen = MediaQuery.of(context).size.width;
-    double heightComponentNotification = heightScreen / 12;
-    String urlImage =
-        'https://cdn.tuoitre.vn/thumb_w/480/471584752817336320/2024/2/7/2024-01-28t180511z1178443544rc2gi5aomjs1rtrmadp3germany-ukraine-1707277688908652334379.jpg';
-    double widthComponentNotification =
-        widthScreen - AppConstant.paddingComponent;
     return Scaffold(
         body: SafeArea(
       child: Column(
