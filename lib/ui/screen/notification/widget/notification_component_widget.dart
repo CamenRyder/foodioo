@@ -7,6 +7,7 @@ import '../../../../Core/Theme/app_colors.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
+import 'package:badges/badges.dart' as badges;
 
 class NotificationComponentWidget extends StatelessWidget {
   const NotificationComponentWidget({super.key, this.notificationModel});
@@ -21,6 +22,7 @@ class NotificationComponentWidget extends StatelessWidget {
     String avatarImageUrl = baseUrl + subDomain;
     String name = notificationModel?.userAction?.fullname ?? "Unknown";
     String content = notificationModel?.message ?? "";
+    bool isSeen = notificationModel?.isSeen ?? false;
     String dateCreate =
         convertTimeCreatePost(dateCreate: notificationModel?.createdAt ?? "-");
     String urlImage =
@@ -38,48 +40,52 @@ class NotificationComponentWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(
             vertical: AppConstant.paddingContent + 3,
             horizontal: AppConstant.paddingComponent),
-        child: Row(
-          children: [
-            RingOfAvatarWidget(url: avatarImageUrl),
-            const SpacingHorizontalWidget(
-              width: AppConstant.paddingIndicator,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        name,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            dateCreate,
-                            style: Theme.of(context).textTheme.labelSmall,
-                          ),
-                          const SpacingHorizontalWidget(
-                            width: AppConstant.paddingContent,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  const SpacingVerticalWidget(
-                    height: AppConstant.paddingContent,
-                  ),
-                  Text(
-                    content,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
+        child: Badge(
+          isLabelVisible: !isSeen,
+          smallSize: AppConstant.radiusSmall,
+          child: Row(
+            children: [
+              RingOfAvatarWidget(url: avatarImageUrl),
+              const SpacingHorizontalWidget(
+                width: AppConstant.paddingIndicator,
               ),
-            )
-          ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          name,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              dateCreate,
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                            const SpacingHorizontalWidget(
+                              width: AppConstant.paddingContent,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    const SpacingVerticalWidget(
+                      height: AppConstant.paddingContent,
+                    ),
+                    Text(
+                      content,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ));
   }
 }
