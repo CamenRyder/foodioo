@@ -15,6 +15,17 @@ class RefreshNewFeed extends HomeEvent {
   RefreshNewFeed();
 }
 
+class FetchYourReport extends HomeEvent {
+  int postId;
+  FetchYourReport({required this.postId});
+}
+
+class MultiPickReport extends HomeEvent {
+  List<int> issuesIds;
+  int postId;
+  MultiPickReport({required this.issuesIds, required this.postId});
+}
+
 class LikePost extends HomeEvent {
   final int postId;
   LikePost({required this.postId});

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodioo/ui/screen/home%20/widget/button_delete_post_widget.dart';
+import 'package:foodioo/ui/screen/home%20/widget/button_ban_post_widget.dart';
 
 import '../../../../repositories/authentication/auth_bloc.dart';
 import '../../../../repositories/models/post_model.dart';
@@ -28,6 +28,6 @@ class ButtonQuickMethodWidget extends StatelessWidget {
         ? ButtonEditPostWidget(
             postId: postId,
           )
-        : const ButtonDeletePostWidget();
+        : const ButtonBanPostWidget();
   }
 }

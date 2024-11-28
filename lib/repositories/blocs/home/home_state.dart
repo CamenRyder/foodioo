@@ -11,6 +11,9 @@ class HomeState {
 
   int currentAccountId;
   bool isLoadingNewFeed;
+  bool isLoadingPostReport;
+  bool isPostedReport;
+  bool isLoadingYourReportIntoPost;
   bool isLoadingAccountsReact;
   bool isLoadingDeletePost;
   bool isShowMessage = false;
@@ -25,7 +28,10 @@ class HomeState {
       this.issuesDefault = const [],
       this.issuesTicked = const [],
       this.isLoadingAccountsReact = false,
+      this.isLoadingYourReportIntoPost = false,
       this.isLoadingNewFeed = false,
+      this.isLoadingPostReport = false,
+      this.isPostedReport = false,
       this.isShowMessage = false,
       this.isLoadingDeletePost = false,
       this.hasReachedReactPost = false,
@@ -39,6 +45,9 @@ class HomeState {
     List<ReactModel>? reactModels,
     List<ReportModel>? issuesDefault,
     List<ReportModel>? issuesTicked,
+    bool? isLoadingYourReportIntoPost,
+    bool? isLoadingPostReport,
+    bool? isPostedReport,
     bool? isLoadingNewFeed,
     bool? isLoadingAccountsReact,
     bool? isLoadingDeletePost,
@@ -50,9 +59,13 @@ class HomeState {
     String? message,
   }) {
     return HomeState(
+        isLoadingYourReportIntoPost:
+            isLoadingYourReportIntoPost ?? this.isLoadingYourReportIntoPost,
         issuesDefault: issuesDefault ?? this.issuesDefault,
         issuesTicked: issuesTicked ?? this.issuesTicked,
         postModels: postModels ?? this.postModels,
+        isLoadingPostReport: isLoadingPostReport ?? this.isLoadingPostReport,
+        isPostedReport: isPostedReport ?? false,
         reactModels: reactModels ?? this.reactModels,
         isLoadingNewFeed: isLoadingNewFeed ?? this.isLoadingNewFeed,
         isShowMessage: isShowMessage ?? false,
