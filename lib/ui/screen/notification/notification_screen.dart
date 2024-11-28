@@ -42,7 +42,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
             height: AppConstant.paddingComponent,
           ),
 
-          Expanded(child: BlocBuilder<NotificationBloc, NotifcationState>(
+          Expanded(
+            child: BlocBuilder<NotificationBloc, NotifcationState>(
             builder: (context, state) {
               if (state.isLoadingListNotification) {
                 return Skeletonizer(

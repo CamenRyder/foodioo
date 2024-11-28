@@ -4,10 +4,10 @@ import 'package:foodioo/repositories/models/notification_model.dart';
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Helper/helper_function.dart';
 import '../../../../Core/Theme/app_colors.dart';
+import '../../../../Core/routes/routes_name.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
-import 'package:badges/badges.dart' as badges;
 
 class NotificationComponentWidget extends StatelessWidget {
   const NotificationComponentWidget({super.key, this.notificationModel});
@@ -45,42 +45,58 @@ class NotificationComponentWidget extends StatelessWidget {
           smallSize: AppConstant.radiusSmall,
           child: Row(
             children: [
-              RingOfAvatarWidget(url: avatarImageUrl),
-              const SpacingHorizontalWidget(
-                width: AppConstant.paddingIndicator,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, NavigatorNames.VIA_PROFILE,
+                        arguments: {
+                          'viaAccountId': notificationModel?.userAction?.id ?? 0
+                        });
+                  },
+                  child: RingOfAvatarWidget(url: avatarImageUrl)),
+              GestureDetector(
+                onTap: () {},
+                onLongPress: () {},
+                child: Row(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          name,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              dateCreate,
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                            const SpacingHorizontalWidget(
-                              width: AppConstant.paddingContent,
-                            )
-                          ],
-                        )
-                      ],
+                    const SpacingHorizontalWidget(
+                      width: AppConstant.paddingIndicator,
                     ),
-                    const SpacingVerticalWidget(
-                      height: AppConstant.paddingContent,
-                    ),
-                    Text(
-                      content,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                name,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    dateCreate,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
+                                  ),
+                                  const SpacingHorizontalWidget(
+                                    width: AppConstant.paddingContent,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          const SpacingVerticalWidget(
+                            height: AppConstant.paddingContent,
+                          ),
+                          Text(
+                            content,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               )
