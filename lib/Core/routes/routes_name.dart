@@ -7,4 +7,5 @@ class NavigatorNames {
   static const String FOOD_MAP = '/food_map';
   static const String CREATE_POST = '/create_post';
   static  const String VIA_PROFILE = '/via_profile';
+  static  const String DETAIL_NOTIFICATION = '/detail_notification';
 }

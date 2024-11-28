@@ -180,6 +180,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/device.png
   AssetGenImage get device => const AssetGenImage('assets/images/device.png');
 
+  /// File path: assets/images/image_hover_glass_dark_mode.png
+  AssetGenImage get imageHoverGlassDarkMode =>
+      const AssetGenImage('assets/images/image_hover_glass_dark_mode.png');
+
+  /// File path: assets/images/image_hover_glass_light_mode.png
+  AssetGenImage get imageHoverGlassLightMode =>
+      const AssetGenImage('assets/images/image_hover_glass_light_mode.png');
+
   /// File path: assets/images/intro_01.png
   AssetGenImage get intro01 =>
       const AssetGenImage('assets/images/intro_01.png');
@@ -193,7 +201,14 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/intro_03.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [device, intro01, intro02, intro03];
+  List<AssetGenImage> get values => [
+        device,
+        imageHoverGlassDarkMode,
+        imageHoverGlassLightMode,
+        intro01,
+        intro02,
+        intro03
+      ];
 }
 
 class Assets {

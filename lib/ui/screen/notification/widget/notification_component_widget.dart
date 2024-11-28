@@ -29,79 +29,82 @@ class NotificationComponentWidget extends StatelessWidget {
         'https://cdn.tuoitre.vn/thumb_w/480/471584752817336320/2024/2/7/2024-01-28t180511z1178443544rc2gi5aomjs1rtrmadp3germany-ukraine-1707277688908652334379.jpg';
     double widthComponentNotification =
         widthScreen - AppConstant.paddingComponent;
-    return Container(
-        height: heightComponentNotification,
-        width: widthComponentNotification,
-        decoration: BoxDecoration(
-          color: AppColors.spaceGrey,
-          borderRadius: BorderRadius.circular(AppConstant.radiusLarge),
-        ),
-        padding: const EdgeInsets.all(AppConstant.paddingComponent),
-        margin: const EdgeInsets.symmetric(
-            vertical: AppConstant.paddingContent + 3,
-            horizontal: AppConstant.paddingComponent),
-        child: Badge(
-          isLabelVisible: !isSeen,
-          smallSize: AppConstant.radiusSmall,
-          child: Row(
-            children: [
-              GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, NavigatorNames.VIA_PROFILE,
-                        arguments: {
-                          'viaAccountId': notificationModel?.userAction?.id ?? 0
-                        });
-                  },
-                  child: RingOfAvatarWidget(url: avatarImageUrl)),
-              GestureDetector(
-                onTap: () {},
-                onLongPress: () {},
-                child: Row(
-                  children: [
-                    const SpacingHorizontalWidget(
-                      width: AppConstant.paddingIndicator,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                name,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    dateCreate,
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                  ),
-                                  const SpacingHorizontalWidget(
-                                    width: AppConstant.paddingContent,
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                          const SpacingVerticalWidget(
-                            height: AppConstant.paddingContent,
-                          ),
-                          Text(
-                            content,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
+    return Hero(
+      tag: '${notificationModel?.id ?? 0}',
+      child: Container(
+          width: widthComponentNotification,
+          decoration: BoxDecoration(
+            color: Theme.of(context).unselectedWidgetColor,
+            borderRadius: BorderRadius.circular(AppConstant.radiusLarge),
           ),
-        ));
+          padding: const EdgeInsets.all(AppConstant.paddingComponent),
+          margin: const EdgeInsets.symmetric(
+              vertical: AppConstant.paddingContent + 3,
+              horizontal: AppConstant.paddingComponent),
+          child: Badge(
+            isLabelVisible: !isSeen,
+            backgroundColor: Colors.redAccent,
+            smallSize: AppConstant.radiusSmall,
+            child: Row(
+              children: [
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, NavigatorNames.VIA_PROFILE, arguments: {
+                        'viaAccountId': notificationModel?.userAction?.id ?? 0
+                      });
+                    },
+                    child: RingOfAvatarWidget(url: avatarImageUrl)),
+                const SpacingHorizontalWidget(
+                  width: AppConstant.paddingIndicator,
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, NavigatorNames.DETAIL_NOTIFICATION,
+                          arguments: {
+                            'notificationModel': notificationModel,
+                          });
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              name,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  dateCreate,
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                const SpacingHorizontalWidget(
+                                  width: AppConstant.paddingContent,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                        const SpacingVerticalWidget(
+                          height: AppConstant.paddingContent,
+                        ),
+                        Text(
+                          content,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )),
+    );
   }
 }
