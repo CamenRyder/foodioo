@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Constants/constant_stataue.dart';
 import 'package:foodioo/repositories/blocs/notification/notifcation_event.dart';
@@ -24,12 +23,11 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
       Emitter<NotifcationState> emit) async {
     emit(state.copyWith(isLoadingListNotification: true));
     ResponseModel responseModel = await notifcationService.getYourNotification(
-        page: state.page,
-        pageSize: pageSize,
-        accountId: event.currentAccountId);
+        page: 1, pageSize: pageSize, accountId: event.currentAccountId);
     if (responseModel.getSuccess) {
       emit(state.copyWith(
           notifcations: responseModel.data,
+          page: 2,
           currentAccountId: event.currentAccountId,
           isSeenedNotification: false,
           isLoadingListNotification: false));
@@ -56,7 +54,10 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
 
   _onRefreshNotifications(RefreshNotifications event, Emitter emit) {
     emit(state.copyWith(
-        page: 1, isSeenedNotification: false, hasReachedNotifications: false));
+        page: 1,
+        isSeenedNotification: false,
+        hasReachedNotifications: false,
+        notifcations: []));
     add(FetchNotifications());
   }
 
@@ -64,7 +65,6 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
       FetchNotifications event, Emitter<NotifcationState> emit) async {
     if (!state.hasReachedNotifications) {
       int page = state.page;
-      page++;
       ResponseModel responseModel =
           await notifcationService.getYourNotification(
               page: page,
@@ -75,6 +75,7 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
       if (responseModel.getSuccess) {
         emit(state.copyWith(
           notifcations: currentNotifications,
+          page: ++page,
           hasReachedNotifications: responseModel.data.isEmpty,
         ));
       }

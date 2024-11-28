@@ -8,7 +8,7 @@ class AppConstant {
   static String keySoundOnClick = "sound_key_when_click";
   static String keyEnableVibration = "enable_vibration";
   static String messageGetSuccesData = "Lấy dữ liệu từ Foodioo thành công";
-  static int pageSize = 4;
+  static int pageSize = 20;
 
   static const double sizeIconLarge = 32.0;
   static const double sizeIconMedium = 24.0;

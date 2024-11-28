@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodioo/repositories/models/notification_model.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
+import '../../../../Core/Helper/helper_function.dart';
 import '../../../../Core/Theme/app_colors.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
@@ -14,7 +15,14 @@ class NotificationComponentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double heightScreen = MediaQuery.of(context).size.height;
     double widthScreen = MediaQuery.of(context).size.width;
-    double heightComponentNotification = heightScreen / 12;
+    double heightComponentNotification = heightScreen / 10;
+    String baseUrl = AppConstant.baseURL;
+    String subDomain = notificationModel?.userAction?.urlAvatar ?? "";
+    String avatarImageUrl = baseUrl + subDomain;
+    String name = notificationModel?.userAction?.fullname ?? "Unknown";
+    String content = notificationModel?.message ?? "";
+    String dateCreate =
+        convertTimeCreatePost(dateCreate: notificationModel?.createdAt ?? "-");
     String urlImage =
         'https://cdn.tuoitre.vn/thumb_w/480/471584752817336320/2024/2/7/2024-01-28t180511z1178443544rc2gi5aomjs1rtrmadp3germany-ukraine-1707277688908652334379.jpg';
     double widthComponentNotification =
@@ -32,7 +40,7 @@ class NotificationComponentWidget extends StatelessWidget {
             horizontal: AppConstant.paddingComponent),
         child: Row(
           children: [
-            RingOfAvatarWidget(url: urlImage),
+            RingOfAvatarWidget(url: avatarImageUrl),
             const SpacingHorizontalWidget(
               width: AppConstant.paddingIndicator,
             ),
@@ -45,13 +53,13 @@ class NotificationComponentWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Gia Khanh',
+                        name,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Row(
                         children: [
                           Text(
-                            '12 phút trước',
+                            dateCreate,
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                           const SpacingHorizontalWidget(
@@ -65,7 +73,7 @@ class NotificationComponentWidget extends StatelessWidget {
                     height: AppConstant.paddingContent,
                   ),
                   Text(
-                    'Gia Khanh đã thích bài viết của bạn: b...',
+                    content,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],

@@ -34,10 +34,8 @@ class _BottomTabbarScreenState extends State<BottomTabbarScreen> {
           const HomeScreen(),
           StoreScreen(),
           SearchScreen(),
-          NotificationScreen(),
-          ProfileScreen(
-            viaAccountId: currnetAccountId
-          )
+          const NotificationScreen(),
+          ProfileScreen(viaAccountId: currnetAccountId)
         ],
       ),
       bottomNavigationBar: BlocBuilder<SystemBloc, SystemState>(
