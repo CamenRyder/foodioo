@@ -14,6 +14,7 @@ class AppTheme {
         cardColor: AppColors.spaceGrey,
         canvasColor: AppColorsLight.primary,
         highlightColor: AppColors.spaceGrey,
+        unselectedWidgetColor: AppColors.componentNotification,
         scaffoldBackgroundColor:
             AppColorsLight.background, // ddoori laji khi xong
         appBarTheme: const AppBarTheme(
@@ -104,6 +105,7 @@ class AppTheme {
         hintColor: AppColorsDark.textContent,
         cardColor: const Color.fromARGB(255, 196, 23, 34),
         canvasColor: AppColorsDark.textContent,
+        unselectedWidgetColor: const Color.fromARGB(255, 80, 74, 74),
         highlightColor: AppColors.grey50,
         scaffoldBackgroundColor:
             AppColorsDark.background, // ddoori laji khi xong
