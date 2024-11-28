@@ -21,6 +21,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<DeletePost>(_onDeletePost);
     on<RefreshNewFeed>(_onRefreshNewFeed);
     on<FetchYourReport>(_onFetchYourReport);
+    on<PickReport>(_onPickReport);
+    on<UnPickReport>(_onUnPickReport);
     on<MultiPickReport>(_onMultiPickReport);
   }
 
@@ -29,8 +31,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   int pageSize = AppConstant.pageSize;
 
+  _onUnPickReport(UnPickReport event, Emitter<HomeState> emit) {
+    List<int> pickedIssues = state.pickedIssues;
+    pickedIssues.remove(event.issueId);
+    emit(state.copyWith(pickedIssues: pickedIssues));
+  }
+
+  _onPickReport(PickReport event, Emitter<HomeState> emit) {
+    List<int> pickedIssues = state.pickedIssues;
+    pickedIssues.add(event.issueId);
+    emit(state.copyWith(pickedIssues: pickedIssues));
+  }
+
   _onFetchYourReport(FetchYourReport event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(isLoadingPostReport: true));
+    emit(state.copyWith(isLoadingYourReportIntoPost: true, pickedIssues: []));
     ResponseModel data = await reportService.getYourIssueTicked(
         accountId: state.currentAccountId, postId: event.postId);
     if (data.getSuccess) {
@@ -46,10 +60,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(isLoadingPostReport: true));
     ResponseModel data = await reportService.createIssues(
         accountId: state.currentAccountId,
-        issuesId: event.issuesIds.toList(),
+        issuesId:
+            state.pickedIssues.toSet().toList(), // lọc list ko bị trùng lặp.
         postId: event.postId);
     if (data.getSuccess) {
-      emit(state.copyWith(isPostedReport: true, isLoadingPostReport: false));
+      emit(state.copyWith(isPostedReport: true, isLoadingPostReport: false , issuesTicked:  []));
     } else {
       emit(state.copyWith(isPostedReport: false, isLoadingPostReport: false));
     }

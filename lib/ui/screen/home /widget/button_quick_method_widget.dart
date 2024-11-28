@@ -28,6 +28,6 @@ class ButtonQuickMethodWidget extends StatelessWidget {
         ? ButtonEditPostWidget(
             postId: postId,
           )
-        : const ButtonBanPostWidget();
+        : ButtonBanPostWidget(postId: postId);
   }
 }

@@ -21,9 +21,18 @@ class FetchYourReport extends HomeEvent {
 }
 
 class MultiPickReport extends HomeEvent {
-  List<int> issuesIds;
   int postId;
-  MultiPickReport({required this.issuesIds, required this.postId});
+  MultiPickReport({required this.postId});
+}
+
+class PickReport extends HomeEvent {
+  int issueId;
+  PickReport({required this.issueId});
+}
+
+class UnPickReport extends HomeEvent {
+  int issueId;
+  UnPickReport({required this.issueId});
 }
 
 class LikePost extends HomeEvent {

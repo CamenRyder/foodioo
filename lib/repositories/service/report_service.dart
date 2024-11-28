@@ -43,9 +43,9 @@ class ReportService extends FetchClient {
   Future<ResponseModel> getYourIssueTicked(
       {required int postId, required int accountId}) async {
     try {
-      final Response<dynamic> result = await super.postData(
+      final Response<dynamic> result = await super.getData(
           path: '/report-post/your-report',
-          params: {"post_id": postId, "account_id": accountId});
+          queryParameters: {"post_id": postId, "account_id": accountId});
       List<ReportModel> issues = [];
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final issuesData = result.data['data'];
@@ -56,7 +56,7 @@ class ReportService extends FetchClient {
               message: AppConstant.messageGetSuccesData);
         }
         for (var e in issuesData) {
-          issues.add(ReportModel.fromJson(e));
+          issues.add(ReportModel.fromJson(e['issue']));
         }
         return ResponseModel(
             data: issues,

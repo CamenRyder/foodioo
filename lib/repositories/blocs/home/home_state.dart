@@ -8,7 +8,7 @@ class HomeState {
   List<ReactModel> reactModels;
   List<ReportModel> issuesDefault;
   List<ReportModel> issuesTicked;
-
+  List<int> pickedIssues; 
   int currentAccountId;
   bool isLoadingNewFeed;
   bool isLoadingPostReport;
@@ -27,6 +27,7 @@ class HomeState {
       this.reactModels = const [],
       this.issuesDefault = const [],
       this.issuesTicked = const [],
+      this.pickedIssues =  const [] ,  
       this.isLoadingAccountsReact = false,
       this.isLoadingYourReportIntoPost = false,
       this.isLoadingNewFeed = false,
@@ -45,6 +46,7 @@ class HomeState {
     List<ReactModel>? reactModels,
     List<ReportModel>? issuesDefault,
     List<ReportModel>? issuesTicked,
+    List<int>? pickedIssues,
     bool? isLoadingYourReportIntoPost,
     bool? isLoadingPostReport,
     bool? isPostedReport,
@@ -69,6 +71,7 @@ class HomeState {
         reactModels: reactModels ?? this.reactModels,
         isLoadingNewFeed: isLoadingNewFeed ?? this.isLoadingNewFeed,
         isShowMessage: isShowMessage ?? false,
+        pickedIssues: pickedIssues ?? this.pickedIssues,
         hasReachedReactPost: hasReachedReactPost ?? this.hasReachedReactPost,
         isLoadingDeletePost: isLoadingDeletePost ?? this.isLoadingDeletePost,
         isRefreshFeed: isRefreshFeed ?? false,
