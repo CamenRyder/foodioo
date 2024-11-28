@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/models/react_model.dart';
+import 'package:foodioo/repositories/models/report_model.dart';
 import 'package:foodioo/repositories/service/post_service.dart';
+import 'package:foodioo/repositories/service/report_service.dart';
 import 'package:foodioo/repositories/view/login_vm.dart';
 
 import '../../../Core/Constants/constant_stataue.dart';
@@ -17,10 +20,55 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetAccountReactPost>(_getAccountReactPost);
     on<DeletePost>(_onDeletePost);
     on<RefreshNewFeed>(_onRefreshNewFeed);
+    on<FetchYourReport>(_onFetchYourReport);
+    on<PickReport>(_onPickReport);
+    on<UnPickReport>(_onUnPickReport);
+    on<MultiPickReport>(_onMultiPickReport);
   }
 
   PostService postService = PostService();
+  ReportService reportService = ReportService();
+
   int pageSize = AppConstant.pageSize;
+
+  _onUnPickReport(UnPickReport event, Emitter<HomeState> emit) {
+    List<int> pickedIssues = state.pickedIssues;
+    pickedIssues.remove(event.issueId);
+    emit(state.copyWith(pickedIssues: pickedIssues));
+  }
+
+  _onPickReport(PickReport event, Emitter<HomeState> emit) {
+    List<int> pickedIssues = state.pickedIssues;
+    pickedIssues.add(event.issueId);
+    emit(state.copyWith(pickedIssues: pickedIssues));
+  }
+
+  _onFetchYourReport(FetchYourReport event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(isLoadingYourReportIntoPost: true, pickedIssues: []));
+    ResponseModel data = await reportService.getYourIssueTicked(
+        accountId: state.currentAccountId, postId: event.postId);
+    if (data.getSuccess) {
+      emit(state.copyWith(
+          issuesTicked: data.data, isLoadingYourReportIntoPost: false));
+    } else {
+      emit(
+          state.copyWith(issuesTicked: [], isLoadingYourReportIntoPost: false));
+    }
+  }
+
+  _onMultiPickReport(MultiPickReport event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(isLoadingPostReport: true));
+    ResponseModel data = await reportService.createIssues(
+        accountId: state.currentAccountId,
+        issuesId:
+            state.pickedIssues.toSet().toList(), // lọc list ko bị trùng lặp.
+        postId: event.postId);
+    if (data.getSuccess) {
+      emit(state.copyWith(isPostedReport: true, isLoadingPostReport: false , issuesTicked:  []));
+    } else {
+      emit(state.copyWith(isPostedReport: false, isLoadingPostReport: false));
+    }
+  }
 
   _onRefreshNewFeed(RefreshNewFeed event, Emitter<HomeState> emit) async {
     emit(state.copyWith(isRefreshFeed: true));
@@ -136,13 +184,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   _initalLoading(InitalLoading event, Emitter<HomeState> emit) async {
     try {
       emit(state.copyWith(isLoadingNewFeed: true));
-      ResponseModel res =
-          await postService.getNewFeed(page: 1, pageSize: pageSize , accountId: event.currentAccountId);
-      if (res.getSuccess) {
+      ResponseModel res = await postService.getNewFeed(
+          page: 1, pageSize: pageSize, accountId: event.currentAccountId);
+      ResponseModel res2 = await reportService.getIssuesForReport();
+      if (res.getSuccess && res2.getSuccess) {
+        List<ReportModel> issues = res2.data;
         List<PostModel> posts = res.data;
         emit(state.copyWith(
             postModels: posts,
             isLoadingNewFeed: false,
+            issuesDefault: issues,
             currentAccountId: event.currentAccountId));
       } else {
         throw Exception(res.message);
