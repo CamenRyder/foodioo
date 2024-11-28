@@ -1,9 +1,14 @@
 import 'package:foodioo/repositories/models/post_model.dart';
 import 'package:foodioo/repositories/models/react_model.dart';
 
+import '../../models/report_model.dart';
+
 class HomeState {
   List<PostModel> postModels;
   List<ReactModel> reactModels;
+  List<ReportModel> issuesDefault;
+  List<ReportModel> issuesTicked;
+
   int currentAccountId;
   bool isLoadingNewFeed;
   bool isLoadingAccountsReact;
@@ -17,6 +22,8 @@ class HomeState {
   HomeState(
       {this.postModels = const [],
       this.reactModels = const [],
+      this.issuesDefault = const [],
+      this.issuesTicked = const [],
       this.isLoadingAccountsReact = false,
       this.isLoadingNewFeed = false,
       this.isShowMessage = false,
@@ -30,6 +37,8 @@ class HomeState {
   HomeState copyWith({
     List<PostModel>? postModels,
     List<ReactModel>? reactModels,
+    List<ReportModel>? issuesDefault,
+    List<ReportModel>? issuesTicked,
     bool? isLoadingNewFeed,
     bool? isLoadingAccountsReact,
     bool? isLoadingDeletePost,
@@ -41,6 +50,8 @@ class HomeState {
     String? message,
   }) {
     return HomeState(
+        issuesDefault: issuesDefault ?? this.issuesDefault,
+        issuesTicked: issuesTicked ?? this.issuesTicked,
         postModels: postModels ?? this.postModels,
         reactModels: reactModels ?? this.reactModels,
         isLoadingNewFeed: isLoadingNewFeed ?? this.isLoadingNewFeed,
