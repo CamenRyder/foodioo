@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/home/home_bloc.dart';
+import 'package:foodioo/repositories/blocs/notification/notification_bloc.dart';
 import 'package:foodioo/repositories/blocs/profile/profile_bloc.dart';
 import 'package:foodioo/repositories/blocs/systems/system_event.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -109,6 +110,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           BlocProvider(create: (context) => CreatePostBloc()),
           BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
           BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
+          BlocProvider<NotificationBloc>(
+              create: (context) => NotificationBloc()),
         ],
         child: LoaderOverLayWidget(
             child: Listener(
