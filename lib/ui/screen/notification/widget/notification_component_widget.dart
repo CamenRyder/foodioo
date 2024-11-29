@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/blocs/notification/notifcation_event.dart';
 import 'package:foodioo/repositories/blocs/notification/notification_bloc.dart';
 import 'package:foodioo/repositories/models/notification_model.dart';
+import 'package:foodioo/ui/General/message_over_screen.dart';
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Helper/helper_function.dart';
 import '../../../../Core/routes/routes_name.dart';
@@ -69,11 +70,25 @@ class NotificationComponentWidget extends StatelessWidget {
                           });
                       print(rs);
                       if (rs == 1) {
-                        context.read<NotificationBloc>().add(SeenNotification(
-                            notifcationId: notificationModel?.id ?? 0));
+                        if (notificationModel?.isSeen == true) {
+                          MessageToast.showToast(context,
+                              message: "Đã xem thông báo bài viết");
+                        } else {
+                          context.read<NotificationBloc>().add(SeenNotification(
+                              notifcationId: notificationModel?.id ?? 0));
+                        }
                       } else if (rs == 2) {
+                        MessageToast.showToast(context);
                       } else if (rs == 3) {
-                      } else if (rs == 4) {}
+                        context.read<NotificationBloc>().add(
+                            SoftDeleteNotification(
+                                notificationId: notificationModel?.id ?? 0));
+                        // MessageToast.showToast(context);
+                      } else if (rs == 4) {
+                        context
+                            .read<NotificationBloc>()
+                            .add(SeenAllNotification());
+                      }
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

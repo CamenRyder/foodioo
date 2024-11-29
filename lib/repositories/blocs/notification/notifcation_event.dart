@@ -16,3 +16,8 @@ class SeenNotification extends NotifcationEvent {
   final int notifcationId;
   SeenNotification({required this.notifcationId});
 }
+
+class SoftDeleteNotification extends NotifcationEvent {
+  final int notificationId;
+  SoftDeleteNotification({required this.notificationId});
+}

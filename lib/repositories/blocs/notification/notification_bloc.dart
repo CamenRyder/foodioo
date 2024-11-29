@@ -14,10 +14,20 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
     on<FetchNotifications>(_onFetchNotifications);
     on<SeenNotification>(_onSeenNotification);
     on<SeenAllNotification>(_onSeenAllNotification);
+    on<SoftDeleteNotification>(_onSoftDeleteNotification);
   }
 
   NotifcationService notifcationService = NotifcationService();
   int pageSize = AppConstant.pageSize;
+
+  _onSoftDeleteNotification(
+      SoftDeleteNotification event, Emitter<NotifcationState> emit) async {
+    ResponseModel responseModel = await notifcationService
+        .softDeleteNotification(notificationId: event.notificationId);
+    if (responseModel.getSuccess) {
+      add(RefreshNotifications());
+    }
+  }
 
   _onInitialLoadingNotifcationScreen(InitialLoadingNotifcationScreen event,
       Emitter<NotifcationState> emit) async {
