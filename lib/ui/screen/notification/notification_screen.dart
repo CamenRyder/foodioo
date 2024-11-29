@@ -5,6 +5,7 @@ import 'package:foodioo/repositories/authentication/auth_bloc.dart';
 import 'package:foodioo/repositories/blocs/notification/notifcation_event.dart';
 import 'package:foodioo/repositories/blocs/notification/notifcation_state.dart';
 import 'package:foodioo/repositories/blocs/notification/notification_bloc.dart';
+import 'package:foodioo/ui/General/message_over_screen.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'widget/notification_component_widget.dart';
@@ -42,9 +43,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
             height: AppConstant.paddingComponent,
           ),
 
-          Expanded(
-            child: BlocBuilder<NotificationBloc, NotifcationState>(
+          Expanded(child: BlocBuilder<NotificationBloc, NotifcationState>(
             builder: (context, state) {
+              
               if (state.isLoadingListNotification) {
                 return Skeletonizer(
                     child: ListView.builder(

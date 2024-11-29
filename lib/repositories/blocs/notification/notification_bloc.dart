@@ -64,6 +64,9 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
   _onFetchNotifications(
       FetchNotifications event, Emitter<NotifcationState> emit) async {
     if (!state.hasReachedNotifications) {
+      if (state.page == 1) {
+        emit(state.copyWith(isLoadingListNotification: true));
+      }
       int page = state.page;
       ResponseModel responseModel =
           await notifcationService.getYourNotification(
@@ -74,10 +77,10 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
       currentNotifications.addAll(responseModel.data);
       if (responseModel.getSuccess) {
         emit(state.copyWith(
-          notifcations: currentNotifications,
-          page: ++page,
-          hasReachedNotifications: responseModel.data.isEmpty,
-        ));
+            notifcations: currentNotifications,
+            page: ++page,
+            hasReachedNotifications: responseModel.data.isEmpty,
+            isLoadingListNotification: false));
       }
     }
   }

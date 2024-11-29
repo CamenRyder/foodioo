@@ -12,6 +12,12 @@ class AppColors {
   static const Color grey50 = Color.fromARGB(255, 202, 202, 202);
   static const Color spaceGrey = Color.fromARGB(255, 236, 233, 233);
   static const Color componentNotification = Color.fromARGB(255, 220, 220, 220);
+  static const Color componentNotificationDetailLight =
+      Color.fromARGB(255, 231, 197, 197);
+
+  static const Color componentNotificationDetailDark =
+      Color.fromARGB(255, 124, 65, 65);
+
   static const Color black = Color(0xFF000000);
 }
 

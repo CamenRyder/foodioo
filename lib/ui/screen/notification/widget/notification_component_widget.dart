@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/repositories/blocs/notification/notifcation_event.dart';
+import 'package:foodioo/repositories/blocs/notification/notification_bloc.dart';
 import 'package:foodioo/repositories/models/notification_model.dart';
-
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Helper/helper_function.dart';
-import '../../../../Core/Theme/app_colors.dart';
 import '../../../../Core/routes/routes_name.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
@@ -60,12 +61,19 @@ class NotificationComponentWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
+                    onTap: () async {
+                      final rs = await Navigator.pushNamed(
                           context, NavigatorNames.DETAIL_NOTIFICATION,
                           arguments: {
                             'notificationModel': notificationModel,
                           });
+                      print(rs);
+                      if (rs == 1) {
+                        context.read<NotificationBloc>().add(SeenNotification(
+                            notifcationId: notificationModel?.id ?? 0));
+                      } else if (rs == 2) {
+                      } else if (rs == 3) {
+                      } else if (rs == 4) {}
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

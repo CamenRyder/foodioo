@@ -17,7 +17,12 @@ class DetailNotificationScreen extends StatelessWidget {
   const DetailNotificationScreen({super.key, required this.notificationModel});
 
   final NotificationModel notificationModel;
-
+  final List<String> titleButton = const [
+    "Đánh dấu là xem thông báo",
+    "Xem chi tiết bài viết",
+    "Xóa thông báo",
+    "Đánh dấu xem tất cả",
+  ];
   @override
   Widget build(BuildContext context) {
     double heightScreen = MediaQuery.of(context).size.height;
@@ -29,6 +34,9 @@ class DetailNotificationScreen extends StatelessWidget {
     String name = notificationModel.userAction?.fullname ?? "Unknown";
     String content = notificationModel.message ?? "";
     bool isDarkMode = context.read<AuthBloc>().state.isDarkMode;
+    Color colorComponent = isDarkMode
+        ? AppColors.componentNotificationDetailDark
+        : AppColors.componentNotificationDetailLight;
     String pathBackground = isDarkMode
         ? Assets.images.imageHoverGlassDarkMode.path.toString()
         : Assets.images.imageHoverGlassLightMode.path.toString();
@@ -40,7 +48,7 @@ class DetailNotificationScreen extends StatelessWidget {
     return Scaffold(
         body: GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        Navigator.pop(context, 0);
       },
       child: Container(
         height: double.infinity,
@@ -54,14 +62,14 @@ class DetailNotificationScreen extends StatelessWidget {
         child: Center(
             child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Hero(
               tag: '${notificationModel.id ?? 0}',
               child: Container(
                   width: widthComponentNotification,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).unselectedWidgetColor,
+                    color: colorComponent,
                     borderRadius:
                         BorderRadius.circular(AppConstant.radiusLarge),
                   ),
@@ -126,11 +134,87 @@ class DetailNotificationScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   )),
-            )
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context, 1);
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                    vertical: AppConstant.paddingContent + 3,
+                    horizontal: AppConstant.paddingComponent),
+                decoration: BoxDecoration(
+                  color: colorComponent,
+                  borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
+                ),
+                padding: const EdgeInsets.all(AppConstant.paddingComponent),
+                child: Text(
+                  "Đánh dấu là xem thông báo",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                  Navigator.pop(context, 2 );
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                    vertical: AppConstant.paddingContent,
+                    horizontal: AppConstant.paddingComponent),
+                decoration: BoxDecoration(
+                  color: colorComponent,
+                  borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
+                ),
+                padding: const EdgeInsets.all(AppConstant.paddingComponent),
+                child: Text(
+                  "Xem chi tiết bài viết",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context, 3);
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                    vertical: AppConstant.paddingContent,
+                    horizontal: AppConstant.paddingComponent),
+                decoration: BoxDecoration(
+                  color: colorComponent,
+                  borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
+                ),
+                padding: const EdgeInsets.all(AppConstant.paddingComponent),
+                child: Text(
+                  "Xóa thông báo",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context, 4);
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                    vertical: AppConstant.paddingContent,
+                    horizontal: AppConstant.paddingComponent),
+                decoration: BoxDecoration(
+                  color: colorComponent,
+                  borderRadius: BorderRadius.circular(AppConstant.radiusMedium),
+                ),
+                padding: const EdgeInsets.all(AppConstant.paddingComponent),
+                child: Text(
+                  "Đánh dấu xem tất cả",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            ),
           ],
         )).asGlass(
             blurX: 20,
