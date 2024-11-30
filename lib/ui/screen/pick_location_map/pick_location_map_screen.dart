@@ -1,26 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'widget/button_map_floating_widget.dart';
-
-class FoodMapScreen extends StatefulWidget {
-  const FoodMapScreen({super.key});
+class PickLocationMapScreen extends StatefulWidget {
+  const PickLocationMapScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return FoodMapScreenState();
-  }
+  State<PickLocationMapScreen> createState() => _PickLocationMapScreenState();
 }
 
-class FoodMapScreenState extends State<FoodMapScreen> {
-  late GoogleMapController _mapController;
+class _PickLocationMapScreenState extends State<PickLocationMapScreen> {
   BitmapDescriptor currentLocationMarker = BitmapDescriptor.defaultMarker;
   late LatLng currentLocationA;
   Set<Marker> markerShowing = <Marker>{};
+  late GoogleMapController _mapController;
 
   createCurrentLocationMarker() async {
     Position curentLocation = await Geolocator.getCurrentPosition();
@@ -64,8 +59,10 @@ class FoodMapScreenState extends State<FoodMapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: [
+      appBar: AppBar(
+        title: const Text('Chọn vị trí bạn muốn chia sẻ'),
+      ),
+      body: Stack(children: [
         GoogleMap(
           mapType: MapType.terrain,
           myLocationButtonEnabled: false,
@@ -85,8 +82,7 @@ class FoodMapScreenState extends State<FoodMapScreen> {
             zoom: 15.0,
           ),
         ),
-        const ButtonMapFloatingWidget(),
-      ],
-    ));
+      ]),
+    );
   }
 }

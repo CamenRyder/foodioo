@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodioo/Core/routes/routes_name.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:foodioo/ui/General/message_over_screen.dart';
 
@@ -69,7 +70,10 @@ class TitleBarWidget extends StatelessWidget {
                 width: 7,
               ),
               GestureDetector(
-                onTap: () => MessageToast.showToast(context),
+                onTap: () async {
+                  await Navigator.pushNamed(
+                      context, NavigatorNames.PICK_LOCATION_MAP);
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                       vertical: AppConstant.paddingContent,

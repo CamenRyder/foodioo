@@ -14,10 +14,20 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
     on<FetchNotifications>(_onFetchNotifications);
     on<SeenNotification>(_onSeenNotification);
     on<SeenAllNotification>(_onSeenAllNotification);
+    on<SoftDeleteNotification>(_onSoftDeleteNotification);
   }
 
   NotifcationService notifcationService = NotifcationService();
   int pageSize = AppConstant.pageSize;
+
+  _onSoftDeleteNotification(
+      SoftDeleteNotification event, Emitter<NotifcationState> emit) async {
+    ResponseModel responseModel = await notifcationService
+        .softDeleteNotification(notificationId: event.notificationId);
+    if (responseModel.getSuccess) {
+      add(RefreshNotifications());
+    }
+  }
 
   _onInitialLoadingNotifcationScreen(InitialLoadingNotifcationScreen event,
       Emitter<NotifcationState> emit) async {
@@ -64,6 +74,9 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
   _onFetchNotifications(
       FetchNotifications event, Emitter<NotifcationState> emit) async {
     if (!state.hasReachedNotifications) {
+      if (state.page == 1) {
+        emit(state.copyWith(isLoadingListNotification: true));
+      }
       int page = state.page;
       ResponseModel responseModel =
           await notifcationService.getYourNotification(
@@ -74,10 +87,10 @@ class NotificationBloc extends Bloc<NotifcationEvent, NotifcationState> {
       currentNotifications.addAll(responseModel.data);
       if (responseModel.getSuccess) {
         emit(state.copyWith(
-          notifcations: currentNotifications,
-          page: ++page,
-          hasReachedNotifications: responseModel.data.isEmpty,
-        ));
+            notifcations: currentNotifications,
+            page: ++page,
+            hasReachedNotifications: responseModel.data.isEmpty,
+            isLoadingListNotification: false));
       }
     }
   }

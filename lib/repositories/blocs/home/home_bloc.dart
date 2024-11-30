@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/models/react_model.dart';
 import 'package:foodioo/repositories/models/report_model.dart';

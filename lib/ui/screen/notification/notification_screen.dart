@@ -44,6 +44,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
           Expanded(child: BlocBuilder<NotificationBloc, NotifcationState>(
             builder: (context, state) {
+              
               if (state.isLoadingListNotification) {
                 return Skeletonizer(
                     child: ListView.builder(

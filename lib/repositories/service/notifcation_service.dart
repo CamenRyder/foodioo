@@ -4,10 +4,31 @@ import 'package:foodioo/repositories/models/notification_model.dart';
 import '../../Core/Constants/constant_stataue.dart';
 import '../../Core/Helper/dio_sepecificate.dart';
 import '../../Core/Helper/validate_code_response.dart';
-import '../models/report_model.dart';
 import '../view/login_vm.dart';
 
 class NotifcationService extends FetchClient {
+  Future<ResponseModel> softDeleteNotification(
+      {required int notificationId}) async {
+    try {
+      final Response<dynamic> result = await super.postData(
+        path: '/notification/$notificationId',
+      );
+      if (result.data['code'] >= 200 && result.data['code'] < 300) {
+        return ResponseModel(
+            data: "Đã xóa thông báo thành công",
+            getSuccess: true,
+            message: AppConstant.messageGetSuccesData);
+      }
+      return ResponseModel(
+          data: "Đã xóa thông báo thất bại",
+          getSuccess: false,
+          message: AppConstant.messageGetSuccesData);
+    } catch (e) {
+      return ResponseModel(
+          getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
   Future<ResponseModel> getYourNotification(
       {required int page,
       required int pageSize,
@@ -27,7 +48,10 @@ class NotifcationService extends FetchClient {
               message: AppConstant.messageGetSuccesData);
         }
         for (var e in notifyData) {
+          if(e['is_delete'] ==false)
+          {
           notifications.add(NotificationModel.fromJson(e));
+          }
         }
         return ResponseModel(
             data: notifications,
@@ -67,11 +91,10 @@ class NotifcationService extends FetchClient {
     }
   }
 
-  Future<ResponseModel> seenAllNotification(
-      {required int accountId}) async {
+  Future<ResponseModel> seenAllNotification({required int accountId}) async {
     try {
       final Response<dynamic> result = await super.putData(
-        path: '/notification/$accountId',
+        path: '/notification/seen-all/$accountId',
       );
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         return ResponseModel(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodioo/ui/screen/detail_notification/detail_notification_screen.dart';
+import 'package:foodioo/ui/screen/pick_location_map/pick_location_map_screen.dart';
 import 'package:foodioo/ui/screen/profile/profile_screen.dart';
 import 'package:foodioo/ui/screen/splash/splash_screen.dart';
 import '../../ui/screen/bottom_tabbar/bottom_tabbar_screen.dart';
@@ -25,6 +26,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const FoodMapScreen());
       case NavigatorNames.CREATE_POST:
         return MaterialPageRoute(builder: (_) => const CreatePostScreen());
+      case NavigatorNames.PICK_LOCATION_MAP:
+        return MaterialPageRoute(builder: (_) => const PickLocationMapScreen());
       case NavigatorNames.DETAIL_NOTIFICATION:
         return MaterialPageRoute(
             builder: (_) => DetailNotificationScreen(

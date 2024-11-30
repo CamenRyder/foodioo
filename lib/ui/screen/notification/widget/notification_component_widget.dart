@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/repositories/blocs/notification/notifcation_event.dart';
+import 'package:foodioo/repositories/blocs/notification/notification_bloc.dart';
 import 'package:foodioo/repositories/models/notification_model.dart';
-
+import 'package:foodioo/ui/General/message_over_screen.dart';
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Helper/helper_function.dart';
-import '../../../../Core/Theme/app_colors.dart';
 import '../../../../Core/routes/routes_name.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../../General/spacing_vertical_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
-import 'package:badges/badges.dart' as badges;
 
 class NotificationComponentWidget extends StatelessWidget {
   const NotificationComponentWidget({super.key, this.notificationModel});
@@ -61,12 +62,33 @@ class NotificationComponentWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
+                    onTap: () async {
+                      final rs = await Navigator.pushNamed(
                           context, NavigatorNames.DETAIL_NOTIFICATION,
                           arguments: {
                             'notificationModel': notificationModel,
                           });
+                      print(rs);
+                      if (rs == 1) {
+                        if (notificationModel?.isSeen == true) {
+                          MessageToast.showToast(context,
+                              message: "Đã xem thông báo bài viết");
+                        } else {
+                          context.read<NotificationBloc>().add(SeenNotification(
+                              notifcationId: notificationModel?.id ?? 0));
+                        }
+                      } else if (rs == 2) {
+                        MessageToast.showToast(context);
+                      } else if (rs == 3) {
+                        context.read<NotificationBloc>().add(
+                            SoftDeleteNotification(
+                                notificationId: notificationModel?.id ?? 0));
+                        // MessageToast.showToast(context);
+                      } else if (rs == 4) {
+                        context
+                            .read<NotificationBloc>()
+                            .add(SeenAllNotification());
+                      }
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
