@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'widget/button_map_floating_widget.dart';
@@ -17,9 +19,13 @@ class FoodMapScreen extends StatefulWidget {
 class FoodMapScreenState extends State<FoodMapScreen> {
   late GoogleMapController _mapController;
   BitmapDescriptor currentLocationMarker = BitmapDescriptor.defaultMarker;
+  late LatLng currentLocationA;
   Set<Marker> markerShowing = <Marker>{};
 
-  createCurrentLocationMarker() {
+  createCurrentLocationMarker() async {
+    Position curentLocation = await Geolocator.getCurrentPosition();
+    currentLocationA =
+        LatLng(curentLocation.latitude, curentLocation.longitude);
     BitmapDescriptor.asset(const ImageConfiguration(size: Size(32, 32)),
             "assets/images/device.png")
         .then((value) {
@@ -30,7 +36,7 @@ class FoodMapScreenState extends State<FoodMapScreen> {
   }
 
   @override
-void initState() {
+  void initState() {
     createCurrentLocationMarker();
     super.initState();
   }
@@ -73,7 +79,7 @@ void initState() {
             const LatLng(10.869389323190637, 106.70797958010037),
             const LatLng(10.862224514959449, 106.71089782334573),
             const LatLng(10.873962066748906, 106.70057668363232),
-          ], const LatLng(10.869694877364696, 106.70485748904734)),
+          ], currentLocationA),
           initialCameraPosition: const CameraPosition(
             target: LatLng(10.869694877364696, 106.70485748904734),
             zoom: 15.0,
