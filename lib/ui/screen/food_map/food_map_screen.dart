@@ -37,8 +37,8 @@ class FoodMapScreenState extends State<FoodMapScreen> {
 
   @override
   void initState() {
-    createCurrentLocationMarker();
     super.initState();
+    createCurrentLocationMarker();
   }
 
   Set<Marker> createMakers(

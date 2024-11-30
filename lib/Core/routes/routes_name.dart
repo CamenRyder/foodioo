@@ -8,4 +8,5 @@ class NavigatorNames {
   static const String CREATE_POST = '/create_post';
   static  const String VIA_PROFILE = '/via_profile';
   static  const String DETAIL_NOTIFICATION = '/detail_notification';
+  static const String PICK_LOCATION_MAP = '/pick_location_map';
 }
