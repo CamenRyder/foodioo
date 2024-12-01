@@ -24,6 +24,7 @@ class BottomSheetPickingMapWidget extends StatefulWidget {
 class BottomSheetPickingMapWidgetState
     extends State<BottomSheetPickingMapWidget> {
   late GoogleMapController _mapController;
+  TextEditingController controller = TextEditingController();
   LatLng? _selectedLocation;
   Marker? _marker;
   BitmapDescriptor currentLocationMarker = BitmapDescriptor.defaultMarker;
@@ -97,31 +98,129 @@ class BottomSheetPickingMapWidgetState
                     bottom: AppConstant.paddingComponent),
                 child: Row(
                   children: [
+                    // Expanded(
+                    //   child: TextField(),
+                    // ),
                     Expanded(
-                      child: TextField(),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (_selectedLocation != null) {
-                          Navigator.of(context).pop(_selectedLocation!);
-                        }
-                      },
                       child: Container(
-                          margin:
-                              const EdgeInsets.all(AppConstant.paddingContent),
-                          padding: const EdgeInsets.all(
-                              AppConstant.paddingComponent - 5),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius:
-                                BorderRadius.circular(AppConstant.radiusSmall),
-                          ),
-                          child: SvgGenSizeWidget(
-                            icon: Assets.icons.search.svg(
-                              color: Colors.white,
+                        height: 45,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppConstant.paddingHorizontalApp),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius:
+                              BorderRadius.circular(AppConstant.radiusMedium),
+                        ),
+                        child: TextField(
+                          autofocus: true,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          textInputAction: TextInputAction.search,
+                          onChanged: (value) {
+                            // if (value.isNotEmpty) {
+                            //   // context.read<ListCustomerBloc>().add(SearchCustomer(
+                            //   //       key: value,
+                            //   //       teamType: widget.teamType,
+                            //   //     ));
+                            //   setState(() {
+                            //     isShowClear = true;
+                            //   });
+                            // }
+                          },
+                          controller: controller,
+                          onSubmitted: (value) {
+                            // print("Data akko: $value");
+                            // if (value == "") {
+                            //   MessageToast.showToast(
+                            //       context, "Hãy nhập từ khóa trước khi nhập!!");
+                            // } else {
+                            //   context
+                            //       .read<ListCustomerBloc>()
+                            //       .add(SearchCustomer(
+                            //         key: value,
+                            //         teamType: widget.teamType,
+                            //       ));
+                            // }
+                          },
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText:
+                                'Nhập mã khách hàng, mã dms, mã số thuế, số điện thoại để tìm kiếm',
+                            hintStyle: Theme.of(context).textTheme.labelMedium,
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            // icon: Image.asset(
+                            //   'assets/icons/icon_search_2.png',
+                            //   height: 24,
+                            //   color: AppColors.textBlack,
+                            // ),
+                            icon: GestureDetector(
+                              onTap: () {
+                                // if (controller.value.text == "") {
+                                //   MessageToast.showToast(context,
+                                //       "Hãy nhập từ khóa trước khi nhập!!");
+                                // } else {
+                                //   context
+                                //       .read<ListCustomerBloc>()
+                                //       .add(SearchCustomer(
+                                //         key: controller.value.text,
+                                //         teamType: widget.teamType,
+                                //       ));
+                                // }
+                                // removeFocus(context);
+                              },
+                              child: SvgGenSizeWidget(
+                                  icon: Assets.icons.search
+                                      .svg(color: AppColors.black)),
                             ),
-                          )),
+                            prefixIconConstraints: const BoxConstraints(
+                                minWidth: AppConstant.paddingButton),
+                            suffixIconConstraints: const BoxConstraints(
+                                minWidth: AppConstant.paddingButton),
+                            // suffixIcon: isShowClear
+                            //     ? GestureDetector(
+                            //         onTap: () {
+                            //           setState(() {
+                            //             controller.clear();
+                            //             isShowClear = false;
+                            //           });
+                            //           removeFocus(context);
+                            //           context
+                            //               .read<ListCustomerBloc>()
+                            //               .add(CleanDataSearch());
+                            //         },
+                            //         child: Icon(
+                            //           Icons.close,
+                            //           size: 20.h,
+                            //           color: AppColors.textBlack,
+                            //         ))
+                            //     : null,
+                          ),
+                        ),
+                      ),
                     ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     if (_selectedLocation != null) {
+                    //       Navigator.of(context).pop(_selectedLocation!);
+                    //     }
+                    //   },
+                    //   child: Container(
+                    //       margin:
+                    //           const EdgeInsets.all(AppConstant.paddingContent),
+                    //       padding: const EdgeInsets.all(
+                    //           AppConstant.paddingComponent - 5),
+                    //       decoration: BoxDecoration(
+                    //         color: Theme.of(context).primaryColor,
+                    //         borderRadius:
+                    //             BorderRadius.circular(AppConstant.radiusSmall),
+                    //       ),
+                    //       child: SvgGenSizeWidget(
+                    //         icon: Assets.icons.search.svg(
+                    //           color: Colors.white,
+                    //         ),
+                    //       )),
+                    // ),
                   ],
                 )),
             Expanded(
