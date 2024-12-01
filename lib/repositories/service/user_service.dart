@@ -119,7 +119,7 @@ class UserService extends FetchClient {
       final Response<dynamic> result =
           await super.getData(path: '/accounts/me');
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
-        final accounts = result.data['data'];
+        final accounts = result.data['data']['accounts'];
 
         for (var e in accounts) {
           userModels.add(UserModel.fromJson(e));

@@ -13,20 +13,39 @@ class PickLocationMapScreen extends StatefulWidget {
 
 class _PickLocationMapScreenState extends State<PickLocationMapScreen> {
   BitmapDescriptor currentLocationMarker = BitmapDescriptor.defaultMarker;
-  late LatLng currentLocationA;
   Set<Marker> markerShowing = <Marker>{};
   late GoogleMapController _mapController;
+  double sizeBitMap = 28;
+  LatLng? _selectedLocation;
+  Marker? _marker;
 
   createCurrentLocationMarker() async {
     Position curentLocation = await Geolocator.getCurrentPosition();
-    currentLocationA =
+    _selectedLocation =
         LatLng(curentLocation.latitude, curentLocation.longitude);
-    BitmapDescriptor.asset(const ImageConfiguration(size: Size(32, 32)),
+    BitmapDescriptor.asset(
+            ImageConfiguration(size: Size(sizeBitMap, sizeBitMap)),
             "assets/images/device.png")
         .then((value) {
       setState(() {
         currentLocationMarker = value;
       });
+    });
+    _marker = Marker(
+        icon: currentLocationMarker,
+        markerId: const MarkerId("currentLocation"),
+        infoWindow: const InfoWindow(title: "Vị trí bạn đang cung cấp"),
+        position: _selectedLocation!);
+  }
+
+  void _updateMarker(LatLng location) {
+    setState(() {
+      _marker = Marker(
+          icon: currentLocationMarker,
+          markerId: const MarkerId("currentLocation"),
+          infoWindow: const InfoWindow(title: "Vị trí bạn đang cung caasp"),
+          position: _selectedLocation!);
+      _selectedLocation = location;
     });
   }
 
@@ -71,14 +90,13 @@ class _PickLocationMapScreenState extends State<PickLocationMapScreen> {
             Factory<OneSequenceGestureRecognizer>(
                 () => EagerGestureRecognizer())
           },
-          markers: createMakers([
-            const LatLng(10.86471114436039, 106.7008556333543),
-            const LatLng(10.869389323190637, 106.70797958010037),
-            const LatLng(10.862224514959449, 106.71089782334573),
-            const LatLng(10.873962066748906, 106.70057668363232),
-          ], currentLocationA),
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(10.869694877364696, 106.70485748904734),
+          markers: _marker != null ? {_marker!} : {},
+          onTap: (LatLng location) {
+            _updateMarker(location);
+          },
+          initialCameraPosition: CameraPosition(
+            target: _selectedLocation ??
+                const LatLng(10.869694877364696, 106.70485748904734),
             zoom: 15.0,
           ),
         ),
