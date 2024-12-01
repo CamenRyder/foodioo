@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:foodioo/Core/routes/routes_name.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/Core/Helper/helper_function.dart';
+import 'package:foodioo/repositories/blocs/create_post/create_post_bloc.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:foodioo/ui/General/message_over_screen.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
 import '../../../General/spacing_horizontal_widget.dart';
 import '../../authorizator/widget/ring_of_avatar_widget.dart';
+import 'bottom_sheet_picking_map_widget.dart';
 import 'get_image_widget.dart';
 
 class TitleBarWidget extends StatelessWidget {
@@ -71,8 +76,20 @@ class TitleBarWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  await Navigator.pushNamed(
-                      context, NavigatorNames.PICK_LOCATION_MAP);
+                  // await Navigator.pushNamed(
+                  //     context, NavigatorNames.PICK_LOCATION_MAP);
+                  removeFocus(context);
+                  final currentLocation = await _getCurrentLocation();
+                  await showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return BottomSheetPickingMapWidget(
+                        currentLocation: currentLocation,
+                        bloc: context.read<CreatePostBloc>(),
+                      );
+                    },
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -101,5 +118,12 @@ class TitleBarWidget extends StatelessWidget {
         width: 12,
       ),
     ]);
+  }
+
+  Future<LatLng> _getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low);
+    LatLng currentLocation = LatLng(position.latitude, position.longitude);
+    return currentLocation;
   }
 }
