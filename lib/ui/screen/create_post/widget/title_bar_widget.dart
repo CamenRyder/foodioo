@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Helper/helper_function.dart';
+import 'package:foodioo/repositories/blocs/create_post/create_post_bloc.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:foodioo/ui/General/message_over_screen.dart';
 import 'package:geolocator/geolocator.dart';
@@ -84,6 +86,7 @@ class TitleBarWidget extends StatelessWidget {
                     builder: (context) {
                       return BottomSheetPickingMapWidget(
                         currentLocation: currentLocation,
+                        bloc: context.read<CreatePostBloc>(),
                       );
                     },
                   );

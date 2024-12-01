@@ -97,7 +97,7 @@ class PostService extends FetchClient {
       if (response.statusCode == 200) {
         if (response.data["results"].isEmpty) {
           return ResponseModel(
-              data: '', getSuccess: true, message: 'Khong tim thay dia chi');
+              data: '', getSuccess: false, message: 'Khong tim thay dia chi');
         }
         return ResponseModel(
             data:

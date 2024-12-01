@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:foodioo/repositories/blocs/create_post/create_post_bloc.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
 import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
 import 'package:foodioo/ui/general/spacing_horizontal_widget.dart';
@@ -12,8 +13,9 @@ import '../../../../Core/Theme/app_typography.dart';
 import '../../../../Core/Theme/assets.gen.dart';
 
 class BottomSheetPickingMapWidget extends StatefulWidget {
-  const BottomSheetPickingMapWidget({super.key, required this.currentLocation});
-
+  const BottomSheetPickingMapWidget(
+      {super.key, required this.currentLocation, required this.bloc});
+  final CreatePostBloc bloc;
   final LatLng currentLocation;
 
   @override
@@ -104,11 +106,9 @@ class BottomSheetPickingMapWidgetState
                         autofocus: true,
                         style: Theme.of(context).textTheme.bodyLarge,
                         textInputAction: TextInputAction.search,
-                        onChanged: (value) {
-                        },
+                        onChanged: (value) {},
                         controller: controller,
-                        onSubmitted: (value) {
-                        },
+                        onSubmitted: (value) {},
                         decoration: InputDecoration(
                           hintText: 'Nhập địa chỉ để tìm kiếm',
                           filled: true,
@@ -121,8 +121,7 @@ class BottomSheetPickingMapWidgetState
                           isDense: true,
                           hintStyle: Theme.of(context).textTheme.labelMedium,
                           suffixIcon: GestureDetector(
-                            onTap: () {
-                            },
+                            onTap: () {},
                             child: Container(
                               margin: const EdgeInsets.only(
                                   right: AppConstant.paddingHorizontalApp),

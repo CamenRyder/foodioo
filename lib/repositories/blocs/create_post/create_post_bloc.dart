@@ -3,6 +3,7 @@ import 'package:foodioo/repositories/blocs/create_post/create_post_event.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_state.dart';
 import 'package:foodioo/repositories/service/post_service.dart';
 import 'package:foodioo/repositories/view/login_vm.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   CreatePostBloc() : super(const CreatePostState()) {
@@ -12,9 +13,35 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<RemoveImage>((event, emit) => _onRemoveImage(event, emit));
     on<CreatePost>((event, emit) => _onCreatePost(event, emit));
     on<InputContentPost>((event, emit) => _onInputContentPost(event, emit));
-    
+    on<InputStringSearchLocation>(
+        (event, emit) => _onInputStringSearchLocation(event, emit));
+    on<SearchLocation>((event, emit) => _onSearchLocation(event, emit));
   }
   PostService postService = PostService();
+
+  _onInputStringSearchLocation(InputStringSearchLocation event, Emitter emit) {
+    emit(state.copyWith(keySearchLocation: event.key));
+  }
+
+  _onSearchLocation(SearchLocation event, Emitter emit) async {
+    emit(state.copyWith(isSearchingLocation: true));
+    ResponseModel response = await postService.searchPositionCustomer(
+        address: state.keySearchLocation);
+    emit(state.copyWith(isSearchingLocation: false, keySearchLocation: ''));
+    if (response.getSuccess) {
+      final latngg = response.data;
+      String latitude = latngg.split(',')[0];
+      double latiudeDouble = double.parse(latitude);
+      String longitude = latngg.split(',')[1];
+      double longitudeDouble = double.parse(longitude);
+      LatLng currentLocationPicked = LatLng(latiudeDouble, longitudeDouble);
+      emit(state.copyWith(currentLocationPicked: currentLocationPicked));
+    }
+
+    emit(state.copyWith(isSearchSuccesLocation: true));
+    emit(state.copyWith(isSearchingLocation: false));
+  }
+
   _onInitalLoadingCreatePost(InitalLoadingCreatePost event, Emitter emit) {
     emit(state.copyWith(
         currentAccountID: event.currrentAccountId,
