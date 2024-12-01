@@ -2,11 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:foodioo/ui/General/spacing_vertical_widget.dart';
+import 'package:foodioo/ui/General/svg_gen_size_widget.dart';
 import 'package:foodioo/ui/general/spacing_horizontal_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
+import '../../../../Core/Theme/assets.gen.dart';
 
 class BottomSheetPickingMapWidget extends StatefulWidget {
   const BottomSheetPickingMapWidget({super.key, required this.currentLocation});
@@ -90,6 +92,38 @@ class BottomSheetPickingMapWidgetState
               child: Text("Chọn vị trí bạn muốn chia sẻ",
                   style: Theme.of(context).textTheme.bodyLarge),
             ),
+            Container(
+                margin: const EdgeInsetsDirectional.only(
+                    bottom: AppConstant.paddingComponent),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (_selectedLocation != null) {
+                          Navigator.of(context).pop(_selectedLocation!);
+                        }
+                      },
+                      child: Container(
+                          margin:
+                              const EdgeInsets.all(AppConstant.paddingContent),
+                          padding: const EdgeInsets.all(
+                              AppConstant.paddingComponent - 5),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius:
+                                BorderRadius.circular(AppConstant.radiusSmall),
+                          ),
+                          child: SvgGenSizeWidget(
+                            icon: Assets.icons.search.svg(
+                              color: Colors.white,
+                            ),
+                          )),
+                    ),
+                  ],
+                )),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
