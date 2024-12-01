@@ -16,8 +16,8 @@ class PostService extends FetchClient {
     try {
       List<PostModel> postModels = [];
 
-      final Response<dynamic> result = await super.getData(
-          path: '/posts?account_id=$accountId&page=$page&page_size=4');
+      final Response<dynamic> result = await super
+          .getData(path: '/posts?account_id=$accountId&page=$page&page_size=4');
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final posts = result.data['data'];
         if (posts == null) {
@@ -77,6 +77,38 @@ class PostService extends FetchClient {
     } catch (e) {
       return ResponseModel(
           getSuccess: false, message: "Đã có lỗi: $e", data: null);
+    }
+  }
+
+  Future<ResponseModel> searchPositionCustomer(
+      {required String address}) async {
+    try {
+      final Response<dynamic> response = await super.getData(
+          domainApp: 'https://rsapi.goong.io',
+          path: '/geocode',
+          queryParameters: {
+            "address": address,
+            "api_key": AppConstant.googleMapApiKey
+          },
+          optionsAlternative: Options());
+      if (response.data["errors"] != null) {
+        throw response.data["errors"][0]["message"];
+      }
+      if (response.statusCode == 200) {
+        if (response.data["results"].isEmpty) {
+          return ResponseModel(
+              data: '', getSuccess: true, message: 'Khong tim thay dia chi');
+        }
+        return ResponseModel(
+            data:
+                '${response.data["results"][0]["geometry"]["location"]["lat"]},${response.data["results"][0]["geometry"]["location"]["lng"]}',
+            getSuccess: true,
+            message: "Tim thay dia chi");
+      } else {
+        throw response.data["errors"][0]["message"];
+      }
+    } catch (e) {
+      return ResponseModel(data: e, getSuccess: false, message: "Vai ca dan");
     }
   }
 
@@ -292,13 +324,14 @@ class PostService extends FetchClient {
     try {
       List<PostModel> postModels = [];
 
-      final Response<dynamic> result =
-          await super.getData(path: '/posts/person', queryParameters: {
-        'from_id': currentAccountId,
-        'to_id': aimAccountId,
-        'page': page,
-        'page_size': 4
-      });
+      final Response<dynamic> result = await super.getData(
+          path: '/posts/person',
+          queryParameters: {
+            'from_id': currentAccountId,
+            'to_id': aimAccountId,
+            'page': page,
+            'page_size': 4
+          });
       if (result.data['code'] >= 200 && result.data['code'] < 300) {
         final posts = result.data['data'];
         if (posts == null) {

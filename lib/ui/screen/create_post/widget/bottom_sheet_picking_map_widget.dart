@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
+import '../../../../Core/Theme/app_typography.dart';
 import '../../../../Core/Theme/assets.gen.dart';
 
 class BottomSheetPickingMapWidget extends StatefulWidget {
@@ -88,139 +89,55 @@ class BottomSheetPickingMapWidgetState
                   color: Theme.of(context).hintColor),
             ),
             Container(
-              margin: const EdgeInsetsDirectional.only(
-                  bottom: AppConstant.paddingComponent),
+              margin:
+                  const EdgeInsetsDirectional.all(AppConstant.paddingContent),
               child: Text("Chọn vị trí bạn muốn chia sẻ",
                   style: Theme.of(context).textTheme.bodyLarge),
             ),
             Container(
-                margin: const EdgeInsetsDirectional.only(
-                    bottom: AppConstant.paddingComponent),
+                margin: const EdgeInsetsDirectional.all(
+                    AppConstant.paddingComponent),
                 child: Row(
                   children: [
-                    // Expanded(
-                    //   child: TextField(),
-                    // ),
                     Expanded(
-                      child: Container(
-                        height: 45,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppConstant.paddingHorizontalApp),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius:
-                              BorderRadius.circular(AppConstant.radiusMedium),
-                        ),
-                        child: TextField(
-                          autofocus: true,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          textInputAction: TextInputAction.search,
-                          onChanged: (value) {
-                            // if (value.isNotEmpty) {
-                            //   // context.read<ListCustomerBloc>().add(SearchCustomer(
-                            //   //       key: value,
-                            //   //       teamType: widget.teamType,
-                            //   //     ));
-                            //   setState(() {
-                            //     isShowClear = true;
-                            //   });
-                            // }
-                          },
-                          controller: controller,
-                          onSubmitted: (value) {
-                            // print("Data akko: $value");
-                            // if (value == "") {
-                            //   MessageToast.showToast(
-                            //       context, "Hãy nhập từ khóa trước khi nhập!!");
-                            // } else {
-                            //   context
-                            //       .read<ListCustomerBloc>()
-                            //       .add(SearchCustomer(
-                            //         key: value,
-                            //         teamType: widget.teamType,
-                            //       ));
-                            // }
-                          },
-                          decoration: InputDecoration(
-                            isDense: true,
-                            hintText:
-                                'Nhập mã khách hàng, mã dms, mã số thuế, số điện thoại để tìm kiếm',
-                            hintStyle: Theme.of(context).textTheme.labelMedium,
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            // icon: Image.asset(
-                            //   'assets/icons/icon_search_2.png',
-                            //   height: 24,
-                            //   color: AppColors.textBlack,
-                            // ),
-                            icon: GestureDetector(
-                              onTap: () {
-                                // if (controller.value.text == "") {
-                                //   MessageToast.showToast(context,
-                                //       "Hãy nhập từ khóa trước khi nhập!!");
-                                // } else {
-                                //   context
-                                //       .read<ListCustomerBloc>()
-                                //       .add(SearchCustomer(
-                                //         key: controller.value.text,
-                                //         teamType: widget.teamType,
-                                //       ));
-                                // }
-                                // removeFocus(context);
-                              },
+                      child: TextField(
+                        autofocus: true,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        textInputAction: TextInputAction.search,
+                        onChanged: (value) {
+                        },
+                        controller: controller,
+                        onSubmitted: (value) {
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Nhập địa chỉ để tìm kiếm',
+                          filled: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: AppConstant.paddingComponent,
+                              horizontal: AppConstant.paddingVerticalApp - 3),
+                          labelStyle: AppTypographyLight.textContentBold,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: const Color.fromARGB(255, 218, 218, 218),
+                          isDense: true,
+                          hintStyle: Theme.of(context).textTheme.labelMedium,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                  right: AppConstant.paddingHorizontalApp),
                               child: SvgGenSizeWidget(
                                   icon: Assets.icons.search
                                       .svg(color: AppColors.black)),
                             ),
-                            prefixIconConstraints: const BoxConstraints(
-                                minWidth: AppConstant.paddingButton),
-                            suffixIconConstraints: const BoxConstraints(
-                                minWidth: AppConstant.paddingButton),
-                            // suffixIcon: isShowClear
-                            //     ? GestureDetector(
-                            //         onTap: () {
-                            //           setState(() {
-                            //             controller.clear();
-                            //             isShowClear = false;
-                            //           });
-                            //           removeFocus(context);
-                            //           context
-                            //               .read<ListCustomerBloc>()
-                            //               .add(CleanDataSearch());
-                            //         },
-                            //         child: Icon(
-                            //           Icons.close,
-                            //           size: 20.h,
-                            //           color: AppColors.textBlack,
-                            //         ))
-                            //     : null,
                           ),
+                          prefixIconConstraints: const BoxConstraints(
+                              minWidth: AppConstant.paddingButton),
+                          suffixIconConstraints: const BoxConstraints(
+                              minWidth: AppConstant.paddingButton),
                         ),
                       ),
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     if (_selectedLocation != null) {
-                    //       Navigator.of(context).pop(_selectedLocation!);
-                    //     }
-                    //   },
-                    //   child: Container(
-                    //       margin:
-                    //           const EdgeInsets.all(AppConstant.paddingContent),
-                    //       padding: const EdgeInsets.all(
-                    //           AppConstant.paddingComponent - 5),
-                    //       decoration: BoxDecoration(
-                    //         color: Theme.of(context).primaryColor,
-                    //         borderRadius:
-                    //             BorderRadius.circular(AppConstant.radiusSmall),
-                    //       ),
-                    //       child: SvgGenSizeWidget(
-                    //         icon: Assets.icons.search.svg(
-                    //           color: Colors.white,
-                    //         ),
-                    //       )),
-                    // ),
                   ],
                 )),
             Expanded(

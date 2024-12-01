@@ -5,6 +5,7 @@ class AppConstant {
   static const String APP_VERSION = "1.0.0";
   static String apiBaseURL = "${dotenv.env['API_BASE_URL']}/api";
   static String baseURL = "${dotenv.env['API_BASE_URL']}/";
+  static String googleMapApiKey = "${dotenv.env['GOONG_API_KEY']}";
   static String keySoundOnClick = "sound_key_when_click";
   static String keyEnableVibration = "enable_vibration";
   static String messageGetSuccesData = "Lấy dữ liệu từ Foodioo thành công";

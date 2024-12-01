@@ -12,6 +12,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<RemoveImage>((event, emit) => _onRemoveImage(event, emit));
     on<CreatePost>((event, emit) => _onCreatePost(event, emit));
     on<InputContentPost>((event, emit) => _onInputContentPost(event, emit));
+    
   }
   PostService postService = PostService();
   _onInitalLoadingCreatePost(InitalLoadingCreatePost event, Emitter emit) {
