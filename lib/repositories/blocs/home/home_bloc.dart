@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/repositories/models/react_model.dart';
 import 'package:foodioo/repositories/models/report_model.dart';
@@ -6,6 +8,7 @@ import 'package:foodioo/repositories/service/report_service.dart';
 import 'package:foodioo/repositories/view/login_vm.dart';
 
 import '../../../Core/Constants/constant_stataue.dart';
+import '../../../Core/Helper/dio_sepecificate.dart';
 import '../../models/post_model.dart';
 import 'home_event.dart';
 import 'home_state.dart';
@@ -63,7 +66,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             state.pickedIssues.toSet().toList(), // lọc list ko bị trùng lặp.
         postId: event.postId);
     if (data.getSuccess) {
-      emit(state.copyWith(isPostedReport: true, isLoadingPostReport: false , issuesTicked:  []));
+      emit(state.copyWith(
+          isPostedReport: true, isLoadingPostReport: false, issuesTicked: []));
     } else {
       emit(state.copyWith(isPostedReport: false, isLoadingPostReport: false));
     }
@@ -145,7 +149,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       if (event.page == 1) {
         emit(state.copyWith(isLoadingNewFeed: true));
-
+        final rs = await FetchClient().getData(
+            domainApp: 'http://54.255.204.181:5212', path: '/api/category');
         final ResponseModel response = await postService.getNewFeed(
             page: event.page,
             pageSize: pageSize,
@@ -157,6 +162,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           throw Exception(response.message);
         }
       } else if (!state.hasReachedPost) {
+        
         final ResponseModel response = await postService.getNewFeed(
             page: event.page,
             pageSize: pageSize,
@@ -183,6 +189,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   _initalLoading(InitalLoading event, Emitter<HomeState> emit) async {
     try {
       emit(state.copyWith(isLoadingNewFeed: true));
+
       ResponseModel res = await postService.getNewFeed(
           page: 1, pageSize: pageSize, accountId: event.currentAccountId);
       ResponseModel res2 = await reportService.getIssuesForReport();
