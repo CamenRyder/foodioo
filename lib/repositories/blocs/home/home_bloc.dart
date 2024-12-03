@@ -149,8 +149,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       if (event.page == 1) {
         emit(state.copyWith(isLoadingNewFeed: true));
-        final rs = await FetchClient().getData(
-            domainApp: 'http://54.255.204.181:5212', path: '/api/category');
         final ResponseModel response = await postService.getNewFeed(
             page: event.page,
             pageSize: pageSize,

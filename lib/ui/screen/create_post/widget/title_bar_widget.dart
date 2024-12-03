@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodioo/Core/Helper/helper_function.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_bloc.dart';
+import 'package:foodioo/repositories/blocs/create_post/create_post_state.dart';
 import 'package:foodioo/repositories/models/user_model.dart';
 import 'package:foodioo/ui/General/message_over_screen.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../Core/Constants/constant_stataue.dart';
 import '../../../../Core/Theme/app_colors.dart';
@@ -75,38 +74,41 @@ class TitleBarWidget extends StatelessWidget {
                 width: 7,
               ),
               GestureDetector(
-                onTap: () async {
-                  // await Navigator.pushNamed(
-                  //     context, NavigatorNames.PICK_LOCATION_MAP);
+                onTap: () {
                   removeFocus(context);
-                  final currentLocation = await _getCurrentLocation();
-                  await showModalBottomSheet(
+                  showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
                     builder: (context) {
                       return BottomSheetPickingMapWidget(
-                        currentLocation: currentLocation,
                         bloc: context.read<CreatePostBloc>(),
                       );
                     },
                   );
                 },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: AppConstant.paddingContent,
-                      horizontal: AppConstant.paddingContent + 5),
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(AppConstant.radiusMedium),
-                    color: AppColors.grey50,
-                  ),
-                  child: Center(
-                      child: Text("Chia sẻ vị trí",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(color: Colors.white))),
-                ),
+                child: BlocBuilder<CreatePostBloc, CreatePostState>(
+                    buildWhen: (previous, current) =>
+                        previous.isPickedLocation != current.isPickedLocation,
+                    builder: (context, state) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: AppConstant.paddingContent,
+                            horizontal: AppConstant.paddingContent + 5),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(AppConstant.radiusMedium),
+                          color: state.isPickedLocation == true
+                              ? Theme.of(context).primaryColor
+                              : AppColors.grey50,
+                        ),
+                        child: Center(
+                            child: Text("Chia sẻ vị trí",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(color: Colors.white))),
+                      );
+                    }),
               )
             ],
           )
@@ -118,12 +120,5 @@ class TitleBarWidget extends StatelessWidget {
         width: 12,
       ),
     ]);
-  }
-
-  Future<LatLng> _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.low);
-    LatLng currentLocation = LatLng(position.latitude, position.longitude);
-    return currentLocation;
   }
 }

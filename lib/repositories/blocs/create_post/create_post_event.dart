@@ -13,6 +13,7 @@ class GetImageDevice extends CreatePostEvent {
   GetImageDevice({required this.images});
 }
 
+
 class InputStringSearchLocation extends CreatePostEvent {
   final String key;
   InputStringSearchLocation({required this.key});

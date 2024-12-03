@@ -8,6 +8,7 @@ class CreatePostState {
   final LatLng currentLocationPicked;
   final bool isSearchingLocation;
   final bool isSearchSuccesLocation;
+  final bool isPickedLocation;   
   final String description;
   final bool isPosted; // for success upload post
   final bool isLoadingOverLay;
@@ -19,6 +20,7 @@ class CreatePostState {
     this.images = const [],
     this.description = '',
     this.isSearchSuccesLocation = false,
+    this.isPickedLocation = false ,  
     this.keySearchLocation = '',
     this.isSearchingLocation = false,
     this.currentLocationPicked = const LatLng(0, 0),
@@ -35,6 +37,7 @@ class CreatePostState {
     String? description,
     int? currentAccountID,
     String? keySearchLocation,
+    bool? isPickedLocation ,  
     LatLng? currentLocationPicked,
     bool? isSearchingLocation,
     bool? isSearchSuccesLocation,
@@ -46,12 +49,13 @@ class CreatePostState {
   }) {
     return CreatePostState(
         isPosted: isPosted ?? this.isPosted,
+        isPickedLocation: isPickedLocation ?? this.isPickedLocation ,  
         images: images ?? this.images,
         isLoadingOverLay: isLoadingOverLay ?? false,
         keySearchLocation: keySearchLocation ?? this.keySearchLocation,
-        currentLocationPicked: currentLocationPicked ?? this.currentLocationPicked,
-        isSearchSuccesLocation:
-            isSearchSuccesLocation ?? this.isSearchSuccesLocation,
+        currentLocationPicked:
+            currentLocationPicked ?? this.currentLocationPicked,
+        isSearchSuccesLocation: isSearchSuccesLocation ?? false,
         isSearchingLocation: isSearchingLocation ?? this.isSearchingLocation,
         isShowMessage: isShowMessage ?? false,
         currentAccountID: currentAccountID ?? this.currentAccountID,

@@ -3,6 +3,7 @@ import 'package:foodioo/repositories/blocs/create_post/create_post_event.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_state.dart';
 import 'package:foodioo/repositories/service/post_service.dart';
 import 'package:foodioo/repositories/view/login_vm.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
@@ -13,14 +14,24 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<RemoveImage>((event, emit) => _onRemoveImage(event, emit));
     on<CreatePost>((event, emit) => _onCreatePost(event, emit));
     on<InputContentPost>((event, emit) => _onInputContentPost(event, emit));
+    on<PickLocation>((event, emit) => _onPickLocation(event, emit));
     on<InputStringSearchLocation>(
         (event, emit) => _onInputStringSearchLocation(event, emit));
+    on<SaveLocation>((event, emit) => _onSaveLocation(event, emit));
     on<SearchLocation>((event, emit) => _onSearchLocation(event, emit));
   }
   PostService postService = PostService();
 
   _onInputStringSearchLocation(InputStringSearchLocation event, Emitter emit) {
     emit(state.copyWith(keySearchLocation: event.key));
+  }
+
+  _onSaveLocation(SaveLocation event, Emitter emit) {
+    emit(state.copyWith(isPickedLocation: true));
+  }
+
+  _onPickLocation(PickLocation event, Emitter emit) {
+    emit(state.copyWith(currentLocationPicked: event.locationPicked));
   }
 
   _onSearchLocation(SearchLocation event, Emitter emit) async {
@@ -35,18 +46,32 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       String longitude = latngg.split(',')[1];
       double longitudeDouble = double.parse(longitude);
       LatLng currentLocationPicked = LatLng(latiudeDouble, longitudeDouble);
-      emit(state.copyWith(currentLocationPicked: currentLocationPicked));
+      emit(state.copyWith(
+          currentLocationPicked: currentLocationPicked,
+          isSearchSuccesLocation: true,
+          isSearchingLocation: false));
     }
 
-    emit(state.copyWith(isSearchSuccesLocation: true));
     emit(state.copyWith(isSearchingLocation: false));
   }
 
-  _onInitalLoadingCreatePost(InitalLoadingCreatePost event, Emitter emit) {
+  Future<LatLng> _getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low);
+    LatLng currentLocation = LatLng(position.latitude, position.longitude);
+    return currentLocation;
+  }
+
+  _onInitalLoadingCreatePost(
+      InitalLoadingCreatePost event, Emitter emit) async {
+    LatLng currentLocation = await _getCurrentLocation();
     emit(state.copyWith(
         currentAccountID: event.currrentAccountId,
         images: [],
         enableButtonCreatePost: false,
+        isPickedLocation: false,
+        isSearchSuccesLocation: false,
+        currentLocationPicked: currentLocation,
         isPosted: false,
         description: ''));
   }
@@ -81,9 +106,18 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         return;
       }
       emit(state.copyWith(isLoadingOverLay: true));
+      String? lat;
+      String? lng;
+      if (state.isPickedLocation) {
+        LatLng currentLocationPicked = state.currentLocationPicked;
+        lat = "${currentLocationPicked.latitude}";
+        lng = "${currentLocationPicked.longitude}";
+      }
       ResponseModel result = await postService.createPostData(
           description: state.description,
           accountId: state.currentAccountID,
+          lat: lat,
+          lng: lng,
           imageUrl: state.images.map((e) => e.path).toList());
       if (result.getSuccess) {
         emit(state.copyWith(
