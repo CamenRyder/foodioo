@@ -46,7 +46,7 @@ class AppBarHome extends StatelessWidget {
               IconButtonCustomize(
                 icon: Assets.icons.template.svg(color: AppColors.white),
                 onTap: () {
-                  MessageToast.showToast(context);
+                  // MessageToast.showToast(context);
                 },
               ),
               // IconButtonCustomize(

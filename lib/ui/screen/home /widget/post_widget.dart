@@ -113,10 +113,12 @@ class _PostWidgetState extends State<PostWidget> {
                           );
                         },
                       ),
-                      const Align(
-                        alignment: Alignment.topRight,
-                        child: ButtonShowMapWidget(),
-                      ),
+                      if (widget.postModel.lat != null)
+                        Align(
+                          alignment: Alignment.topRight,
+                          child:
+                              ButtonShowMapWidget(postModel: widget.postModel),
+                        ),
                       widget.postModel.images!.isEmpty ||
                               widget.postModel.images!.length == 1
                           ? const SizedBox()
