@@ -23,7 +23,10 @@ class RouteGenerator {
       case NavigatorNames.APP_MAIN:
         return MaterialPageRoute(builder: (_) => const BottomTabbarScreen());
       case NavigatorNames.FOOD_MAP:
-        return MaterialPageRoute(builder: (_) => const FoodMapScreen());
+        return MaterialPageRoute(
+            builder: (_) => FoodMapScreen(
+                  postModel: args?['postModel'],
+                ));
       case NavigatorNames.CREATE_POST:
         return MaterialPageRoute(builder: (_) => const CreatePostScreen());
       case NavigatorNames.PICK_LOCATION_MAP:

@@ -66,9 +66,10 @@ class CommentWidget extends StatelessWidget {
               children: [
                 SpacingVerticalWidget(height: widthScreen / 20 / 2),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(sender, style: Theme.of(context).textTheme.bodyLarge),
+                    const Expanded(child: SizedBox()),
                     ButtonMoreHoriWidget(
                       commentModel: model,
                       deleteFunction: () => context
