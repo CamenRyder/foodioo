@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodioo/Core/Helper/dio_sepecificate.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_event.dart';
 import 'package:foodioo/repositories/blocs/create_post/create_post_state.dart';
 import 'package:foodioo/repositories/service/post_service.dart';
@@ -113,6 +114,12 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         lat = "${currentLocationPicked.latitude}";
         lng = "${currentLocationPicked.longitude}";
       }
+      final data = await FetchClient().postData(
+          domainApp: 'http://54.169.24.186:9200/',
+          path: 'check',
+          params: {"content": state.description});
+      print(data);
+
       ResponseModel result = await postService.createPostData(
           description: state.description,
           accountId: state.currentAccountID,
